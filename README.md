@@ -1,2 +1,2 @@
-# PsychoPong
-Written by Thys Giaccone with the collaboration of Laurent Perrinet
+# PsychoBreakout
+A PsychoPy Breakout game
