@@ -64,7 +64,7 @@ class Arena:
     topx = 10
     topy = 7
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
-    numxtiles = 12
+    numxtiles = 18
     numytiles = 14
     rect = Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
