@@ -1,8 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr 24 14:43:14 2017
+
+@author: Syht
+"""
+
 import math, os, pygame, random
 from pygame.locals import *
 
-# game constants
-SCREENRECT = Rect(0, 0, 640, 480)
+# Game constants
+SCREENRECT = Rect(0, 0, 960, 720)
 
 
 def imgcolorkey(image, colorkey):
@@ -32,9 +39,6 @@ class SpriteSheet:
         return imgs
 
 def hborders(spritesheet):
-    """will redraw horizontal borders to place them at the bottom of the tiles,
-    and will make a plain horizontal border without a background,
-    which is not present in the original sprite sheet"""
     # plain border - 4, special border - 5, upper left - 6, upper right - 7
     rects = [(449, 35, 31, 9), (129, 289, 31, 13), (129, 193, 31, 13), (193, 193, 31, 13)]
     # the plain border had to be extracted
@@ -64,20 +68,20 @@ class Arena:
     topx = 10
     topy = 7
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
-    numxtiles = 18
-    numytiles = 14
+    numxtiles = 28
+    numytiles = 21
     rect = Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
         self.levels = levels
         self.background = pygame.Surface(SCREENRECT.size).convert()
-        self.makebg(4)
+        self.makebg(1)
     def drawtile(self, tile, x, y):
         self.background.blit(tile, (self.topx + self.tileside*x, self.topy + self.tileside*y))
     def makebg(self, tilenum):
         # numbers refer to border images
-        bordertop = [6, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 7]
-        borderleft = [0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
-        borderright = [1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
+        bordertop = [6, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 7]
+        borderleft = [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
+        borderright = [1, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
         for x in range(len(bordertop)):
             self.drawtile(self.borders[bordertop[x]], x, 0)
         for y in range(len(borderleft)):
@@ -87,7 +91,12 @@ class Arena:
             for y in range(self.numytiles):
                 # draw tiles within the border
                 self.drawtile(self.tiles[tilenum], x + 1, y + 1)
-
+    def makelevel(self, levelnum):
+        for y in range(len(self.levels[levelnum])):
+            for x in range(len(self.levels[levelnum][y])):
+                color = self.levels[levelnum][y][x] - 1
+                if color > -1:
+                    Brick(self, x, y, color)
 
 # each type of game object gets an init and an
 # update function. the update function is called
@@ -113,22 +122,24 @@ class Ball(pygame.sprite.Sprite):
     # the smallest dimension
     # used in the game
     # to prevent teleporting
-    speed = 5
-    anglel = 45
-    angleh = 135
-    def __init__(self, arena, paddle):
+    speed = 6
+    # anglel = 45, angleh = 135
+    anglel = 20
+    angleh = 160
+    def __init__(self, arena, paddle, bricks):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.arena = arena
         self.paddle = paddle
         self.update = self.start
+        self.bricks = bricks
     def start(self):
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
         if pygame.mouse.get_pressed()[0] == 1:
             self.fpx = self.rect.centerx
             self.fpy = self.rect.centery
-            self.fpdx = 0
+            self.fpdx = 5
             self.fpdy = 1
             self.update = self.move
     def setfp(self):
@@ -171,6 +182,55 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
 
+        # destroy bricks
+        brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
+        if brickscollided:
+            oldrect = self.rect
+            left = right = up = down = 0
+            for brick in brickscollided:
+                # [] - brick, () - ball
+
+                # ([)]
+                if oldrect.left < brick.rect.left < oldrect.right < brick.rect.right:
+                    self.rect.right = brick.rect.left
+                    self.setint()
+                    left = -1
+
+                # [(])
+                if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
+                    self.rect.left = brick.rect.right
+                    self.setint()
+                    right = 1
+
+                # top ([)] bottom
+                if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
+                    self.rect.bottom = brick.rect.top
+                    self.setint()
+                    up = -1
+
+                # top [(]) bottom
+                if brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom:
+                    self.rect.top = brick.rect.bottom
+                    self.setint()
+                    down = 1
+
+                brick.kill()
+
+
+            # if the ball is asked to go both ways, then do not change direction
+            if left + right != 0:
+                self.fpdx = (left + right)*abs(self.fpdx)
+            if up + down != 0:
+                self.fpdy = (up + down)*abs(self.fpdy)
+
+class Brick(pygame.sprite.Sprite):
+    def __init__(self, arena, x, y, color):
+        pygame.sprite.Sprite.__init__(self, self.containers)
+        self.image = self.images[color]
+        self.rect = self.image.get_rect()
+        self.rect.left = arena.rect.left + x*self.rect.width
+        self.rect.top = arena.rect.top + y*self.rect.height
+
 
 def main():
     pygame.init()
@@ -196,39 +256,49 @@ def main():
                                         (193, 257, 31, 31),
                                         (129, 225, 31, 31),
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
-
+                                        
     Paddle.image = paddleimage(spritesheet)
     Ball.image = spritesheet.imgat((428, 300, 11, 11), -1)
 
+    # yellow - 1, green - 2, red - 3, dark orange - 4,
+    # purple - 5, orange - 6, light blue - 7, dark blue - 8
+    Brick.images = spritesheet.imgsat([(225, 193, 31, 16),
+                                       (225, 225, 31, 16),
+                                       (225, 257, 31, 16),
+                                       (225, 289, 31, 16),
+                                       (257, 193, 31, 16),
+                                       (257, 225, 31, 16),
+                                       (257, 257, 31, 16),
+                                       (257, 289, 31, 16)])
 
-    levels = [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0],
-               [0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0],
-               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0],
-               [0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0],
-               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0],
-               [0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 0],
-               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]
+    levels = [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]
 
 
     # decorate the game window
-    pygame.display.set_caption('scriptedfun.com Arinoid')
+    pygame.display.set_caption('A PsychoPy experiment')
 
     # create the background
     arena = Arena(levels)
@@ -237,17 +307,20 @@ def main():
 
     # initialize game groups
     balls = pygame.sprite.Group()
+    bricks = pygame.sprite.Group()
     all = pygame.sprite.RenderUpdates()
 
     # assign default groups to each sprite class
     Paddle.containers = all
     Ball.containers = all, balls
+    Brick.containers = all, bricks
 
     clock = pygame.time.Clock()
 
     # initialize our starting sprites
     paddle = Paddle(arena)
-    Ball(arena, paddle)
+    Ball(arena, paddle, bricks)
+    arena.makelevel(0)
 
     while 1:
 
