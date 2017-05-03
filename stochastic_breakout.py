@@ -54,9 +54,9 @@ def hborders(spritesheet):
     return borders
 
 def paddleimage(spritesheet):
-    paddle = pygame.Surface((55, 11)).convert()
-    paddle.blit(spritesheet.imgat((261, 143, 27, 11)), (0, 0))    # left half
-    paddle.blit(spritesheet.imgat((289, 143, 28, 11)), (27, 0))   # right half
+    paddle = pygame.Surface((70, 11)).convert()
+    paddle.blit(spritesheet.imgat((261, 143, 42, 11)), (0, 0))    # left half
+    paddle.blit(spritesheet.imgat((289, 143, 28, 11)), (42, 0))   # right half
     return imgcolorkey(paddle, -1)
                                 
 class Arena:
@@ -124,8 +124,8 @@ class Ball(pygame.sprite.Sprite):
     # to prevent teleporting
     speed = 6
     # anglel = 45, angleh = 135
-    anglel = 20
-    angleh = 160
+    anglel = 30
+    angleh = 150
     def __init__(self, arena, paddle, bricks):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
@@ -181,6 +181,15 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
+        
+        """if self.rect.bottom > self.paddle.rect.top:
+            self.rect.bottom = self.paddle.rect.top
+            self.setfp()
+            self.fpdy = -self.fpdy            
+            lepego="Si"
+            if self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left:
+                lepego="No"
+            print self.rect.centerx , self.paddle.rect.centerx, lepego"""
 
         # destroy bricks
         brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
@@ -217,11 +226,6 @@ class Ball(pygame.sprite.Sprite):
                 brick.kill()
 
 
-            # if the ball is asked to go both ways, then do not change direction
-            if left + right != 0:
-                self.fpdx = (left + right)*abs(self.fpdx)
-            if up + down != 0:
-                self.fpdy = (up + down)*abs(self.fpdy)
 
 class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
@@ -238,6 +242,7 @@ def main():
     # set the display mode
     winstyle = 0 # | FULLSCREEN
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
+    # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
     # load images, assign to sprite classes
@@ -258,7 +263,7 @@ def main():
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
                                         
     Paddle.image = paddleimage(spritesheet)
-    Ball.image = spritesheet.imgat((428, 300, 11, 11), -1)
+    Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11), -1
 
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
@@ -298,7 +303,7 @@ def main():
 
 
     # decorate the game window
-    pygame.display.set_caption('A PsychoPy experiment')
+    pygame.display.set_caption('A Stochastic Pong')
 
     # create the background
     arena = Arena(levels)
