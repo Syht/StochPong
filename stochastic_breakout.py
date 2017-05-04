@@ -11,7 +11,6 @@ from pygame.locals import *
 # Game constants
 SCREENRECT = Rect(0, 0, 960, 720)
 
-
 def imgcolorkey(image, colorkey):
     if colorkey is not None:
         if colorkey is -1:
@@ -58,7 +57,7 @@ def paddleimage(spritesheet):
     paddle.blit(spritesheet.imgat((261, 143, 42, 11)), (0, 0))    # left half
     paddle.blit(spritesheet.imgat((289, 143, 28, 11)), (42, 0))   # right half
     return imgcolorkey(paddle, -1)
-                                
+
 class Arena:
     tileside = 31
     # when drawing tiles, the origin is at (topx, topy),
@@ -160,7 +159,6 @@ class Ball(pygame.sprite.Sprite):
             self.fpdx = self.speed*math.cos(angle)
             self.fpdy = -self.speed*math.sin(angle)
 
-
         # usual movement
         self.fpx = self.fpx + self.fpdx
         self.fpy = self.fpy + self.fpdy
@@ -181,11 +179,11 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
-        
+
         """if self.rect.bottom > self.paddle.rect.top:
             self.rect.bottom = self.paddle.rect.top
             self.setfp()
-            self.fpdy = -self.fpdy            
+            self.fpdy = -self.fpdy
             lepego="Si"
             if self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left:
                 lepego="No"
@@ -261,7 +259,7 @@ def main():
                                         (193, 257, 31, 31),
                                         (129, 225, 31, 31),
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
-                                        
+
     Paddle.image = paddleimage(spritesheet)
     Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11), -1
 
