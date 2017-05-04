@@ -1,2 +1,2 @@
-# PsychoBreakout
-A PsychoPy Breakout game
+# StochPong
+A Stochastic Pong
