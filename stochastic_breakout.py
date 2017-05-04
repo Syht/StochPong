@@ -4,12 +4,13 @@ Created on Mon Apr 24 14:43:14 2017
 
 @author: Syht
 """
-
-import math, os, pygame, random
+from peyetribe import EyeTribe
+import math, os, pygame, random, time
 from pygame.locals import *
 
 # Game constants
 SCREENRECT = Rect(0, 0, 960, 720)
+
 
 def imgcolorkey(image, colorkey):
     if colorkey is not None:
@@ -57,7 +58,7 @@ def paddleimage(spritesheet):
     paddle.blit(spritesheet.imgat((261, 143, 42, 11)), (0, 0))    # left half
     paddle.blit(spritesheet.imgat((289, 143, 28, 11)), (42, 0))   # right half
     return imgcolorkey(paddle, -1)
-
+                                
 class Arena:
     tileside = 31
     # when drawing tiles, the origin is at (topx, topy),
@@ -159,6 +160,7 @@ class Ball(pygame.sprite.Sprite):
             self.fpdx = self.speed*math.cos(angle)
             self.fpdy = -self.speed*math.sin(angle)
 
+
         # usual movement
         self.fpx = self.fpx + self.fpdx
         self.fpy = self.fpy + self.fpdy
@@ -179,11 +181,11 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
-
+        
         """if self.rect.bottom > self.paddle.rect.top:
             self.rect.bottom = self.paddle.rect.top
             self.setfp()
-            self.fpdy = -self.fpdy
+            self.fpdy = -self.fpdy            
             lepego="Si"
             if self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left:
                 lepego="No"
@@ -223,6 +225,11 @@ class Ball(pygame.sprite.Sprite):
 
                 brick.kill()
 
+            # if the ball is asked to go both ways, then do not change direction
+            if left + right != 0:
+                self.fpdx = (left + right)*abs(self.fpdx)
+            if up + down != 0:
+                self.fpdy = (up + down)*abs(self.fpdy)
 
 
 class Brick(pygame.sprite.Sprite):
@@ -259,9 +266,9 @@ def main():
                                         (193, 257, 31, 31),
                                         (129, 225, 31, 31),
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
-
+                                        
     Paddle.image = paddleimage(spritesheet)
-    Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11), -1
+    Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11 - little ball / 489, 425, 15, 15 - bigger ball
 
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
@@ -286,7 +293,7 @@ def main():
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 3, 3, 3, 3, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -325,6 +332,16 @@ def main():
     Ball(arena, paddle, bricks)
     arena.makelevel(0)
 
+    # PeyeTribe part
+    tracker = EyeTribe()
+
+    tracker.connect()
+    n = tracker.next()
+
+    print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
+
+    tracker.pushmode()
+
     while 1:
 
         # get input
@@ -344,5 +361,12 @@ def main():
 
         # cap the framerate
         clock.tick(60)
+        
+        n = tracker.next()
+        print(n)
+        
+    tracker.pullmode()
+
+    tracker.close()
 
 if __name__ == '__main__': main()
