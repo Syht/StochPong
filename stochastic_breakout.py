@@ -346,7 +346,7 @@ def main():
         # get input
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                return
+                pygame.quit()
 
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
