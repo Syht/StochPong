@@ -5,18 +5,17 @@ Created on Mon Apr 24 14:43:14 2017
 @author: Syht
 """
 from peyetribe import EyeTribe
-import math, os, pygame, random, time
-from pygame.locals import *
+import math, os, random, time, pygame
 
 # Game constants
-SCREENRECT = Rect(0, 0, 960, 720)
+SCREENRECT = pygame.Rect(0, 0, 960, 720)
 
 
 def imgcolorkey(image, colorkey):
     if colorkey is not None:
         if colorkey is -1:
             colorkey = image.get_at((0, 0))
-        image.set_colorkey(colorkey, RLEACCEL)
+        image.set_colorkey(colorkey, pygame.RLEACCEL)
     return image
 
 def load_image(filename, colorkey = None):
@@ -28,7 +27,7 @@ class SpriteSheet:
     def __init__(self, filename):
         self.sheet = load_image(filename)
     def imgat(self, rect, colorkey = None):
-        rect = Rect(rect)
+        rect = pygame.Rect(rect)
         image = pygame.Surface(rect.size).convert()
         image.blit(self.sheet, (0, 0), rect)
         return imgcolorkey(image, colorkey)
@@ -70,7 +69,7 @@ class Arena:
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
     numxtiles = 28
     numytiles = 21
-    rect = Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
+    rect = pygame.Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
         self.levels = levels
         self.background = pygame.Surface(SCREENRECT.size).convert()
@@ -333,20 +332,20 @@ def main():
     arena.makelevel(0)
 
     # PeyeTribe part
-    tracker = EyeTribe()
+    """tracker = EyeTribe()
 
     tracker.connect()
     n = tracker.next()
 
     print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
 
-    tracker.pushmode()
+    tracker.pushmode()"""
 
     while 1:
 
         # get input
         for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 return
 
         # clear/erase the last drawn sprites
@@ -362,11 +361,11 @@ def main():
         # cap the framerate
         clock.tick(60)
         
-        n = tracker.next()
+        """n = tracker.next()
         print(n)
         
     tracker.pullmode()
 
-    tracker.close()
+    tracker.close()"""
 
 if __name__ == '__main__': main()
