@@ -405,7 +405,7 @@ def main():
 
 
     # decorate the game window
-    pygame.display.set_caption('A Stochastic Pong')
+    pygame.display.set_caption('Wellcome to Stochastic Pong')
 
     # create the background
     arena = Arena(levels)
@@ -438,24 +438,21 @@ def main():
     print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
 
     tracker.pushmode()"""
-
-    while 1:
-
+    done = False
+    while not done:
         # get input
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                pygame.quit()
+                done = True
 
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
-
         # update all the sprites
         all.update()
 
         # draw the scene
         dirty = all.draw(screen)
         pygame.display.update(dirty)
-
         # cap the framerate
         clock.tick(60)
 
@@ -465,5 +462,8 @@ def main():
     tracker.pullmode()
 
     tracker.close()"""
+
+    # pygame.quit()
+
 
 if __name__ == '__main__': main()
