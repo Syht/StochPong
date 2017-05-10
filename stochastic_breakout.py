@@ -4,7 +4,12 @@ Created on Mon Apr 24 14:43:14 2017
 
 @author: Syht
 """
-from peyetribe import EyeTribe
+try:
+    from peyetribe import EyeTribe
+    TRACK_EYE = True
+except:
+    TRACK_EYE = False
+    
 import math, os, random, time, pygame
 import configparser
 
@@ -75,7 +80,7 @@ def paddleimage(spritesheet):
     paddle.blit(spritesheet.imgat((351, 457, (PADDLESIZE-28), 11)), (0, 0))    # left half
     paddle.blit(spritesheet.imgat((289, 143, 28, 11)), ((PADDLESIZE-28), 0))   # right half
     return imgcolorkey(paddle, -1)
-                                
+
 class Arena:
     tileside = TLSIDE
     # when drawing tiles, the origin is at (topx, topy),
@@ -198,11 +203,11 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
-        
+
         """if self.rect.bottom > self.paddle.rect.bottom:
             self.rect.bottom = self.paddle.rect.bottom
             self.setfp()
-            self.fpdy = -self.fpdy            
+            self.fpdy = -self.fpdy
             lepego="Si"
             if self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left:
                 lepego="No"
@@ -283,7 +288,7 @@ def main():
                                         (193, 257, 31, 31),
                                         (129, 225, 31, 31),
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
-                                        
+
     Paddle.image = paddleimage(spritesheet)
     Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11 - little ball / 489, 425, 15, 15 - bigger ball
 
@@ -347,7 +352,7 @@ def main():
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-               
+
               [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -453,10 +458,10 @@ def main():
 
         # cap the framerate
         clock.tick(60)
-        
+
         """n = tracker.next()
         print(n)
-        
+
     tracker.pullmode()
 
     tracker.close()"""
