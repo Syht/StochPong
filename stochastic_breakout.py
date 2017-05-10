@@ -9,7 +9,7 @@ try:
     TRACK_EYE = True
 except:
     TRACK_EYE = False
-    
+
 import math, os, random, time, pygame
 import configparser
 
@@ -267,7 +267,7 @@ def main():
     pygame.init()
 
     # set the display mode
-    winstyle = 0 # | FULLSCREEN
+    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
