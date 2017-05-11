@@ -18,7 +18,7 @@ class EzMenu:
         self.options = options
         self.x = 0
         self.y = 0
-        self.font = pygame.font.Font('freesansbold.ttf', 24)
+        self.font = pygame.font.Font('freesansbold.ttf', 35)
         self.option = 0
         self.width = 1
         self.color = [0, 0, 0]
