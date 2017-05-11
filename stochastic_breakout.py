@@ -4,16 +4,6 @@ Created on Mon Apr 24 14:43:14 2017
 
 @author: Syht
 """
-from peyetribe import EyeTribe
-import math, os, random, time, pygame
-import configparser
-
-# loading of the config.ini file# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 24 14:43:14 2017
-
-@author: Syht
-"""
 try:
     from peyetribe import EyeTribe
     TRACK_EYE = True
