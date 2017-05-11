@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu
+import math, os, random, time, pygame, ezmenu, sys
 import configparser
 
 # loading of the config.ini file
@@ -261,46 +261,30 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left = arena.rect.left + x*self.rect.width
         self.rect.top = arena.rect.top + y*self.rect.height
-"""
+
 def main_menu():
     pygame.init()
-    pygame.display.set_caption('Simple Breakout')
-    screen = pygame.display.set_mode((640,480), DOUBLEBUF)
+    pygame.display.set_caption('Welcome to Stochastic Pong')
+    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.DOUBLEBUF)
     pygame.mouse.set_visible(1)
 
     def option1():
-        main(screen)
+        main()
     def option2():
-        level = askopenfilename()
-        try: test = pickle.load(open(level, 'rb'))
-        except pickle.UnpicklingError:
-            showerror('Error Loading File', 'File selected is not a level')
-            return
-        except IOError: return # they pressed cancel
-        finally: del test
-        main(screen, level)
-    def option3():
-        level_editor.level_editor(screen)
-    def option4():
-        main(screen, None, True)
-    def option5():
         pygame.quit()
-        sys.exit()
 
-    font = pygame.font.Font('freesansbold.ttf', 32)
 
-    titletext = font.render('Simple Breakout', True, (255,255,255))
+    font = pygame.font.Font('freesansbold.ttf', 60)
+
+    titletext = font.render('A Stochastic Pong', True, (255,255,255))
     titletextrect = titletext.get_rect()
-    titletextrect.centerx = 320; titletextrect.y = 110
+    titletextrect.centerx = WIDTH/2; titletextrect.y = HEIGHT/4
 
     menu = ezmenu.EzMenu(
         ['New Game', option1],
-        ['Load Level', option2],
-        ['Level Editor', option3],
-        ['Watch AI', option4],
-        ['Quit Game', option5])
+        ['Quit Game', option2])
 
-    menu.center_at(320, 240)
+    menu.center_at((WIDTH/2), (HEIGHT/2))
     menu.set_normal_color((255,255,255))
 
     screen.blit(titletext, titletextrect)
@@ -317,13 +301,12 @@ def main_menu():
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-                return
 
         screen.fill((0,0,0))
         menu.draw(screen)
         screen.blit(titletext, titletextrect)
         pygame.display.flip()
-"""
+
 def main():
     pygame.init()
 
@@ -540,4 +523,4 @@ def main():
     pygame.quit()
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__': main_menu()
