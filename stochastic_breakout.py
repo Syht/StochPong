@@ -475,15 +475,20 @@ def main():
     lvl = 1
     arena.makelevel(lvl)
 
-    # PeyeTribe part
-    """tracker = EyeTribe()
+    """try:
+        TRACK_EYE = True
+        # PeyeTribe part
+        tracker = EyeTribe()
 
-    tracker.connect()
-    n = tracker.next()
+        tracker.connect()
+        n = tracker.next()
 
-    print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
+        print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
 
-    tracker.pushmode()"""
+        tracker.pushmode()
+    except:
+        TRACK_EYE = False"""
+    
     done = False
     pygame.mouse.set_visible(0)
     
@@ -512,14 +517,22 @@ def main():
         pygame.display.update(dirty)
         # cap the framerate
         clock.tick(60)
+        """try:
+            TRACK_EYE = True
+            n = tracker.next()
+            print(n)
+            with open('data_eye_tracking.dat', 'w') as out:
+                out.write(n + '\n')
+        except:
+            TRACK_EYE = False"""
 
-        """n = tracker.next()
-        print(n)
-
-    tracker.pullmode()
-
-    tracker.close()"""
-
+    """try:
+        TRACK_EYE = True
+        tracker.pullmode()
+        tracker.close()
+    except:
+        TRACK_EYE = False"""
+        
     pygame.quit()
 
 
