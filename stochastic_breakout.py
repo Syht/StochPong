@@ -225,13 +225,13 @@ class Ball(pygame.sprite.Sprite):
                 if oldrect.left < brick.rect.left < oldrect.right < brick.rect.right:
                     self.rect.right = brick.rect.left
                     self.setint()
-                    left = -1
+                    left = -(-1)**random.randint(1,2)
 
                 # [(])
                 if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
                     self.rect.left = brick.rect.right
                     self.setint()
-                    right = 1
+                    right = (-1)**random.randint(1,2)
 
                 # top ([)] bottom
                 if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
@@ -334,7 +334,7 @@ def main():
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
 
     Paddle.image = paddleimage(spritesheet)
-    Ball.image = spritesheet.imgat((489, 425, 15, 15), -1) # 428, 300, 11, 11 - little ball / 489, 425, 15, 15 - bigger ball
+    Ball.image = spritesheet.imgat((483, 420, 26, 25), -1) # 428, 300, 11, 11 - little ball / 489, 425, 15, 15 - bigger ball
 
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
@@ -472,7 +472,7 @@ def main():
     paddle = Paddle(arena)
     Ball(arena, paddle, bricks)
 
-    lvl = 1
+    lvl = 0
     arena.makelevel(lvl)
 
     """try:
@@ -501,12 +501,22 @@ def main():
         # go to next lvl if no more bricks
         if len(bricks) == 0:
             try:
+                # put the paddle and the ball in the initial position
+                all = pygame.sprite.RenderUpdates()
+                Paddle.containers = all
+                Ball.containers = all, balls
+                Brick.containers = all, bricks
+                screen.blit(arena.background, (0, 0))
+                pygame.display.flip()
+                paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
+                # induce a delay of XXX(ms)
                 pygame.time.delay(1000)
+                # make the next level
                 lvl += 1
                 arena.makelevel(lvl)
             except IndexError:
-                done = True
+                main_menu()
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
         # update all the sprites
@@ -534,6 +544,5 @@ def main():
         TRACK_EYE = False"""
         
     pygame.quit()
-
 
 if __name__ == '__main__': main_menu()
