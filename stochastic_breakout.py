@@ -238,12 +238,14 @@ class Ball(pygame.sprite.Sprite):
                     self.rect.bottom = brick.rect.top
                     self.setint()
                     up = -1
+                    left = -(-1)**random.randint(1,2)
 
                 # top [(]) bottom
                 if brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom:
                     self.rect.top = brick.rect.bottom
                     self.setint()
                     down = 1
+                    right = (-1)**random.randint(1,2)
 
                 brick.kill()
 
@@ -334,18 +336,19 @@ def main():
                                         (193, 225, 31, 31)]) + hborders(spritesheet)
 
     Paddle.image = paddleimage(spritesheet)
-    Ball.image = spritesheet.imgat((483, 420, 26, 25), -1) # 428, 300, 11, 11 - little ball / 489, 425, 15, 15 - bigger ball
+    Ball.image = spritesheet.imgat((391, 297, 18, 17), -1) # 428, 300, 11, 11 - little ball / 483, 420, 26, 25 - bigger ball
 
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
-    Brick.images = spritesheet.imgsat([(225, 193, 31, 16),
-                                       (225, 225, 31, 16),
-                                       (225, 257, 31, 16),
-                                       (225, 289, 31, 16),
-                                       (257, 193, 31, 16),
-                                       (257, 225, 31, 16),
-                                       (257, 257, 31, 16),
-                                       (257, 289, 31, 16)])
+    Brick.images = spritesheet.imgsat([(2, 193, 55, 20),
+                                       (2, 225, 55, 20),
+                                       (2, 257, 55, 20),
+                                       (2, 289, 55, 20),
+                                       (66, 193, 55, 20),
+                                       (66, 225, 55, 20),
+                                       (66, 257, 55, 20),
+                                       (66, 289, 55, 20)])
+    # little bricks: (225, 193, 31, 16),(225, 225, 31, 16),(225, 257, 31, 16),(225, 289, 31, 16),(257, 193, 31, 16),(257, 225, 31, 16),(257, 257, 31, 16),(257, 289, 31, 16)
 
     levels = [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -361,7 +364,7 @@ def main():
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -475,19 +478,17 @@ def main():
     lvl = 0
     arena.makelevel(lvl)
 
-    """try:
+    try:
         TRACK_EYE = True
-        # PeyeTribe part
         tracker = EyeTribe()
-
         tracker.connect()
         n = tracker.next()
-
         print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
-
         tracker.pushmode()
+        # Count the number of file in the GazeData folder
+        nb = len(os.listdir('GazeData'))
     except:
-        TRACK_EYE = False"""
+        TRACK_EYE = False
     
     done = False
     pygame.mouse.set_visible(0)
@@ -526,23 +527,21 @@ def main():
         dirty = all.draw(screen)
         pygame.display.update(dirty)
         # cap the framerate
-        clock.tick(60)
-        """try:
+        clock.tick(30)
+        try:
             TRACK_EYE = True
             n = tracker.next()
-            print(n)
-            with open('data_eye_tracking.dat', 'w') as out:
-                out.write(n + '\n')
+            #print(n)
+            with open('GazeData\data_eye_tracking_%d.dat' %nb, 'a') as data:
+                data.write('%s\n' %n)
         except:
-            TRACK_EYE = False"""
+            TRACK_EYE = False
 
-    """try:
+    try:
         TRACK_EYE = True
         tracker.pullmode()
         tracker.close()
     except:
-        TRACK_EYE = False"""
-        
-    pygame.quit()
+        TRACK_EYE = False
 
 if __name__ == '__main__': main_menu()
