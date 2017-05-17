@@ -173,15 +173,22 @@ class Ball(pygame.sprite.Sprite):
         self.rect.centerx = self.fpx
         self.rect.centery = self.fpy
     def move(self):
-        # bounce from paddle
-        if self.rect.colliderect(self.paddle.rect) and self.fpdy > 0:
-            ballpos = self.rect.width + self.rect.left - self.paddle.rect.left - 1
-            ballmax = self.rect.width + self.paddle.rect.width - 2
-            factor = float(ballpos)/ballmax
-            angle = math.radians(self.angleh - factor*(self.angleh - self.anglel))
-            self.fpdx = self.speed*math.cos(angle)
-            self.fpdy = -self.speed*math.sin(angle)
-
+        # bounce from paddle and print coordinates: (Ball Paddle [Yes/No]->if paddle touched or not)
+        if self.rect.bottom > self.paddle.rect.top:
+            if self.rect.colliderect(self.paddle.rect) and self.fpdy > 0:
+                ballpos = self.rect.width + self.rect.left - self.paddle.rect.left - 1
+                ballmax = self.rect.width + self.paddle.rect.width - 2
+                factor = float(ballpos)/ballmax
+                angle = math.radians(self.angleh - factor*(self.angleh - self.anglel))
+                self.fpdx = self.speed*math.cos(angle)
+                self.fpdy = -self.speed*math.sin(angle)
+                hitpos = "Yes"
+            if (self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left) and self.rect.top < (self.paddle.rect.bottom - 26):
+                hitpos = "No"
+            try:
+                print (self.rect.centerx, self.paddle.rect.centerx, hitpos)
+            except UnboundLocalError:
+                pass
 
         # usual movement
         self.fpx = self.fpx + self.fpdx
@@ -204,15 +211,6 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
 
-        """if self.rect.bottom > self.paddle.rect.bottom:
-            self.rect.bottom = self.paddle.rect.bottom
-            self.setfp()
-            self.fpdy = -self.fpdy
-            lepego="Si"
-            if self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left:
-                lepego="No"
-            print (self.rect.centerx , self.paddle.rect.centerx, lepego)"""
-
         # destroy bricks
         brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
         if brickscollided:
@@ -225,13 +223,13 @@ class Ball(pygame.sprite.Sprite):
                 if oldrect.left < brick.rect.left < oldrect.right < brick.rect.right:
                     self.rect.right = brick.rect.left
                     self.setint()
-                    left = -(-1)**random.randint(1,2)
+                    left = -1
 
                 # [(])
                 if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
                     self.rect.left = brick.rect.right
                     self.setint()
-                    right = (-1)**random.randint(1,2)
+                    right = 1
 
                 # top ([)] bottom
                 if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
@@ -251,7 +249,7 @@ class Ball(pygame.sprite.Sprite):
 
             # if the ball is asked to go both ways, then do not change direction
             if left + right != 0:
-                self.fpdx = (left + right)*abs(self.fpdx)
+                self.fpdx = (left + right)*abs(self.fpdx)/abs(left+right)
             if up + down != 0:
                 self.fpdy = (up + down)*abs(self.fpdy)
 
@@ -353,17 +351,17 @@ def main():
     levels = [[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
