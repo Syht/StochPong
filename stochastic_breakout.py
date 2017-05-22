@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, sys
+import math, os, random, time, pygame, ezmenu, sys, itertools
 import configparser
 
 # loading of the config.ini file
@@ -127,6 +127,7 @@ class Arena:
 
 class Paddle(pygame.sprite.Sprite):
     def __init__(self, arena):
+        Paddle.lenPP = len(os.listdir('PaddlePos'))
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.arena = arena
@@ -138,6 +139,8 @@ class Paddle(pygame.sprite.Sprite):
                 self.rect.left = self.arena.rect.left
             elif self.rect.right > self.arena.rect.right:
                 self.rect.right = self.arena.rect.right
+        with open('PaddlePos\data_paddle_position_%d.dat' %Paddle.lenPP, 'a') as data:
+            data.write('%d\n' %self.rect.centerx)
 
 class Ball(pygame.sprite.Sprite):
     # the speed should be less than
@@ -156,6 +159,7 @@ class Ball(pygame.sprite.Sprite):
         self.update = self.start
         self.bricks = bricks
     def start(self):
+        Ball.lenBP = len(os.listdir('BallPos'))
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
         if pygame.mouse.get_pressed()[0] == 1:
@@ -164,6 +168,7 @@ class Ball(pygame.sprite.Sprite):
             self.fpdx = 5
             self.fpdy = 1
             self.update = self.move
+        return self.lenBP
     def setfp(self):
         """use whenever usual integer rect values are adjusted"""
         self.fpx = self.rect.centerx
@@ -182,11 +187,11 @@ class Ball(pygame.sprite.Sprite):
                 angle = math.radians(self.angleh - factor*(self.angleh - self.anglel))
                 self.fpdx = self.speed*math.cos(angle)
                 self.fpdy = -self.speed*math.sin(angle)
-                hitpos = "Yes"
+                hit = "Yes"
             if (self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left) and self.rect.top < (self.paddle.rect.bottom - 26):
-                hitpos = "No"
+                hit = "No"
             try:
-                print (self.rect.centerx, self.paddle.rect.centerx, hitpos)
+                print (self.rect.centerx, self.paddle.rect.centerx, hit)
             except UnboundLocalError:
                 pass
 
@@ -243,7 +248,9 @@ class Ball(pygame.sprite.Sprite):
                     self.rect.top = brick.rect.bottom
                     self.setint()
                     down = 1
-                    right = (-1)**random.randint(1,2)
+                    """if self.colortype[3]:
+                        right = -1"""
+                    """right = (-1)**random.randint(1,2)"""
 
                 brick.kill()
 
@@ -252,7 +259,10 @@ class Ball(pygame.sprite.Sprite):
                 self.fpdx = (left + right)*abs(self.fpdx)/abs(left+right)
             if up + down != 0:
                 self.fpdy = (up + down)*abs(self.fpdy)
-
+                
+        # write the ball position in a .dat file
+        with open('BallPos\data_ball_position_%d.dat' %Ball.lenBP, 'a') as data:
+            data.write('%d;%d\n' %(self.rect.centerx, self.rect.centery))
 
 class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
@@ -261,6 +271,8 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left = arena.rect.left + x*self.rect.width
         self.rect.top = arena.rect.top + y*self.rect.height
+    """def colortype(self):
+        Brick.couleur = self.color"""
 
 def main_menu():
     pygame.init()
@@ -448,7 +460,6 @@ def main():
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]]
 
-
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
 
@@ -484,7 +495,7 @@ def main():
         print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
         tracker.pushmode()
         # Count the number of file in the GazeData folder
-        nb = len(os.listdir('GazeData'))
+        lenGD = len(os.listdir('GazeData'))
     except:
         TRACK_EYE = False
     
@@ -516,6 +527,7 @@ def main():
                 arena.makelevel(lvl)
             except IndexError:
                 main_menu()
+
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
         # update all the sprites
@@ -530,7 +542,7 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             #print(n)
-            with open('GazeData\data_eye_tracking_%d.dat' %nb, 'a') as data:
+            with open('GazeData\data_eye_tracking_%d.dat' %lenGD, 'a') as data:
                 data.write('%s\n' %n)
         except:
             TRACK_EYE = False
