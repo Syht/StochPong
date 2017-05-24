@@ -12,6 +12,7 @@ except:
 
 import math, os, random, time, pygame, ezmenu, sys, itertools
 import configparser
+import numpy as np
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
@@ -252,6 +253,13 @@ class Ball(pygame.sprite.Sprite):
                         right = -1"""
                     """right = (-1)**random.randint(1,2)"""
 
+                if brick.color//2:
+                    left = (-1)* (np.random.rand() > .5)
+                    right = (np.random.rand() > .5)
+                    up = (-1)* (np.random.rand() > .5)
+                    down = (np.random.rand() > .5)
+
+
                 brick.kill()
 
             # if the ball is asked to go both ways, then do not change direction
@@ -259,7 +267,7 @@ class Ball(pygame.sprite.Sprite):
                 self.fpdx = (left + right)*abs(self.fpdx)/abs(left+right)
             if up + down != 0:
                 self.fpdy = (up + down)*abs(self.fpdy)
-                
+
         # write the ball position in a .dat file
         with open('BallPos\data_ball_position_%d.dat' %Ball.lenBP, 'a') as data:
             data.write('%d;%d\n' %(self.rect.centerx, self.rect.centery))
@@ -271,6 +279,7 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left = arena.rect.left + x*self.rect.width
         self.rect.top = arena.rect.top + y*self.rect.height
+        self.color = color
     """def colortype(self):
         Brick.couleur = self.color"""
 
@@ -374,7 +383,7 @@ def main():
                [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-               [0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+               [0, 3, 3, 2, 2, 3, 3, 2, 2, 2, 3, 2, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -498,10 +507,10 @@ def main():
         lenGD = len(os.listdir('GazeData'))
     except:
         TRACK_EYE = False
-    
+
     done = False
     pygame.mouse.set_visible(0)
-    
+
     while not done:
         # get input
         for event in pygame.event.get():
@@ -542,7 +551,7 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             #print(n)
-            with open('GazeData\data_eye_tracking_%d.dat' %lenGD, 'a') as data:
+            with open(os.path.join('GazeData', 'data_eye_tracking_%d.dat' %lenGD), 'a') as data:
                 data.write('%s\n' %n)
         except:
             TRACK_EYE = False
