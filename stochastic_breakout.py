@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, sys, itertools, configparser, ast
+import math, os, random, time, pygame, ezmenu, configparser, ast
 import numpy as np
 
 # loading of the config.ini file
@@ -167,7 +167,6 @@ class Ball(pygame.sprite.Sprite):
             self.fpdx = 5
             self.fpdy = 1
             self.update = self.move
-        return self.lenBP
     def setfp(self):
         """use whenever usual integer rect values are adjusted"""
         self.fpx = self.rect.centerx
@@ -246,9 +245,10 @@ class Ball(pygame.sprite.Sprite):
                     self.rect.top = brick.rect.bottom
                     self.setint()
                     down = 1
-                    print(brick.color)
                     if brick.color == 2:
-                        right = -(-1)**random.randint(1,2)
+                        right = (-1)**random.randint(1,2)
+                    if brick.color == 5:
+                        right = -(-1)**random.randint(1,3)
 
                 brick.kill()
 
@@ -355,8 +355,16 @@ def main():
                                        (66, 225, 55, 20),
                                        (66, 257, 55, 20),
                                        (66, 289, 55, 20)])
+    """Brick.images = spritesheet.imgsat([(482, 162, 117, 30),
+                                       (482, 194, 117, 30),
+                                       (482, 226, 117, 30),
+                                       (482, 258, 117, 30),
+                                       (482, 290, 117, 30),
+                                       (482, 322, 117, 30),
+                                       (482, 354, 117, 30),
+                                       (482, 386, 117, 30)])"""
     # little bricks: (225, 193, 31, 16),(225, 225, 31, 16),(225, 257, 31, 16),(225, 289, 31, 16),(257, 193, 31, 16),(257, 225, 31, 16),(257, 257, 31, 16),(257, 289, 31, 16)
-
+    # Giant bricks: (482, 162, 116, 29), (482, 194, 116, 29), (482, 226, 116, 29), (482, 258, 116, 29), (482, 290, 116, 29), (482, 322, 116, 29), (482, 354, 116, 29), (482, 386, 116, 29)
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
 
