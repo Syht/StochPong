@@ -33,7 +33,6 @@ AGLH = int(orb['angleh'])
 # Game constants
 SCREENRECT = pygame.Rect(0, 0, WIDTH, HEIGHT)
 
-
 def imgcolorkey(image, colorkey):
     if colorkey is not None:
         if colorkey is -1:
@@ -139,8 +138,8 @@ class Paddle(pygame.sprite.Sprite):
                 self.rect.left = self.arena.rect.left
             elif self.rect.right > self.arena.rect.right:
                 self.rect.right = self.arena.rect.right
-        with open(os.path.join('PaddlePos', 'data_paddle_position_%d.dat' %Paddle.lenPP), 'a') as data:
-            data.write('%d\n' %self.rect.centerx)
+        with open(os.path.join('PaddlePos', 'data_paddle_position_%d.txt' %Paddle.lenPP), 'a') as data:
+            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Ball(pygame.sprite.Sprite):
     # the speed should be less than
@@ -152,6 +151,7 @@ class Ball(pygame.sprite.Sprite):
     anglel = AGLL
     angleh = AGLH
     def __init__(self, arena, paddle, bricks):
+        Ball.lenBP = len(os.listdir('BallPos'))
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.arena = arena
@@ -159,7 +159,6 @@ class Ball(pygame.sprite.Sprite):
         self.update = self.start
         self.bricks = bricks
     def start(self):
-        Ball.lenBP = len(os.listdir('BallPos'))
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
         if pygame.mouse.get_pressed()[0] == 1:
@@ -260,8 +259,8 @@ class Ball(pygame.sprite.Sprite):
                 self.fpdy = (up + down)*abs(self.fpdy)
 
         # write the ball position in a .dat file
-        with open(os.path.join('BallPos', 'data_ball_position_%d.dat' %Ball.lenBP), 'a') as data:
-            data.write('%d;%d\n' %(self.rect.centerx, self.rect.centery))
+        with open(os.path.join('BallPos', 'data_ball_position_%d.txt' %Ball.lenBP), 'a') as data:
+            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
@@ -358,7 +357,7 @@ def main():
                                        (66, 289, 55, 20)])
     # little bricks: (225, 193, 31, 16),(225, 225, 31, 16),(225, 257, 31, 16),(225, 289, 31, 16),(257, 193, 31, 16),(257, 225, 31, 16),(257, 257, 31, 16),(257, 289, 31, 16)
 
-    # loads the different levels reading config.ini
+    # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
 
     # decorate the game window
@@ -443,7 +442,7 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             #print(n)
-            with open(os.path.join('GazeData', 'data_eye_tracking_%d.dat' %lenGD), 'a') as data:
+            with open(os.path.join('GazeData', 'data_eye_tracking_%d.txt' %lenGD), 'a') as data:
                 data.write('%s\n' %n)
         except:
             TRACK_EYE = False
