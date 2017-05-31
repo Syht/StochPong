@@ -20,6 +20,7 @@ scrsize = config['screensize']
 pdlsize = config['paddlesize']
 orb = config['ball']
 level = config['levels']
+bricksprite = config['bricks']
 
 # retrieving of the data in config.ini
 HEIGHT = int(scrsize['height'])
@@ -347,24 +348,9 @@ def main():
 
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
-    Brick.images = spritesheet.imgsat([(2, 193, 55, 20),
-                                       (2, 225, 55, 20),
-                                       (2, 257, 55, 20),
-                                       (2, 289, 55, 20),
-                                       (66, 193, 55, 20),
-                                       (66, 225, 55, 20),
-                                       (66, 257, 55, 20),
-                                       (66, 289, 55, 20)])
-    """Brick.images = spritesheet.imgsat([(482, 162, 117, 30),
-                                       (482, 194, 117, 30),
-                                       (482, 226, 117, 30),
-                                       (482, 258, 117, 30),
-                                       (482, 290, 117, 30),
-                                       (482, 322, 117, 30),
-                                       (482, 354, 117, 30),
-                                       (482, 386, 117, 30)])"""
-    # little bricks: (225, 193, 31, 16),(225, 225, 31, 16),(225, 257, 31, 16),(225, 289, 31, 16),(257, 193, 31, 16),(257, 225, 31, 16),(257, 257, 31, 16),(257, 289, 31, 16)
-    # Giant bricks: (482, 162, 116, 29), (482, 194, 116, 29), (482, 226, 116, 29), (482, 258, 116, 29), (482, 290, 116, 29), (482, 322, 116, 29), (482, 354, 116, 29), (482, 386, 116, 29)
+    # Three size options -> 'littlebricks', 'mediumbricks', 'bigbricks'
+    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['mediumbricks']))
+
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
 
