@@ -90,7 +90,7 @@ class Arena:
     topx = 10
     topy = 7
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
-    numxtiles = int((WIDTH-92)/TLSIDE)
+    numxtiles = int((WIDTH-62)/TLSIDE)
     numytiles = int((HEIGHT-68)/TLSIDE)
     rect = pygame.Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
@@ -101,9 +101,9 @@ class Arena:
         self.background.blit(tile, (self.topx + self.tileside*x, self.topy + self.tileside*y))
     def makebg(self, tilenum):
         # numbers refer to border images
-        bordertop = [6, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 7]
-        borderleft = [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
-        borderright = [1, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
+        bordertop = [6, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 7]
+        borderleft = [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
+        borderright = [1, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
         for x in range(len(bordertop)):
             self.drawtile(self.borders[bordertop[x]], x, 0)
         for y in range(len(borderleft)):
@@ -246,18 +246,27 @@ class Ball(pygame.sprite.Sprite):
                     self.rect.top = brick.rect.bottom
                     self.setint()
                     down = 1
+                    if brick.color == 0:
+                        pass
+                    if brick.color == 1:
+                        if random.randint(0,100) < 25:
+                            right = -1
                     if brick.color == 2:
-                        right = (-1)**random.randint(1,2)
-                    if brick.color == 5:
-                        right = -(-1)**random.randint(1,3)
+                        if random.randint(0,100) < 50:
+                            right = -1
+                    if brick.color == 3:
+                        if random.randint(0,100) < 75:
+                            right = -1
+                    if brick.color == 4:
+                        right = -1
 
                 brick.kill()
 
             # if the ball is asked to go both ways, then do not change direction
             if left + right != 0:
-                self.fpdx = (left + right)*self.fpdx/abs(left+right)
+                self.fpdx = (left + right)*self.fpdx/abs(left + right)
             if up + down != 0:
-                self.fpdy = (up + down)*abs(self.fpdy)
+                self.fpdy = (up + down)*abs(self.fpdy)/abs(up + down)
 
         # write the ball position in a .dat file
         with open(os.path.join('BallPos', 'data_ball_position_%d.txt' %Ball.lenBP), 'a') as data:
@@ -349,7 +358,7 @@ def main():
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
     # Three size options -> 'littlebricks', 'mediumbricks', 'bigbricks'
-    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['mediumbricks']))
+    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
