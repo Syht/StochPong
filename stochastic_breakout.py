@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, configparser, ast
+import math, os, random, time, pygame, ezmenu, configparser, ast, sys
 import numpy as np
 
 # loading of the config.ini file
@@ -333,6 +333,7 @@ def main_menu():
         main()
     def option2():
         pygame.quit()
+        os._exit(1)
 
 
     font = pygame.font.Font(os.path.join('data', 'freesansbold.ttf'), 60)
@@ -362,6 +363,7 @@ def main_menu():
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
+                os._exit(1)
 
         screen.fill((0,0,0))
         menu.draw(screen)
