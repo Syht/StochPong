@@ -325,9 +325,6 @@ class Brick(pygame.sprite.Sprite):
         self.rect.top = arena.rect.top + y*self.rect.height
         self.color = color
 
-"""def exp_name(self, mode,  observer, block, timeStr):
-    return os.path.join(self.params_exp['datadir'], timeStr + '_' + observer + '_' + str(block) + '.npy')"""
-
 def main_menu():
     pygame.init()
     pygame.display.set_caption('Welcome to Stochastic Pong')
