@@ -293,7 +293,7 @@ def main_menu():
         pygame.quit()
 
 
-    font = pygame.font.Font('freesansbold.ttf', 60)
+    font = pygame.font.Font(os.path.join('data', 'freesansbold.ttf'), 60)
 
     titletext = font.render('A Stochastic Pong', True, (255,255,255))
     titletextrect = titletext.get_rect()
@@ -338,7 +338,7 @@ def main():
     # load images, assign to sprite classes
     # (do this before the classes are used, after screen setup)
     spritesheet = SpriteSheet('arinoid_master.bmp')
-    bg = pygame.image.load(os.path.join('data', 'test_berserk.png'))
+    #bg = pygame.image.load(os.path.join('data', 'test_berserk.png'))
     Arena.tiles = spritesheet.imgsat([(129, 321, 31, 31),   # purple - 0
                                       (161, 321, 31, 31),   # dark blue - 1
                                       (129, 353, 31, 31),   # red - 2
@@ -368,8 +368,8 @@ def main():
 
     # create the background
     arena = Arena(levels)
-    #screen.blit(Arena.background, (0, 0))
-    screen.blit(bg, (40, 37))
+    screen.blit(arena.background, (0, 0))
+    #screen.blit(bg, (40, 37))
     pygame.display.flip()
 
     # initialize game groups
@@ -420,8 +420,8 @@ def main():
                 Paddle.containers = all
                 Ball.containers = all, balls
                 Brick.containers = all, bricks
-                #screen.blit(Arena.background, (0, 0))
-                screen.blit(bg, (40, 37))
+                screen.blit(arena.background, (0, 0))
+                #screen.blit(bg, (40, 37))
                 pygame.display.flip()
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
@@ -435,7 +435,7 @@ def main():
 
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
-        screen.blit(bg, (40, 37))
+        #screen.blit(bg, (40, 37))
         # update all the sprites
         all.update()
 
