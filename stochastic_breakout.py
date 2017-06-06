@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, configparser, ast, datetime
+import math, os, random, time, pygame, ezmenu, configparser, ast
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
@@ -25,11 +25,7 @@ obs = config['experiment']
 # retrieving of the data in config.ini
 HEIGHT = int(scrsize['height'])
 WIDTH = int(scrsize['width'])
-TLSIDE = int(scrsize['tileside'])
 PADDLESIZE = int(pdlsize['size'])
-SPD = int(orb['speed'])
-AGLL = int(orb['anglel'])
-AGLH = int(orb['angleh'])
 
 # Game constants
 SCREENRECT = pygame.Rect(0, 0, WIDTH, HEIGHT)
@@ -82,7 +78,7 @@ def paddleimage(spritesheet):
     return imgcolorkey(paddle, -1)
 
 class Arena:
-    tileside = TLSIDE
+    tileside = int(scrsize['tileside'])
     # when drawing tiles, the origin is at (topx, topy),
     # so that a filled tile map will be centered on the screen
     # (since 640 x 480 is not divisible by 31 x 31, so the remainder
@@ -90,8 +86,8 @@ class Arena:
     topx = 10
     topy = 7
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
-    numxtiles = int((WIDTH-62)/TLSIDE)
-    numytiles = int((HEIGHT-68)/TLSIDE)
+    numxtiles = int((WIDTH-62)/tileside)
+    numytiles = int((HEIGHT-68)/tileside)
     rect = pygame.Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
         self.levels = levels
@@ -140,7 +136,7 @@ class Paddle(pygame.sprite.Sprite):
                 self.rect.left = self.arena.rect.left
             elif self.rect.right > self.arena.rect.right:
                 self.rect.right = self.arena.rect.right
-        with open(os.path.join('datadir', Paddle.timeStr + '_' + Paddle.observer + '_' + 'paddle' + '.npy'), 'a') as data:
+        with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.observer + '.npy'), 'a') as data:
             data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Ball(pygame.sprite.Sprite):
@@ -148,10 +144,10 @@ class Ball(pygame.sprite.Sprite):
     # the smallest dimension
     # used in the game
     # to prevent teleporting
-    speed = SPD
+    speed = int(orb['speed'])
     # anglel = 45, angleh = 135
-    anglel = AGLL
-    angleh = AGLH
+    anglel = int(orb['anglel'])
+    angleh = int(orb['angleh'])
     def __init__(self, arena, paddle, bricks):
         Ball.observer = str(obs['observer'])
         Ball.timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
@@ -313,7 +309,7 @@ class Ball(pygame.sprite.Sprite):
                 self.fpdy = (up + down)*self.fpdy/abs(up + down)
 
         # write the ball position in a .dat file
-        with open(os.path.join('datadir', Ball.timeStr + '_' + Ball.observer + '_' + 'ball' + '.npy'), 'a') as data:
+        with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.npy'), 'a') as data:
             data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Brick(pygame.sprite.Sprite):
@@ -444,15 +440,13 @@ def main():
         n = tracker.next()
         print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
         tracker.pushmode()
-        # Count the number of file in the GazeData folder
-        lenGD = len(os.listdir('GazeData'))
+        timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
+        observer = str(obs['observer'])
     except:
         TRACK_EYE = False
 
     done = False
     pygame.mouse.set_visible(0)
-    timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
-    observer = 'thys'
 
     while not done:
         # get input
@@ -496,7 +490,7 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             #print(n)
-            with open(os.path.join('datadir', timeStr + '_' + observer + '_' + 'gaze' + '.npy'), 'a') as data:
+            with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + observer + '.npy'), 'a') as data:
                 data.write('%s\n' %n)
         except:
             TRACK_EYE = False
