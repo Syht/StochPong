@@ -136,7 +136,7 @@ class Paddle(pygame.sprite.Sprite):
                 self.rect.left = self.arena.rect.left
             elif self.rect.right > self.arena.rect.right:
                 self.rect.right = self.arena.rect.right
-        with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.observer + '.npy'), 'a') as data:
+        with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.observer + '.txt'), 'a') as data:
             data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Ball(pygame.sprite.Sprite):
@@ -309,7 +309,7 @@ class Ball(pygame.sprite.Sprite):
                 self.fpdy = (up + down)*self.fpdy/abs(up + down)
 
         # write the ball position in a .dat file
-        with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.npy'), 'a') as data:
+        with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.txt'), 'a') as data:
             data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
 
 class Brick(pygame.sprite.Sprite):
@@ -490,7 +490,7 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             #print(n)
-            with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + observer + '.npy'), 'a') as data:
+            with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + observer + '.txt'), 'a') as data:
                 data.write('%s\n' %n)
         except:
             TRACK_EYE = False
