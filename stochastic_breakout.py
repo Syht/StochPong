@@ -228,18 +228,57 @@ class Ball(pygame.sprite.Sprite):
                     self.rect.right = brick.rect.left
                     self.setint()
                     left = -1
+                    """if brick.color == 0:
+                        pass
+                    if brick.color == 1:
+                        if random.randint(0,100) < 25:
+                            up = -1
+                    if brick.color == 2:
+                        if random.randint(0,100) < 50:
+                            up = -1
+                    if brick.color == 3:
+                        if random.randint(0,100) < 75:
+                            up = -1
+                    if brick.color == 4:
+                        up = -1"""
 
                 # [(])
                 if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
                     self.rect.left = brick.rect.right
                     self.setint()
                     right = 1
+                    """if brick.color == 0:
+                        pass
+                    if brick.color == 1:
+                        if random.randint(0,100) < 25:
+                            up = -1
+                    if brick.color == 2:
+                        if random.randint(0,100) < 50:
+                            up = -1
+                    if brick.color == 3:
+                        if random.randint(0,100) < 75:
+                            up = -1
+                    if brick.color == 4:
+                        up = -1"""
 
                 # top ([)] bottom
                 if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
                     self.rect.bottom = brick.rect.top
                     self.setint()
                     up = -1
+                    """if brick.color == 0:
+                        pass
+                    if brick.color == 1:
+                        if random.randint(0,100) < 25:
+                            right = -1
+                    if brick.color == 2:
+                        if random.randint(0,100) < 50:
+                            right = -1
+                    if brick.color == 3:
+                        if random.randint(0,100) < 75:
+                            right = -1
+                    if brick.color == 4:
+                        right = -1"""
 
                 # top [(]) bottom
                 if brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom:
@@ -266,7 +305,7 @@ class Ball(pygame.sprite.Sprite):
             if left + right != 0:
                 self.fpdx = (left + right)*self.fpdx/abs(left + right)
             if up + down != 0:
-                self.fpdy = (up + down)*abs(self.fpdy)/abs(up + down)
+                self.fpdy = (up + down)*self.fpdy/abs(up + down)
 
         # write the ball position in a .dat file
         with open(os.path.join('BallPos', 'data_ball_position_%d.txt' %Ball.lenBP), 'a') as data:
