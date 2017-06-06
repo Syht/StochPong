@@ -227,8 +227,9 @@ class Ball(pygame.sprite.Sprite):
                 if oldrect.left < brick.rect.left < oldrect.right < brick.rect.right:
                     self.rect.right = brick.rect.left
                     self.setint()
-                    left = -1
-                    """if brick.color == 0:
+                    if not (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
+                        left = -1
+                    if brick.color == 0:
                         pass
                     if brick.color == 1:
                         if random.randint(0,100) < 25:
@@ -240,14 +241,15 @@ class Ball(pygame.sprite.Sprite):
                         if random.randint(0,100) < 75:
                             up = -1
                     if brick.color == 4:
-                        up = -1"""
+                        up = -1
 
                 # [(])
                 if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
                     self.rect.left = brick.rect.right
                     self.setint()
-                    right = 1
-                    """if brick.color == 0:
+                    if not (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
+                        right = -1
+                    if brick.color == 0:
                         pass
                     if brick.color == 1:
                         if random.randint(0,100) < 25:
@@ -259,14 +261,14 @@ class Ball(pygame.sprite.Sprite):
                         if random.randint(0,100) < 75:
                             up = -1
                     if brick.color == 4:
-                        up = -1"""
+                        up = -1
 
                 # top ([)] bottom
                 if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
                     self.rect.bottom = brick.rect.top
                     self.setint()
                     up = -1
-                    """if brick.color == 0:
+                    if brick.color == 0:
                         pass
                     if brick.color == 1:
                         if random.randint(0,100) < 25:
@@ -278,13 +280,14 @@ class Ball(pygame.sprite.Sprite):
                         if random.randint(0,100) < 75:
                             right = -1
                     if brick.color == 4:
-                        right = -1"""
+                        right = -1
 
                 # top [(]) bottom
                 if brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom:
                     self.rect.top = brick.rect.bottom
                     self.setint()
-                    down = 1
+                    #down = 1
+                    up = -1
                     if brick.color == 0:
                         pass
                     if brick.color == 1:
