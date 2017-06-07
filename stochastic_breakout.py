@@ -175,22 +175,14 @@ class Ball(pygame.sprite.Sprite):
         self.rect.centerx = self.fpx
         self.rect.centery = self.fpy
     def move(self):
-        # bounce from paddle and print coordinates: (Ball Paddle [Yes/No]->if paddle touched or not)
-        if self.rect.bottom > self.paddle.rect.top:
-            if self.rect.colliderect(self.paddle.rect) and self.fpdy > 0:
-                ballpos = self.rect.width + self.rect.left - self.paddle.rect.left - 1
-                ballmax = self.rect.width + self.paddle.rect.width - 2
-                factor = float(ballpos)/ballmax
-                angle = math.radians(self.angleh - factor*(self.angleh - self.anglel))
-                self.fpdx = self.speed*math.cos(angle)
-                self.fpdy = -self.speed*math.sin(angle)
-                hit = "Yes"
-            if (self.paddle.rect.left>self.rect.right or self.paddle.rect.right<self.rect.left) and self.rect.top < (self.paddle.rect.bottom - 26):
-                hit = "No"
-            try:
-                print (self.rect.centerx, self.paddle.rect.centerx, hit)
-            except UnboundLocalError:
-                pass
+        # bounce from paddle
+        if self.rect.colliderect(self.paddle.rect) and self.fpdy > 0:
+            ballpos = self.rect.width + self.rect.left - self.paddle.rect.left - 1
+            ballmax = self.rect.width + self.paddle.rect.width - 2
+            factor = float(ballpos)/ballmax
+            angle = math.radians(self.angleh - factor*(self.angleh - self.anglel))
+            self.fpdx = self.speed*math.cos(angle)
+            self.fpdy = -self.speed*math.sin(angle)
 
         # usual movement
         self.fpx = self.fpx + self.fpdx
@@ -333,7 +325,6 @@ def main_menu():
         pygame.quit()
         os._exit(1)
 
-
     font = pygame.font.Font(os.path.join('data', 'freesansbold.ttf'), 60)
 
     titletext = font.render('A Stochastic Pong', True, (255,255,255))
@@ -400,7 +391,7 @@ def main():
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
     # Three size options -> 'littlebricks', 'mediumbricks', 'bigbricks'
-    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
+    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']), 0)
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
