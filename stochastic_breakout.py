@@ -11,6 +11,7 @@ except:
     TRACK_EYE = False
 
 import math, os, random, time, pygame, ezmenu, configparser, ast
+import numpy as np
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
@@ -209,96 +210,49 @@ class Ball(pygame.sprite.Sprite):
         brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
         if brickscollided:
             oldrect = self.rect
-            left = right = up = down = 0
+            x = y = 1
             for brick in brickscollided:
                 # [] - brick, () - ball
-
-                # ([)]
-                if oldrect.left < brick.rect.left < oldrect.right < brick.rect.right:
-                    self.rect.right = brick.rect.left
-                    self.setint()
-                    if not (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
-                        left = -1
+                
+                # ([)] or [(])
+                if (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
+                    x = -1
                     if brick.color == 0:
                         pass
                     if brick.color == 1:
                         if random.randint(0,100) < 25:
-                            up = -1
+                            y = -1
                     if brick.color == 2:
                         if random.randint(0,100) < 50:
-                            up = -1
+                            y = -1
                     if brick.color == 3:
                         if random.randint(0,100) < 75:
-                            up = -1
+                            y = -1
                     if brick.color == 4:
-                        up = -1
+                        y = -1
 
-                # [(])
-                if brick.rect.left < oldrect.left < brick.rect.right < oldrect.right:
-                    self.rect.left = brick.rect.right
-                    self.setint()
-                    if not (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
-                        right = -1
+                # top ([)] bottom or top [(]) bottom
+                if (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
+                    if not (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
+                        y = -1
                     if brick.color == 0:
                         pass
                     if brick.color == 1:
                         if random.randint(0,100) < 25:
-                            up = -1
+                            x = -1
                     if brick.color == 2:
                         if random.randint(0,100) < 50:
-                            up = -1
+                            x = -1
                     if brick.color == 3:
                         if random.randint(0,100) < 75:
-                            up = -1
+                            x = -1
                     if brick.color == 4:
-                        up = -1
-
-                # top ([)] bottom
-                if oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom:
-                    self.rect.bottom = brick.rect.top
-                    self.setint()
-                    up = -1
-                    if brick.color == 0:
-                        pass
-                    if brick.color == 1:
-                        if random.randint(0,100) < 25:
-                            right = -1
-                    if brick.color == 2:
-                        if random.randint(0,100) < 50:
-                            right = -1
-                    if brick.color == 3:
-                        if random.randint(0,100) < 75:
-                            right = -1
-                    if brick.color == 4:
-                        right = -1
-
-                # top [(]) bottom
-                if brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom:
-                    self.rect.top = brick.rect.bottom
-                    self.setint()
-                    #down = 1
-                    up = -1
-                    if brick.color == 0:
-                        pass
-                    if brick.color == 1:
-                        if random.randint(0,100) < 25:
-                            right = -1
-                    if brick.color == 2:
-                        if random.randint(0,100) < 50:
-                            right = -1
-                    if brick.color == 3:
-                        if random.randint(0,100) < 75:
-                            right = -1
-                    if brick.color == 4:
-                        right = -1
+                        x = -1
 
                 brick.kill()
 
-            # if the ball is asked to go both ways, then do not change direction
-            if left + right != 0:
-                self.fpdx = (left + right)*self.fpdx/abs(left + right)
-            if up + down != 0:
-                self.fpdy = (up + down)*self.fpdy/abs(up + down)
+            self.fpdx = x*self.fpdx
+            self.fpdy = y*self.fpdy
 
         # write the ball position in a .dat file
         with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.txt'), 'a') as data:
@@ -308,7 +262,7 @@ class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[color]
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()#.inflate(-27,0)
         self.rect.left = arena.rect.left + x*self.rect.width
         self.rect.top = arena.rect.top + y*self.rect.height
         self.color = color
@@ -458,7 +412,7 @@ def main():
                 pygame.display.flip()
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
-                # induce a delay of XXX(ms)
+                # induce a delay (ms)
                 pygame.time.delay(1000)
                 # make the next level
                 lvl += 1
@@ -480,7 +434,6 @@ def main():
         try:
             TRACK_EYE = True
             n = tracker.next()
-            #print(n)
             with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + observer + '.txt'), 'a') as data:
                 data.write('%s\n' %n)
         except:
