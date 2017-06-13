@@ -262,8 +262,8 @@ class Brick(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[color]
         self.rect = self.image.get_rect()
-        self.rect.left = arena.rect.left + x*self.rect.width
-        self.rect.top = arena.rect.top + y*self.rect.height
+        self.rect.left = arena.rect.left + x*(self.rect.width + 50)
+        self.rect.top = arena.rect.top + y*(self.rect.height + 20)
         self.color = color
 
 def main_menu():
