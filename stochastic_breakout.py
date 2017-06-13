@@ -89,15 +89,12 @@ class Arena:
     numxtiles = int((WIDTH-62)/tileside)
     numytiles = int((HEIGHT-68)/tileside)
     rect = pygame.Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
-
     def __init__(self, levels):
         self.levels = levels
         self.background = pygame.Surface(SCREENRECT.size).convert()
         self.makebg(1)
-
     def drawtile(self, tile, x, y):
         self.background.blit(tile, (self.topx + self.tileside*x, self.topy + self.tileside*y))
-
     def makebg(self, tilenum):
         # numbers refer to border images
         bordertop = [6, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 7]
@@ -112,13 +109,12 @@ class Arena:
             for y in range(self.numytiles):
                 # draw tiles within the border
                 self.drawtile(self.tiles[tilenum], x + 1, y + 1)
-
     def makelevel(self, levelnum):
         for y in range(len(self.levels[levelnum])):
             for x in range(len(self.levels[levelnum][y])):
                 color = self.levels[levelnum][y][x] - 1
                 if color > -1:
-                    Brick(self, x, y, color)
+                    Brick(self, x, y, color)                    
 
 # each type of game object gets an init and an
 # update function. the update function is called
@@ -161,7 +157,6 @@ class Ball(pygame.sprite.Sprite):
         self.paddle = paddle
         self.update = self.start
         self.bricks = bricks
-
     def start(self):
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
@@ -171,17 +166,14 @@ class Ball(pygame.sprite.Sprite):
             self.fpdx = 5
             self.fpdy = 1
             self.update = self.move
-
     def setfp(self):
         """use whenever usual integer rect values are adjusted"""
         self.fpx = self.rect.centerx
         self.fpy = self.rect.centery
-
     def setint(self):
         """use whenever floating point rect values are adjusted"""
         self.rect.centerx = self.fpx
         self.rect.centery = self.fpy
-
     def move(self):
         # bounce from paddle
         if self.rect.colliderect(self.paddle.rect) and self.fpdy > 0:
@@ -220,7 +212,7 @@ class Ball(pygame.sprite.Sprite):
             x = y = 1
             for brick in brickscollided:
                 # [] - brick, () - ball
-
+                
                 # ([)] or [(])
                 if (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
                     x = -1
@@ -245,13 +237,13 @@ class Ball(pygame.sprite.Sprite):
                     if brick.color == 0:
                         pass
                     if brick.color == 1:
-                        if random.randint(0, 100) < 25:
+                        if random.randint(0,100) < 25:
                             x = -1
                     if brick.color == 2:
-                        if random.randint(0, 100) < 50:
+                        if random.randint(0,100) < 50:
                             x = -1
                     if brick.color == 3:
-                        if random.randint(0, 100) < 75:
+                        if random.randint(0,100) < 75:
                             x = -1
                     if brick.color == 4:
                         x = -1
@@ -270,19 +262,12 @@ class Brick(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[color]
         self.rect = self.image.get_rect()
-        #print(self.rect.width, self.rect.height)
+        # Set the size of the grid in which the bricks will be placed
         self.rect.width, self.rect.height = 93, 25
-        #self.rect = self.rect.inflate(self.rect.width, self.rect.height)
-        # pour définir les positions comme multiples de         self.rect.width, self.rect.height
-        self.rect.left = arena.rect.left + x*self.rect.width
-        self.rect.top = arena.rect.top + y*self.rect.height
-        # maintenant on peut modifier la taille
-        self.rect.width, self.rect.height = 93, 93
-        #print(self.rect.width, self.rect.height)
-
-        #self.rect.left = arena.rect.left + x*(self.rect.width + 50)
-        #self.rect.top = arena.rect.top + y*(self.rect.height + 20)
-
+        self.rect.left = arena.rect.left + x*(self.rect.width + 50)
+        self.rect.top = arena.rect.top + y*(self.rect.height + 20)
+        # Resize the hitbox at the image size
+        self.rect.width, self.rect.height = self.image.get_rect().width, self.image.get_rect().height
         self.color = color
 
 def main_menu():
