@@ -279,6 +279,10 @@ class Brick(pygame.sprite.Sprite):
         # maintenant on peut modifier la taille
         self.rect.width, self.rect.height = 93, 93
         #print(self.rect.width, self.rect.height)
+
+        #self.rect.left = arena.rect.left + x*(self.rect.width + 50)
+        #self.rect.top = arena.rect.top + y*(self.rect.height + 20)
+
         self.color = color
 
 def main_menu():
