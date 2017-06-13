@@ -11,7 +11,6 @@ except:
     TRACK_EYE = False
 
 import math, os, random, time, pygame, ezmenu, configparser, ast
-import numpy as np
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
@@ -119,7 +118,7 @@ class Arena:
             for x in range(len(self.levels[levelnum][y])):
                 color = self.levels[levelnum][y][x] - 1
                 if color > -1:
-                    Brick(self, x, y, color)
+                    Brick(self, x, y, color)                    
 
 # each type of game object gets an init and an
 # update function. the update function is called
@@ -270,7 +269,7 @@ class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[color]
-        self.rect = self.image.get_rect()#.inflate(-27,0)
+        self.rect = self.image.get_rect()
         self.rect.left = arena.rect.left + x*self.rect.width
         self.rect.top = arena.rect.top + y*self.rect.height
         self.color = color
@@ -358,6 +357,11 @@ def main():
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
 
+    """movie = pygame.movie.Movie('moving_texture.mp4')
+    movie_screen = pygame.Surface(movie.get_size()).convert()
+    movie.set_display(movie_screen)
+    movie.play()"""
+
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
 
@@ -430,6 +434,7 @@ def main():
 
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
+        """screen.blit(movie_screen,(0,0))"""
         #screen.blit(bg, (40, 37))
         # update all the sprites
         all.update()
