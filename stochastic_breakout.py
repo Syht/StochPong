@@ -264,7 +264,7 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # Set the size of the grid in which the bricks will be placed
         self.rect.width, self.rect.height = 93, 25
-        self.rect.left = arena.rect.left + x*(self.rect.width + 50)
+        self.rect.left = arena.rect.left + x*(self.rect.width + 35)
         self.rect.top = arena.rect.top + y*(self.rect.height + 20)
         # Resize the hitbox at the image size
         self.rect.width, self.rect.height = self.image.get_rect().width, self.image.get_rect().height
@@ -320,7 +320,7 @@ def main():
     pygame.init()
 
     # set the display mode
-    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
+    winstyle = pygame.FULLSCREEN #pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
@@ -353,11 +353,6 @@ def main():
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
 
-    """movie = pygame.movie.Movie('moving_texture.mp4')
-    movie_screen = pygame.Surface(movie.get_size()).convert()
-    movie.set_display(movie_screen)
-    movie.play()"""
-
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
 
@@ -383,7 +378,7 @@ def main():
     paddle = Paddle(arena)
     Ball(arena, paddle, bricks)
 
-    lvl = 0
+    lvl = 5
     arena.makelevel(lvl)
 
     try:
@@ -425,21 +420,21 @@ def main():
                 # make the next level
                 lvl += 1
                 arena.makelevel(lvl)
+                timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
             except IndexError:
                 main_menu()
 
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
-        """screen.blit(movie_screen,(0,0))"""
         #screen.blit(bg, (40, 37))
         # update all the sprites
         all.update()
-
         # draw the scene
         dirty = all.draw(screen)
         pygame.display.update(dirty)
         # cap the framerate
         clock.tick(30)
+        
         try:
             TRACK_EYE = True
             n = tracker.next()
