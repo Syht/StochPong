@@ -92,7 +92,7 @@ class Arena:
     def __init__(self, levels):
         self.levels = levels
         self.background = pygame.Surface(SCREENRECT.size).convert()
-        self.makebg(1)
+        self.makebg(4)
     def drawtile(self, tile, x, y):
         self.background.blit(tile, (self.topx + self.tileside*x, self.topy + self.tileside*y))
     def makebg(self, tilenum):
@@ -157,6 +157,7 @@ class Ball(pygame.sprite.Sprite):
         self.paddle = paddle
         self.update = self.start
         self.bricks = bricks
+        self.score = 0
     def start(self):
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
@@ -204,6 +205,7 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             self.update = self.start
+            self.score -= 500
 
         # destroy bricks
         brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
@@ -249,6 +251,10 @@ class Ball(pygame.sprite.Sprite):
                         x = -1
 
                 brick.kill()
+                if self.score < 0:
+                    self.score = 0
+                self.score += 100
+                print(self.score)
 
             self.fpdx = x*self.fpdx
             self.fpdy = y*self.fpdy
@@ -320,14 +326,14 @@ def main():
     pygame.init()
 
     # set the display mode
-    winstyle = pygame.FULLSCREEN #pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
+    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
 
     # load images, assign to sprite classes
     # (do this before the classes are used, after screen setup)
-    spritesheet = SpriteSheet('arinoid_master.bmp')
+    spritesheet = SpriteSheet('arinoid_master_plasma.bmp')
     #bg = pygame.image.load(os.path.join('data', 'test_berserk.png'))
     Arena.tiles = spritesheet.imgsat([(129, 321, 31, 31),   # purple - 0
                                       (161, 321, 31, 31),   # dark blue - 1
@@ -348,7 +354,7 @@ def main():
     # yellow - 1, green - 2, red - 3, dark orange - 4,
     # purple - 5, orange - 6, light blue - 7, dark blue - 8
     # Three size options -> 'littlebricks', 'mediumbricks', 'bigbricks'
-    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']), 0)
+    Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
     levels = ast.literal_eval(level['lvls'])
