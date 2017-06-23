@@ -86,20 +86,20 @@ class Arena:
     topx = 10
     topy = 7
     # numxtiles, numytiles, and rect refer to the region where the ball is allowed to be in
-    numxtiles = int((WIDTH-62)/tileside)
+    numxtiles = int((WIDTH-62)/tileside) #↑int((WIDTH-150)/tileside)
     numytiles = int((HEIGHT-68)/tileside)
     rect = pygame.Rect(topx + tileside, topy + tileside, tileside*(numxtiles), tileside*(numytiles))
     def __init__(self, levels):
         self.levels = levels
         self.background = pygame.Surface(SCREENRECT.size).convert()
-        self.makebg(4)
+        self.makebg(3)
     def drawtile(self, tile, x, y):
         self.background.blit(tile, (self.topx + self.tileside*x, self.topy + self.tileside*y))
     def makebg(self, tilenum):
         # numbers refer to border images
-        bordertop = [6, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 7]
-        borderleft = [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
-        borderright = [1, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
+        bordertop = [6, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 7]
+        borderleft = [0, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]
+        borderright = [1, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1]
         for x in range(len(bordertop)):
             self.drawtile(self.borders[bordertop[x]], x, 0)
         for y in range(len(borderleft)):
@@ -114,7 +114,7 @@ class Arena:
             for x in range(len(self.levels[levelnum][y])):
                 color = self.levels[levelnum][y][x] - 1
                 if color > -1:
-                    Brick(self, x, y, color)
+                    Brick(self, x, y, color)                    
 
 # each type of game object gets an init and an
 # update function. the update function is called
@@ -129,6 +129,8 @@ class Paddle(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.arena = arena
         self.rect.bottom = arena.rect.bottom - arena.tileside
+        with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.observer + '.txt'), 'a') as data:
+            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
     def update(self):
         self.rect.centerx = pygame.mouse.get_pos()[0]
         if not self.arena.rect.contains(self.rect):
@@ -149,6 +151,7 @@ class Ball(pygame.sprite.Sprite):
     anglel = int(orb['anglel'])
     angleh = int(orb['angleh'])
     def __init__(self, arena, paddle, bricks):
+        Ball.lost = 0
         Ball.observer = str(obs['observer'])
         Ball.timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         pygame.sprite.Sprite.__init__(self, self.containers)
@@ -157,7 +160,8 @@ class Ball(pygame.sprite.Sprite):
         self.paddle = paddle
         self.update = self.start
         self.bricks = bricks
-        self.score = 0
+        with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.txt'), 'a') as data:
+            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
     def start(self):
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
@@ -204,8 +208,28 @@ class Ball(pygame.sprite.Sprite):
             self.setfp()
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
+            basicfont = pygame.font.SysFont(None, 90)
+            winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
+            bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
+            screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
+            levels = ast.literal_eval(level['lvls'])
+            arena = Arena(levels)
+            # display messages to motivate the player not to lose the ball
+            if Ball.lost == 0:
+                text1 = basicfont.render('Fais attention à', True, (255, 0, 0), (0, 0, 0))
+                text2 = basicfont.render('ne pas perdre la balle', True, (255, 0, 0), (0, 0, 0))
+                screen.blit(text1, (410, 450))
+                screen.blit(text2, (330, 550))
+            if Ball.lost == 1:
+                text3 = basicfont.render('Fais plus attention !', True, (255, 0, 0), (0, 0, 0))
+                screen.blit(text3, (350, 500))
+            pygame.display.flip()
+            pygame.time.delay(2000)
+            screen.blit(arena.background, (0, 0))
+            pygame.display.flip()
+            # switch to the 2nd message
+            Ball.lost = 1
             self.update = self.start
-            self.score -= 500
 
         # destroy bricks
         brickscollided = pygame.sprite.spritecollide(self, self.bricks, False)
@@ -214,7 +238,7 @@ class Ball(pygame.sprite.Sprite):
             x = y = 1
             for brick in brickscollided:
                 # [] - brick, () - ball
-
+                
                 # ([)] or [(])
                 if (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
                     x = -1
@@ -251,10 +275,6 @@ class Ball(pygame.sprite.Sprite):
                         x = -1
 
                 brick.kill()
-                if self.score < 0:
-                    self.score = 0
-                self.score += 100
-                print(self.score)
 
             self.fpdx = x*self.fpdx
             self.fpdy = y*self.fpdy
@@ -270,7 +290,7 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # Set the size of the grid in which the bricks will be placed
         self.rect.width, self.rect.height = 93, 25
-        self.rect.left = arena.rect.left + x*(self.rect.width + 35)
+        self.rect.left = arena.rect.left + x*(self.rect.width + 46) # self.rect.width + 35
         self.rect.top = arena.rect.top + y*(self.rect.height + 20)
         # Resize the hitbox at the image size
         self.rect.width, self.rect.height = self.image.get_rect().width, self.image.get_rect().height
@@ -400,10 +420,12 @@ def main():
     lvl = 5
     arena.makelevel(lvl)
 
-
-
     done = False
     pygame.mouse.set_visible(0)
+
+    basicfont = pygame.font.SysFont(None, 48)
+    text = basicfont.render('Well done! Keep on the good work!', True, (0, 0, 0), (0, 0, 240))
+    textrect = text.get_rect()
 
     while not done:
         # get input
@@ -421,11 +443,13 @@ def main():
                 Brick.containers = all, bricks
                 screen.blit(arena.background, (0, 0))
                 #screen.blit(bg, (40, 37))
-                pygame.display.flip()
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
+                screen.blit(text, (640, 525), textrect)
+                pygame.display.flip()
                 # induce a delay (ms)
-                pygame.time.delay(1000)
+                pygame.time.delay(3000)
+                screen.blit(arena.background, (0, 0))
                 # make the next level
                 lvl += 1
                 arena.makelevel(lvl)
@@ -433,6 +457,7 @@ def main():
             except IndexError:
                 main_menu()
 
+        #screen.blit(text, textrect)
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
         #screen.blit(bg, (40, 37))
@@ -441,9 +466,10 @@ def main():
         # draw the scene
         dirty = all.draw(screen)
         pygame.display.update(dirty)
+        pygame.display.flip()
         # cap the framerate
-        clock.tick(30)
-
+        clock.tick(50)
+        
         try:
             TRACK_EYE = True
             n = tracker.next()
