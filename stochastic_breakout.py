@@ -114,7 +114,7 @@ class Arena:
             for x in range(len(self.levels[levelnum][y])):
                 color = self.levels[levelnum][y][x] - 1
                 if color > -1:
-                    Brick(self, x, y, color)                    
+                    Brick(self, x, y, color)
 
 # each type of game object gets an init and an
 # update function. the update function is called
@@ -214,7 +214,7 @@ class Ball(pygame.sprite.Sprite):
             x = y = 1
             for brick in brickscollided:
                 # [] - brick, () - ball
-                
+
                 # ([)] or [(])
                 if (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
                     x = -1
@@ -383,10 +383,6 @@ def main():
     # initialize our starting sprites
     paddle = Paddle(arena)
     Ball(arena, paddle, bricks)
-
-    lvl = 5
-    arena.makelevel(lvl)
-
     try:
         TRACK_EYE = True
         tracker = EyeTribe()
@@ -396,8 +392,15 @@ def main():
         tracker.pushmode()
         timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         observer = str(obs['observer'])
+        with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + observer + '.txt'), 'a') as data:
+            data.write('%s\n' %n)
     except:
         TRACK_EYE = False
+
+    lvl = 5
+    arena.makelevel(lvl)
+
+
 
     done = False
     pygame.mouse.set_visible(0)
@@ -440,7 +443,7 @@ def main():
         pygame.display.update(dirty)
         # cap the framerate
         clock.tick(30)
-        
+
         try:
             TRACK_EYE = True
             n = tracker.next()
