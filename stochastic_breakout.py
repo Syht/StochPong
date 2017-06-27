@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, configparser, ast
+import math, os, random, time, pygame, ezmenu, configparser, ast, numpy as np, pandas as pd
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
@@ -151,7 +151,7 @@ class Ball(pygame.sprite.Sprite):
     anglel = int(orb['anglel'])
     angleh = int(orb['angleh'])
     def __init__(self, arena, paddle, bricks):
-        Ball.lost = 0
+        Ball.lost = False
         Ball.observer = str(obs['observer'])
         Ball.timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         pygame.sprite.Sprite.__init__(self, self.containers)
@@ -160,8 +160,6 @@ class Ball(pygame.sprite.Sprite):
         self.paddle = paddle
         self.update = self.start
         self.bricks = bricks
-        with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.observer + '.txt'), 'a') as data:
-            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
     def start(self):
         self.rect.centerx = self.paddle.rect.centerx
         self.rect.bottom = self.paddle.rect.top
@@ -211,16 +209,16 @@ class Ball(pygame.sprite.Sprite):
             basicfont = pygame.font.SysFont(None, 90)
             winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
             bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
-            screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
+            screen = pygame.display.set_mode(SCREENRECT.size, pygame.FULLSCREEN, bestdepth)
             levels = ast.literal_eval(level['lvls'])
             arena = Arena(levels)
             # display messages to motivate the player not to lose the ball
-            if Ball.lost == 0:
+            if Ball.lost == False:
                 text1 = basicfont.render('Fais attention à', True, (255, 0, 0), (0, 0, 0))
                 text2 = basicfont.render('ne pas perdre la balle', True, (255, 0, 0), (0, 0, 0))
                 screen.blit(text1, (410, 450))
                 screen.blit(text2, (330, 550))
-            if Ball.lost == 1:
+            if Ball.lost == True:
                 text3 = basicfont.render('Fais plus attention !', True, (255, 0, 0), (0, 0, 0))
                 screen.blit(text3, (350, 500))
             pygame.display.flip()
@@ -228,7 +226,7 @@ class Ball(pygame.sprite.Sprite):
             screen.blit(arena.background, (0, 0))
             pygame.display.flip()
             # switch to the 2nd message
-            Ball.lost = 1
+            Ball.lost = True
             self.update = self.start
 
         # destroy bricks
@@ -299,7 +297,7 @@ class Brick(pygame.sprite.Sprite):
 def main_menu():
     pygame.init()
     pygame.display.set_caption('Welcome to Stochastic Pong')
-    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.DOUBLEBUF)
+    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.FULLSCREEN) #pygame.DOUBLEBUF)
     pygame.mouse.set_visible(1)
 
     def option1():
@@ -346,7 +344,7 @@ def main():
     pygame.init()
 
     # set the display mode
-    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
+    winstyle = pygame.FULLSCREEN #pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | pygame.FULLSCREEN #
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
@@ -417,20 +415,21 @@ def main():
     except:
         TRACK_EYE = False
 
-    lvl = 5
+    lvl = 0
     arena.makelevel(lvl)
 
     done = False
     pygame.mouse.set_visible(0)
 
-    basicfont = pygame.font.SysFont(None, 48)
-    text = basicfont.render('Well done! Keep on the good work!', True, (0, 0, 0), (0, 0, 240))
+    basicfont = pygame.font.SysFont(None, 60)
+    text = basicfont.render('Super ! Continue comme ça !', True, (255, 0, 0), (32, 37, 255))
     textrect = text.get_rect()
 
     while not done:
         # get input
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                pygame.mouse.set_visible(1)
                 done = True
 
         # go to next lvl if no more bricks
@@ -445,10 +444,10 @@ def main():
                 #screen.blit(bg, (40, 37))
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
-                screen.blit(text, (640, 525), textrect)
+                screen.blit(text, (350, 500), textrect)
                 pygame.display.flip()
                 # induce a delay (ms)
-                pygame.time.delay(3000)
+                pygame.time.delay(2500)
                 screen.blit(arena.background, (0, 0))
                 # make the next level
                 lvl += 1
