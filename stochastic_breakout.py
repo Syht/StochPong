@@ -10,7 +10,7 @@ try:
 except:
     TRACK_EYE = False
 
-import math, os, random, time, pygame, ezmenu, configparser, ast, numpy as np, pandas as pd
+import math, os, random, time, pygame, ezmenu, configparser, ast
 
 # loading of the config.ini file
 config = configparser.ConfigParser()
