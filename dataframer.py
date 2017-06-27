@@ -66,5 +66,6 @@ datasheet = pd.DataFrame(
 
 pd.set_option('display.width', 160)
 pd.set_option('display.max_rows', len(datasheet))
+datasheet = datasheet[['GazeState', 'Tgaze', 'Xgaze', 'Ygaze', 'Tball', 'Xball', 'Yball', 'Tpaddle', 'Xpaddle', 'Ypaddle']]
 with open(os.path.join('datadir', tag + '_dataframe_' + subject + '.df'), 'w') as data:
     data.write('%s' %datasheet)
