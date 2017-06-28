@@ -7,6 +7,8 @@ Created on Fri Jun 23 15:25:27 2017
 
 import pandas as pd, os, numpy as np
 
+#def dataframer(gazedata, balldata, paddledata):
+
 datadir, tag, subject = 'datadir', '2017-06-26_111238', 'thys'    
 
 gazefile = open(os.path.join(datadir, tag + '_gaze_' + subject + '.txt'), "r")
@@ -45,12 +47,12 @@ for x in glines:
         Ygaze.append(np.nan)
 
 for x in blines:
-    Tball.append(x.split(';')[0])
+    Tball.append(str(int(x.split(';')[0])/1000))
     Xball.append(x.split(';')[1])
     Yball.append(x.split(';')[2].replace('\n',''))
 
 for x in plines:
-    Tpaddle.append(x.split(';')[0])
+    Tpaddle.append(str(int(x.split(';')[0])/1000))
     Xpaddle.append(x.split(';')[1])
     Ypaddle.append(x.split(';')[2].replace('\n',''))
 
