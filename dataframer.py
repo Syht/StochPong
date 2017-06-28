@@ -7,7 +7,7 @@ Created on Fri Jun 23 15:25:27 2017
 
 import pandas as pd, os, numpy as np
 
-datadir, tag, subject = 'datadir', '2017-06-26_111238', 'thys'    
+datadir, tag, subject = 'datadir', '2017-06-28_142510', 'remi'    
 
 gazefile = open(os.path.join(datadir, tag + '_gaze_' + subject + '.txt'), "r")
 ballfile = open(os.path.join(datadir, tag + '_ball_' + subject + '.txt'), "r")
@@ -54,10 +54,15 @@ for x in plines:
     Xpaddle.append(x.split(';')[1])
     Ypaddle.append(x.split(';')[2].replace('\n',''))
 
-if len(plines) > len(blines):
-    Tball = np.hstack((np.zeros(len(Tpaddle)-len(Tball)) + np.nan, Tball))
-    Xball = np.hstack((np.zeros(len(Xpaddle)-len(Xball)) + np.nan, Xball))
-    Yball = np.hstack((np.zeros(len(Ypaddle)-len(Yball)) + np.nan, Yball))
+if len(glines) > len(blines):
+    Tball = np.hstack((np.zeros(len(Tgaze)-len(Tball)) + np.nan, Tball))
+    Xball = np.hstack((np.zeros(len(Xgaze)-len(Xball)) + np.nan, Xball))
+    Yball = np.hstack((np.zeros(len(Ygaze)-len(Yball)) + np.nan, Yball))
+
+if len(plines) - len(glines) == 1:
+    Tpaddle = np.delete(Tpaddle, 0)
+    Xpaddle = np.delete(Xpaddle, 0)
+    Ypaddle = np.delete(Ypaddle, 0)
 
 datasheet = pd.DataFrame(
         {'Tgaze' : Tgaze, 'Xgaze' : Xgaze, 'Ygaze' : Ygaze, 'GazeState' : GazeState,
@@ -67,5 +72,6 @@ datasheet = pd.DataFrame(
 pd.set_option('display.width', 160)
 pd.set_option('display.max_rows', len(datasheet))
 datasheet = datasheet[['GazeState', 'Tgaze', 'Xgaze', 'Ygaze', 'Tball', 'Xball', 'Yball', 'Tpaddle', 'Xpaddle', 'Ypaddle']]
+datasheet.to_csv(os.path.join('datadir', tag + '_dataframe_' + subject + '.csv'), sep='\t')
 with open(os.path.join('datadir', tag + '_dataframe_' + subject + '.df'), 'w') as data:
     data.write('%s' %datasheet)
