@@ -421,8 +421,8 @@ def main():
     done = False
     pygame.mouse.set_visible(0)
 
-    basicfont = pygame.font.SysFont(None, 60)
-    text = basicfont.render('Super ! Continue comme ça !', True, (255, 0, 0), (32, 37, 255))
+    basicfont = pygame.font.SysFont(None, 90)
+    text = basicfont.render('Super ! Continue comme ça !', True, (255, 255, 255), (32, 37, 255))
     textrect = text.get_rect()
 
     while not done:
@@ -444,7 +444,8 @@ def main():
                 #screen.blit(bg, (40, 37))
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
-                screen.blit(text, (350, 500), textrect)
+                timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
+                screen.blit(text, (210, 480), textrect)
                 pygame.display.flip()
                 # induce a delay (ms)
                 pygame.time.delay(2500)
@@ -452,7 +453,6 @@ def main():
                 # make the next level
                 lvl += 1
                 arena.makelevel(lvl)
-                timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
             except IndexError:
                 main_menu()
 
@@ -467,7 +467,9 @@ def main():
         pygame.display.update(dirty)
         pygame.display.flip()
         # cap the framerate
-        clock.tick(50)
+        clock.tick(40)
+        with open(os.path.join('datadir', 'framerate.txt'), 'a') as data:
+            data.write('%s\n' %clock.get_fps())
         
         try:
             TRACK_EYE = True
