@@ -215,12 +215,12 @@ class Ball(pygame.sprite.Sprite):
             winstyle = pygame.FULLSCREEN #pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | FULLSCREEN
             bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
             screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
-            levels = ast.literal_eval(level['lvls'])
+            levels = ast.literal_eval(level['lvls_mono'])
             arena = Arena(levels)
             # display messages to motivate the player not to lose the ball
             if Ball.lost == False:
                 text1 = basicfont.render('Fais attention à', True, (255, 0, 0), (0, 0, 0))
-                text2 = basicfont.render('ne pas perdre la balle', True, (255, 0, 0), (0, 0, 0))
+                text2 = basicfont.render('ne pas perdre la balle.', True, (255, 0, 0), (0, 0, 0))
                 screen.blit(text1, (410, 450))
                 screen.blit(text2, (330, 550))
             if Ball.lost == True:
@@ -300,7 +300,7 @@ class Brick(pygame.sprite.Sprite):
         self.rect.width, self.rect.height = self.image.get_rect().width, self.image.get_rect().height
         self.color = color
 
-def dataframer(subject, tag, gazedata, balldata, paddledata):
+def dataframer(subject, tag, lvl, gazedata, balldata, paddledata):
     Tgaze, Xgaze, Ygaze, GazeState = [], [], [], []
     Tball, Xball, Yball = [], [], []
     Tpaddle, Xpaddle, Ypaddle = [], [], []
@@ -336,14 +336,11 @@ def dataframer(subject, tag, gazedata, balldata, paddledata):
         Xball = np.hstack((np.zeros(len(Xgaze)-len(Xball)) + np.nan, Xball))
         Yball = np.hstack((np.zeros(len(Ygaze)-len(Yball)) + np.nan, Yball))
 
-    if len(Tgaze) - len(Tpaddle) == 1:
+    while len(Tgaze) - len(Tpaddle) != 0:
         Tpaddle = np.delete(Tpaddle, 0)
         Xpaddle = np.delete(Xpaddle, 0)
         Ypaddle = np.delete(Ypaddle, 0)
 
-    #print(len(Tgaze))
-    #print(len(Tball))
-    #print(len(Tpaddle))
     datasheet = pd.DataFrame(
             {'Tgaze' : Tgaze, 'Xgaze' : Xgaze, 'Ygaze' : Ygaze, 'GazeState' : GazeState,
              'Tball' : Tball, 'Xball' : Xball, 'Yball' : Yball,
@@ -352,8 +349,8 @@ def dataframer(subject, tag, gazedata, balldata, paddledata):
     pd.set_option('display.width', 160)
     pd.set_option('display.max_rows', len(datasheet))
     datasheet = datasheet[['GazeState', 'Tgaze', 'Xgaze', 'Ygaze', 'Tball', 'Xball', 'Yball', 'Tpaddle', 'Xpaddle', 'Ypaddle']]
-    datasheet.to_csv(os.path.join('datadir', tag + '_dataframe_' + subject + '.csv'), sep='\t')
-    with open(os.path.join('datadir', tag + '_dataframe_' + subject + '.df'), 'w') as data:
+    datasheet.to_csv(os.path.join('datadir', tag + '_dataframe_lvl' + lvl + '_' + subject + '.csv'), sep='\t')
+    with open(os.path.join('datadir', tag + '_dataframe_lvl' + lvl + '_' + subject + '.df'), 'w') as data:
         data.write('%s' %datasheet)
 
 def main_menu():
@@ -439,7 +436,7 @@ def main():
     Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
-    levels = ast.literal_eval(level['lvls'])
+    levels = ast.literal_eval(level['lvls_mono'])
 
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
@@ -494,10 +491,6 @@ def main():
         # get input
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                try:
-                    dataframer(subject, timeStr, gazedata, Ball.balldata, Paddle.paddledata)
-                except:
-                    pass
                 pygame.mouse.set_visible(1)
                 done = True
 
@@ -505,7 +498,8 @@ def main():
         if len(bricks) == 0:
             try:
                 try:
-                    dataframer(subject, timeStr, gazedata, Ball.balldata, Paddle.paddledata)
+                    dataframer(subject, timeStr, str(lvl+1), gazedata, Ball.balldata, Paddle.paddledata)
+                    gazedata, Ball.balldata, Paddle.paddledata = [], [], []
                 except:
                     pass
                 # put the paddle and the ball in the initial position
@@ -528,7 +522,7 @@ def main():
                 arena.makelevel(lvl)
             except IndexError:
                 try:
-                    dataframer(subject, timeStr, gazedata, Ball.balldata, Paddle.paddledata)
+                    dataframer(subject, timeStr, str(lvl+1), gazedata, Ball.balldata, Paddle.paddledata)
                 except:
                     pass
                 main_menu()
@@ -545,8 +539,8 @@ def main():
         pygame.display.flip()
         # cap the framerate
         clock.tick(30)
-        with open(os.path.join('datadir', 'framerate.txt'), 'a') as data:
-            data.write('%s\n' %clock.get_fps())
+        """with open(os.path.join('datadir', 'framerate.txt'), 'a') as data:
+            data.write('%s\n' %clock.get_fps())"""
         
         try:
             TRACK_EYE = True
