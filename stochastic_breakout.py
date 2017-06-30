@@ -125,15 +125,11 @@ class Arena:
 class Paddle(pygame.sprite.Sprite):
     def __init__(self, arena):
         Paddle.paddledata = []
-        Paddle.subject = str(obs['subject'])
-        Paddle.timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.arena = arena
         self.rect.bottom = arena.rect.bottom - arena.tileside
         Paddle.paddledata.append('%d;%d;%d' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
-        """with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.subject + '.txt'), 'a') as data:
-            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))"""
     def update(self):
         self.rect.centerx = pygame.mouse.get_pos()[0]
         if not self.arena.rect.contains(self.rect):
@@ -142,23 +138,14 @@ class Paddle(pygame.sprite.Sprite):
             elif self.rect.right > self.arena.rect.right:
                 self.rect.right = self.arena.rect.right
         Paddle.paddledata.append('%d;%d;%d' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
-        """with open(os.path.join('datadir', Paddle.timeStr + '_' + 'paddle' '_' + Paddle.subject + '.txt'), 'a') as data:
-            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))"""
 
 class Ball(pygame.sprite.Sprite):
-    # the speed should be less than
-    # the smallest dimension
-    # used in the game
-    # to prevent teleporting
     speed = int(orb['speed'])
-    # anglel = 45, angleh = 135
     anglel = int(orb['anglel'])
     angleh = int(orb['angleh'])
     def __init__(self, arena, paddle, bricks):
         Ball.balldata = []
         Ball.lost = False
-        Ball.subject = str(obs['subject'])
-        Ball.timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.arena = arena
@@ -284,8 +271,6 @@ class Ball(pygame.sprite.Sprite):
 
         # write the ball position in a .dat file
         Ball.balldata.append('%d;%d;%d' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))
-        """with open(os.path.join('datadir', Ball.timeStr + '_' + 'ball' + '_' + Ball.subject + '.txt'), 'a') as data:
-            data.write('%d;%d;%d\n' %(int(time.time()*1000), self.rect.centerx, self.rect.centery))"""
 
 class Brick(pygame.sprite.Sprite):
     def __init__(self, arena, x, y, color):
@@ -472,8 +457,6 @@ def main():
         timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
         subject = str(obs['subject'])
         gazedata.append(n)
-        """with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + subject + '.txt'), 'a') as data:
-            data.write('%s\n' %n)"""
     except:
         TRACK_EYE = False
 
@@ -546,8 +529,6 @@ def main():
             TRACK_EYE = True
             n = tracker.next()
             gazedata.append(n)
-            """with open(os.path.join('datadir', timeStr + '_' + 'gaze' + '_' + subject + '.txt'), 'a') as data:
-                data.write('%s\n' %n)"""
         except:
             TRACK_EYE = False
 
