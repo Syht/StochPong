@@ -21,7 +21,7 @@ pdlsize = config['paddlesize']
 orb = config['ball']
 level = config['levels']
 bricksprite = config['bricks']
-obs = config['experiment']
+subj = config['experiment']
 
 # retrieving of the data in config.ini
 HEIGHT = int(scrsize['height'])
@@ -230,7 +230,7 @@ class Ball(pygame.sprite.Sprite):
                 # [] - brick, () - ball
                 
                 # ([)] or [(])
-                if (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
+                if (oldrect.centerx < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.centerx):
                     x = -1
                     if brick.color == 0:
                         pass
@@ -248,7 +248,7 @@ class Ball(pygame.sprite.Sprite):
 
                 # top ([)] bottom or top [(]) bottom
                 if (oldrect.top < brick.rect.top < oldrect.bottom < brick.rect.bottom or brick.rect.top < oldrect.top < brick.rect.bottom < oldrect.bottom):
-                    if not (oldrect.left < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.right):
+                    if not (oldrect.centerx < brick.rect.left < oldrect.right < brick.rect.right or brick.rect.left < oldrect.left < brick.rect.right < oldrect.centerx):
                         y = -1
                     if brick.color == 0:
                         pass
@@ -279,7 +279,7 @@ class Brick(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # Set the size of the grid in which the bricks will be placed
         self.rect.width, self.rect.height = 93, 25
-        self.rect.left = arena.rect.left + x*(self.rect.width + 46) # self.rect.width + 35
+        self.rect.left = arena.rect.left + x*(self.rect.width + 46)
         self.rect.top = arena.rect.top + y*(self.rect.height + 20)
         # Resize the hitbox at the image size
         self.rect.width, self.rect.height = self.image.get_rect().width, self.image.get_rect().height
@@ -455,7 +455,7 @@ def main():
         print("eT;dT;aT;Fix;State;Rwx;Rwy;Avx;Avy;LRwx;LRwy;LAvx;LAvy;LPSz;LCx;LCy;RRwx;RRwy;RAvx;RAvy;RPSz;RCx;RCy")
         tracker.pushmode()
         timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
-        subject = str(obs['subject'])
+        subject = str(subj['subject'])
         gazedata.append(n)
     except:
         TRACK_EYE = False
@@ -468,7 +468,9 @@ def main():
 
     basicfont = pygame.font.SysFont(None, 90)
     text = basicfont.render('Super ! Continue comme ça !', True, (255, 255, 255), (32, 37, 255))
+    textfin = basicfont.render('Félicitations, tu as fini le jeu !', True, (255, 255, 255), (32, 37, 255))
     textrect = text.get_rect()
+    textfinrect = textfin.get_rect()
 
     while not done:
         # get input
@@ -481,8 +483,9 @@ def main():
         if len(bricks) == 0:
             try:
                 try:
-                    dataframer(subject, timeStr, str(lvl+1), gazedata, Ball.balldata, Paddle.paddledata)
-                    gazedata, Ball.balldata, Paddle.paddledata = [], [], []
+                    if lvl < 6:
+                        dataframer(subject, timeStr, str(lvl+1), gazedata, Ball.balldata, Paddle.paddledata)
+                        gazedata, Ball.balldata, Paddle.paddledata = [], [], []
                 except:
                     pass
                 # put the paddle and the ball in the initial position
@@ -495,7 +498,10 @@ def main():
                 paddle = Paddle(arena)
                 Ball(arena, paddle, bricks)
                 timeStr = time.strftime("%Y-%m-%d_%H%M%S", time.localtime())
-                screen.blit(text, (210, 480), textrect)
+                if lvl == 5:
+                    screen.blit(textfin, (200, 480), textfinrect)
+                else:
+                    screen.blit(text, (210, 480), textrect)
                 pygame.display.flip()
                 # induce a delay (ms)
                 pygame.time.delay(2500)
@@ -504,13 +510,8 @@ def main():
                 lvl += 1
                 arena.makelevel(lvl)
             except IndexError:
-                try:
-                    dataframer(subject, timeStr, str(lvl+1), gazedata, Ball.balldata, Paddle.paddledata)
-                except:
-                    pass
                 main_menu()
 
-        #screen.blit(text, textrect)
         # clear/erase the last drawn sprites
         all.clear(screen, arena.background)
         #screen.blit(bg, (40, 37))
