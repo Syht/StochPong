@@ -10,7 +10,7 @@ fig = ['fig1', 'fig2', 'fig3', 'fig4', 'fig5', 'fig6']
 i = 0
 for tag in tags:
     fig[i], ax = plt.subplots(figsize=(15,8))
-    df = pd.read_csv(os.path.join(datadir, tag + '_dataframe_' + subject + '.csv'), '\t')
+    df = pd.read_csv(os.path.join(datadir, 'pilot', tag + '_dataframe_lvl'+ str(i+1) + '_' + subject + '.csv'), '\t')
 
     for obj, color in zip(['gaze', 'ball', 'paddle'], ['g', 'b', 'r']):
         if obj == 'gaze':
@@ -19,7 +19,9 @@ for tag in tags:
             time[obj], x[obj], y[obj] = df.loc[:,'Tball'], df.loc[:,'Xball'], df.loc[:,'Yball']
         if obj == 'paddle':
             time[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
-        ax.set_xlim([-100,1300])
-        ax.set_ylim([-200,900])
-        ax.plot(x[obj], 820 - y[obj], c=color)
+        ax.set_xlim([-100,1400])
+        ax.set_ylim([-100,1100])
+        # invert the y-axis
+        ax.set_ylim(ax.get_ylim()[::-1])
+        ax.plot(x[obj], y[obj], c=color)
     i += 1
