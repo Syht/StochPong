@@ -21,7 +21,6 @@ for tag in tags:
             time[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
         ax.set_xlim([-100,1400])
         ax.set_ylim([-100,1100])
-        # invert the y-axis
-        ax.set_ylim(ax.get_ylim()[::-1])
+        ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis
         ax.plot(x[obj], y[obj], c=color)
     i += 1
