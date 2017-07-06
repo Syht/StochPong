@@ -20,10 +20,10 @@ for tag in tags:
         if obj == 'paddle':
             time[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
         
-        """ax.set_xlim([-10,1300])
+        ax.set_xlim([-10,1300])
         ax.set_ylim([-10,1000])
         ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis
-        ax.plot(x[obj], y[obj], c=color)"""
+        ax.plot(x[obj], y[obj], c=color)
 
     #dt = time['gaze'] - time['ball']
     #print('mean', dt.mean, ' +/- ', dt.std)
@@ -32,8 +32,8 @@ for tag in tags:
     """plt.plot(time['gaze']-time['gaze'][0], x['gaze'])
     plt.plot(time['gaze']-time['gaze'][0], y['gaze'])"""
     
-    N_start, N_stop = 60, 140
+    """N_start, N_stop = 60, 140
     plt.plot(time['gaze'][N_start:N_stop]-time['gaze'][0], np.gradient(y['gaze'])[N_start:N_stop])
     N_start, N_stop = 55, 130
-    plt.plot(time['ball'][N_start:N_stop]-next(x for x in time['ball'] if not math.isnan(x)), np.gradient(y['ball'])[N_start:N_stop], c='r')
+    plt.plot(time['ball'][N_start:N_stop]-next(x for x in time['ball'] if not math.isnan(x)), np.gradient(y['ball'])[N_start:N_stop], c='r')"""
     i += 1
