@@ -28,7 +28,7 @@ for tag in tags:
     #dt = time['gaze'] - time['ball']
     #print('mean', dt.mean, ' +/- ', dt.std)
 
-    """ First line: time(Xgaze) | Second line: time(Ygaze) """
+    """ First line: plot time(Xgaze) | Second line: plot time(Ygaze) """
     """plt.plot(time['gaze']-time['gaze'][0], x['gaze'])
     plt.plot(time['gaze']-time['gaze'][0], y['gaze'])"""
     
