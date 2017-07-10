@@ -33,7 +33,7 @@ for tag in tags:
     plt.plot(time['gaze']-time['gaze'][0], y['gaze'])"""
     
     """N_start, N_stop = 60, 140
-    plt.plot(time['gaze'][N_start:N_stop]-time['gaze'][0], np.gradient(y['gaze'])[N_start:N_stop])
+    plt.plot(time['gaze'][N_start:N_stop]-time['gaze'][0], np.gradient(y['gaze'])[N_start:N_stop], 'g')
     N_start, N_stop = 55, 130
-    plt.plot(time['ball'][N_start:N_stop]-next(x for x in time['ball'] if not math.isnan(x)), np.gradient(y['ball'])[N_start:N_stop], c='r')"""
+    plt.plot(time['ball'][N_start:N_stop]-next(x for x in time['ball'] if not math.isnan(x)), np.gradient(y['ball'])[N_start:N_stop], 'b')"""
     i += 1
