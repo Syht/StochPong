@@ -8,7 +8,7 @@ Created on Fri Jul  7 10:24:13 2017
 import os, matplotlib.pyplot as plt, numpy as np, pandas as pd, math
 
 #subjects = ['remi', 'valerie', 'jade', 'juliette', 'elisa', 'maxime']
-subjects = ['juliette']
+subjects = ['jade']
 t, x, y, time, fig = {}, {}, {}, [], []
 dfs = {}
 
@@ -34,22 +34,31 @@ for key, df in dfs.items():
             t[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
     j += 1
 
-    time.append(t['gaze'][len(t['gaze'])-1] - t['gaze'][0]) # retrieve the lengths of the levels
+    time.append(float(str(round(t['gaze'][len(t['gaze'])-1] - t['gaze'][0],3)))) # retrieve the lengths of the levels
 
     """ Plots of: x = f(t) """
-    """plt.plot(t['gaze']-t['gaze'][0], x['gaze'], 'g') # plot of time(Xgaze)
+    plt.plot(t['gaze']-t['gaze'][0], x['gaze'], 'g') # plot of time(Xgaze)
     plt.plot(t['paddle']-t['paddle'][0], x['ball'], 'b') # plot of time(Xball)
     plt.plot(t['paddle']-t['paddle'][0], x['paddle'], 'r') # plot of time(Xpaddle)
     plt.ylabel('X Position')
-    plt.xlabel('Time (s)')"""
+    plt.xlabel('Time (s)')
+
+    """ Plots of: y = f(t) """
+    """plt.plot(t['gaze']-t['gaze'][0], y['gaze'], 'g') # plot of time(Xgaze)
+    plt.plot(t['paddle']-t['paddle'][0], y['ball'], 'b') # plot of time(Xball)
+    plt.plot(t['paddle']-t['paddle'][0], y['paddle'], 'r') # plot of time(Xpaddle)
+    plt.ylabel('Y Position')
+    plt.xlabel('Time (s)')
+    ax.set_ylim([-10,1000])
+    ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis"""
 
     """ Histograms """
-    newXgaze = x['gaze'][~np.isnan(x['gaze'])]
+    """newXgaze = x['gaze'][~np.isnan(x['gaze'])]
     newXball = x['ball'][~np.isnan(x['ball'])]
     newXpaddle = x['paddle'][~np.isnan(x['paddle'])]
     plt.hist([newXgaze, newXball, newXpaddle], normed=True, color=['g', 'b', 'r'])
     plt.ylabel('Probability')
-    plt.xlabel('Value')
+    plt.xlabel('Value')"""
 
     """ Gradients """
     """N_start, N_stop = 200, 350
