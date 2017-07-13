@@ -32,16 +32,20 @@ for key, df in dfs.items():
             t[obj], x[obj], y[obj] = df.loc[:,'Tball'], df.loc[:,'Xball'], df.loc[:,'Yball']
         if obj == 'paddle':
             t[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
+        
+        """if 68 < t['gaze']-t['gaze'][0] < 70:
+            ax.plot(x['gaze'], y['gaze'], 'g')
+            ax.plot(x['ball'], y['ball'], 'b')"""
     j += 1
 
     time.append(float(str(round(t['gaze'][len(t['gaze'])-1] - t['gaze'][0],3)))) # retrieve the lengths of the levels
 
     """ Plots of: x = f(t) """
-    plt.plot(t['gaze']-t['gaze'][0], x['gaze'], 'g') # plot of time(Xgaze)
+    """plt.plot(t['gaze']-t['gaze'][0], x['gaze'], 'g') # plot of time(Xgaze)
     plt.plot(t['paddle']-t['paddle'][0], x['ball'], 'b') # plot of time(Xball)
     plt.plot(t['paddle']-t['paddle'][0], x['paddle'], 'r') # plot of time(Xpaddle)
     plt.ylabel('X Position')
-    plt.xlabel('Time (s)')
+    plt.xlabel('Time (s)')"""
 
     """ Plots of: y = f(t) """
     """plt.plot(t['gaze']-t['gaze'][0], y['gaze'], 'g') # plot of time(Xgaze)
@@ -50,6 +54,7 @@ for key, df in dfs.items():
     plt.ylabel('Y Position')
     plt.xlabel('Time (s)')
     ax.set_ylim([-10,1000])
+    ax.set_xlim([68,70])
     ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis"""
 
     """ Histograms """
@@ -64,5 +69,12 @@ for key, df in dfs.items():
     """N_start, N_stop = 200, 350
     plt.plot(t['gaze'][N_start:N_stop]-t['gaze'][0], np.gradient(y['gaze'])[N_start:N_stop], 'g')
     plt.plot(t['gaze'][N_start:N_stop]-t['gaze'][0], np.gradient(y['ball'])[N_start:N_stop], 'b')"""
+
+    """ Zooming on a rebound """
+    N_start, N_stop = 1600, 1700
+    plt.plot(x['gaze'][N_start:N_stop], y['gaze'][N_start:N_stop], 'g')
+    plt.plot(x['ball'][N_start:N_stop], y['ball'][N_start:N_stop], 'b')
+    plt.plot(x['paddle'][N_start:N_stop], y['paddle'][N_start:N_stop], 'r')
+    ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis
 
 print(time)
