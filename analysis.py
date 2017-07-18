@@ -8,7 +8,7 @@ Created on Fri Jul  7 10:24:13 2017
 import os, matplotlib.pyplot as plt, numpy as np, pandas as pd, math
 
 #subjects = ['remi', 'valerie', 'jade', 'juliette', 'elisa', 'maxime']
-subjects = ['jade']
+subjects = ['valerie']
 t, x, y, time, fig = {}, {}, {}, [], []
 dfs = {}
 
@@ -32,10 +32,6 @@ for key, df in dfs.items():
             t[obj], x[obj], y[obj] = df.loc[:,'Tball'], df.loc[:,'Xball'], df.loc[:,'Yball']
         if obj == 'paddle':
             t[obj], x[obj], y[obj] = df.loc[:,'Tpaddle'], df.loc[:,'Xpaddle'], df.loc[:,'Ypaddle']
-        
-        """if 68 < t['gaze']-t['gaze'][0] < 70:
-            ax.plot(x['gaze'], y['gaze'], 'g')
-            ax.plot(x['ball'], y['ball'], 'b')"""
     j += 1
 
     time.append(float(str(round(t['gaze'][len(t['gaze'])-1] - t['gaze'][0],3)))) # retrieve the lengths of the levels
@@ -66,15 +62,16 @@ for key, df in dfs.items():
     plt.xlabel('Value')"""
 
     """ Gradients """
-    """N_start, N_stop = 200, 350
+    """N_start, N_stop = 1640, 1655
     plt.plot(t['gaze'][N_start:N_stop]-t['gaze'][0], np.gradient(y['gaze'])[N_start:N_stop], 'g')
     plt.plot(t['gaze'][N_start:N_stop]-t['gaze'][0], np.gradient(y['ball'])[N_start:N_stop], 'b')"""
 
     """ Zooming on a rebound """
-    N_start, N_stop = 1600, 1700
+    N_start, N_stop = 1640, 1655
     plt.plot(x['gaze'][N_start:N_stop], y['gaze'][N_start:N_stop], 'g')
     plt.plot(x['ball'][N_start:N_stop], y['ball'][N_start:N_stop], 'b')
     plt.plot(x['paddle'][N_start:N_stop], y['paddle'][N_start:N_stop], 'r')
     ax.set_ylim(ax.get_ylim()[::-1]) # invert the y-axis
 
-print(time)
+print("Duration per level (in seconds) = " + str(time))
+print("Total duration = " + str(round(sum(time)/60, 2)) + " min")
