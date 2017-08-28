@@ -199,10 +199,10 @@ class Ball(pygame.sprite.Sprite):
             self.fpdy = -self.fpdy
         if self.rect.top > self.arena.rect.bottom:
             basicfont = pygame.font.SysFont(None, 90)
-            winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | pygame.FULLSCREEN
+            winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.FULLSCREEN # | pygame.FULLSCREEN
             bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
             screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
-            levels = ast.literal_eval(level['lvls'])
+            levels = ast.literal_eval(level['lvls_mono'])
             arena = Arena(levels)
             # display messages to motivate the player not to lose the ball
             if Ball.lost == False:
@@ -341,7 +341,7 @@ def dataframer(subject, tag, lvl, gazedata, balldata, paddledata):
 def main_menu():
     pygame.init()
     pygame.display.set_caption('Welcome to Stochastic Pong')
-    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.DOUBLEBUF) #pygame.DOUBLEBUF)
+    screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.FULLSCREEN) #pygame.DOUBLEBUF)
     pygame.mouse.set_visible(1)
 
     def option1():
@@ -390,7 +390,7 @@ def main():
     gazedata = []
 
     # set the display mode
-    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.RESIZABLE # | pygame.FULLSCREEN #
+    winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.FULLSCREEN # | pygame.FULLSCREEN #
     bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
     # Set the windows size
     screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
@@ -421,7 +421,7 @@ def main():
     Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
-    levels = ast.literal_eval(level['lvls'])
+    levels = ast.literal_eval(level['lvls_mono'])
 
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
