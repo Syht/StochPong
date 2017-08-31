@@ -9,7 +9,7 @@
 
 ___
 
-**Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne. Il faut refaire cet abstract
+**Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne. IL FAUT REFAIRE CET ABSTRACT
 
 ___
 
@@ -17,11 +17,12 @@ ___
 
 De récentes études, comme celle de *John M. Henderson et al.* (2017), font le lien entre notre contrôle du regard et les prédictions générées par notre cerveau. En effet, le cerveau semble se comporter comme un générateur de prédiction, usant de ses expériences passées et des informations présentement à sa disposition, pour tenter de déterminer les futures informations qu'il va recevoir. On appelle cette façon de considérer le cerveau comme un générateur de prédiction le Cerveau Prédictif. En se basant sur ce concept, l'intérêt de nos recherches est de réussir à construire un moyen d'explorer la prise de décision dans un environnement probabiliste, d'étudier les interactions entre perception et action - appelée inférence active.  
 
-Si nos perceptions sont testées pour confirmer les hypothèses générées par le cerveau, alors la recherche visuelle peut être interprêtée comme une expérience générant des données sensorielles. Nous nous sommes basés sur les travaux de *Karl Friston et al.* (2012) pour ce qui est du fait que le comportement saccadique du regard renseigne sur les prédictions générées par le cerveau.  
+Si nos perceptions sont testées pour confirmer les hypothèses générées par le cerveau, alors la recherche visuelle peut être interprêtée comme une expérience générant des données sensorielles. Nous nous sommes basés sur les travaux de *Karl Friston et al.* (2012) pour ce qui est du fait que le comportement saccadique du regard renseigne sur les prédictions générées par le cerveau.  IL FAUT DÉCRIRE UN PEU PLUS EN DÉTAIL EN QUOI CE PAPIER NOUS A INSPIRÉ
+IL FAUT QUE TU PARLES D'INFÉRENCE ACTIVE, DE LIEN PERCEPTION ACTION
 
 L'utilisation d'un jeu vidéo pour mener cette étude nous est portée par de nombreuses publications scientifiques - comme celles de *Daphne Bavelier et al.* (2012 et 2013) - qui nous démontre l'intérêt de l'utilisation de jeux vidéos pour ce qui est de l'apprentissage et de l'attention. L'utilisation d'un jeu vidéo nous permet d'avoir un environnement écologique et ludique, permettant notamment l'étude de populations de différents âges dont la mâturation du cerveau prédictif peut varier, et permettant également de mettre en évidence des dysfonctionnements si jamais appliqué à des cas pathologiques.  
 
-L'intérêt d'un jeu vidéo ne s'arrête pas là. Une fois développé, le jeu peux toujours être modifié, amélioré, afin de pouvoir être appliqué à des recherches différentes. La flexibilité du jeu vidéo en fait un outil d'une efficacité certaine, permettant un grand nombre d'applications.  
+L'intérêt d'un jeu vidéo ne s'arrête pas là. Une fois développé, le jeu peut être modifié, amélioré, afin de pouvoir être appliqué à des recherches différentes. La flexibilité du jeu vidéo et la possibilité de controler et divers parametres en fait un outil d'une efficacité certaine, permettant un grand nombre d'applications.  
 
 C'est donc à partir de ces considérations que l'idée d'étudier le cerveau prédictif à l'aide du jeu vidéo a vu le jour. L'intérêt de cette étude étant à terme de réussir à modéliser le fonctionnement du cerveau prédictif à l'aide d'outil de traitement du signal tels que des modèles Bayesiens d'inférence active et ainsi soutenir, voire confirmer, cette théorie du cerveau prédictif. Plusieurs objectifs ont donc été fixés afin de mener cette étude. Tout d'abord, il fallait définir le protocole expérimental - c'est-à-dire programmer le jeu - qui permettra de mettre en évidence l'apprentissage et la génération de prédictions. Le choix du langage - Python - nous a été porté par sa grande utilisation dans le monde scientifique, nous permettant de profiter de l'expérience de la communauté, et par la puissance et la flexibilité de ce langage orienté objet. De plus, Python possède un module dédié au développement de jeux vidéos - Pygame - qui rend notre choix plus évident encore.  
 
@@ -33,11 +34,11 @@ Une fois cet outil - le jeu et le système de reccueil de données adapté - dé
 
 ## 2. Méthodes
 
-Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a commencé par une phase de documentation durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude. Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
+Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a commencé par une phase de documentation bibliographique durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude (QUELS ARTICLES ? QUELS SUJETS ? SOIS PRÉCIS !). Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
 
 ### 2.1 Programmation du jeu
 
-Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos en Python. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le composent avec une balle qui rebondit sur une raquette. 
+Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le composent avec une balle qui rebondit sur une raquette. CETTE DERNIERE PHRASE C'EST DU PROTOCOLE EXPÉRIMENTAL
 
 [Insérer screenshot.png]
 
@@ -48,7 +49,7 @@ Le contexte probabiliste est généré par une variable cachée qui va modifier 
 [Insérer image rebond_brique.png]
 
 Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
-(EXPLICITE MIEUX A QUOI CORRESPONDENT LES PROBABILITES , EX : p=0.5 : la balle rebondit une fois sur deux dans la direction opposée et une fois sur deux de rebondir selon un angle de 45 degrées...)
+(EXPLICITE MIEUX A QUOI CORRESPONDENT LES PROBABILITES , EX : p=0.5 : la balle rebondit une fois sur deux dans la direction opposée et une fois sur deux de rebondir selon un angle de 45 degrés...)
  - briques **jaunes** : **p = 0**  
  - briques **oranges** : **p = 0.25**  
  - briques **saumons** : **p = 0.5**  
