@@ -8,8 +8,6 @@ ___
 *Ecole Centrale Marseille, Technopôle de Château-Gombert  
 38, rue Frédéric Joliot Curie 13451 - Marseille Cedex 20*
 
-
-
 **Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne.
 
 
@@ -54,6 +52,7 @@ Afin de facilité l'apprentissage, la couleur des briques provient d'une colorma
 
 Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement et de reproche sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement.
 
+TODO: montrer un screenshot du jeu
 
 ### 2.2 TheEyeTribe : dispositif d'eye-tracking
 
@@ -61,6 +60,7 @@ La récolte des données du regard est faite avec TheEyeTribe, un appareil d'eye
 
 Afin que le programme du jeu puisse fonctionner de concert avec le dispositif d'eye-tracking, nous nous sommes muni d'un code d'interfaçage TheEyeTribe/Python écrit par *Per Baekgaard* sur son dépôt GitHub (https://github.com/baekgaard/peyetribe) et dont la licence est libre d'utilisation.
 
+TODO: montrer une photo du dispositif experiemental?
 
 ### 2.3 Protocole expérimental
 
@@ -68,21 +68,22 @@ Aucune information sur la nature probabiliste des briques n'est donnée au sujet
 
 La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivé sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
-Chaque niveau dure entre 2 et 4 min pour une durée de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min.
+Chaque niveau dure entre 2 et 4 min pour une durée totale de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min.
 
 
 ### 2.4 Analyse des données
 
 L'analyse des données est faite en langage Python, en utilisant Jupyter Notebook - une application open-source web qui permet de créer et partager des documents contenant du code, des équations, des graphiques et du texte explicatif - afin de faciliter l'échange et avoir un environnement de travail flexible.  
 
-Suite au passage du sujet sur l'expérience, le programme écrit des fichiers contenant les variables d'intérêt pour chaque niveau. Ces fichiers sont classés par leur nomination qui est au format suivant : 'année'-'mois'-'jour'_'heure''minute''seconde'_dataframe_lvl'numéro du niveau'_'sujet'.csv (exemple : 2017-06-28_143211_dataframe_lvl4_remi.csv). Ces fichiers sont des tableaux - ou dataframe - contenant les données suivantes :  
- - marque de temps du regard (s)  
+Suite au passage du sujet sur l'expérience, le programme écrit des fichiers contenant les variables d'intérêt pour chaque niveau. Ces fichiers sont classés par leur nomination qui est au format suivant : ``'année'-'mois'-'jour'_'heure''minute''seconde'_dataframe_lvl'numéro du niveau'_'sujet'.csv`` (exemple : ``2017-06-28_143211_dataframe_lvl4_remi.csv``). Ces fichiers sont des tableaux - ou dataframe - contenant les données suivantes :  
+
+ - marque de temps du regard (en secondes)  
  - position en X du regard (pixel)  
  - position en Y du regard (pixel)  
- - marque de temps de la balle (s)  
+ - marque de temps de la balle (en secondes)  
  - position en X de la balle (pixel)  
  - position en Y de la balle (pixel)  
- - marque de temps de la raquette (s)  
+ - marque de temps de la raquette (en secondes)  
  - position en X de la raquette (pixel)  
  - position en Y de la raquette (pixel)  
 
@@ -106,6 +107,7 @@ Résultats distance rebond/gaze + graphs
 * synthèse des données en isolant les valeurs p
 
 ## 4. Discussion
+
 * Résumé des résultats obtenus
     * jeu vidéo -> psycho
     * analyse robuste
