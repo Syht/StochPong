@@ -8,7 +8,7 @@ ___
 *Ecole Centrale Marseille, Technopôle de Château-Gombert  
 38, rue Frédéric Joliot Curie 13451 - Marseille Cedex 20*
 
-
+___
 
 **Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne.
 
