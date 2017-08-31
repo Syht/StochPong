@@ -9,7 +9,7 @@
 
 ___
 
-**Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne.
+**Abstract:** Nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. La capacité à générer des prédictions est centrale pour des systèmes adaptatifs et intelligents comme le cerveau. Celui-ci génère continuellement des prédictions sur quelles données il va recevoir par la suite en se basant sur les données actuelles et les associations de données apprises par le passé. Plus précisément, on cherche à décrire ces phénomènes grâce à un modèle d'inférence Bayésienne. Il faut refaire cet abstract
 
 ___
 
@@ -33,21 +33,22 @@ Une fois cet outil - le jeu et le système de reccueil de données adapté - dé
 
 ## 2. Méthodes
 
-Mon stage au Laboratoire de Neurosciences Cognitives, au près de Bruno Wicker, a commencé par une phase de documentation durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude. Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, en compagnie de Laurent Perrinet, afin d'analyser les données recueillies.
+Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a commencé par une phase de documentation durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude. Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
 
 ### 2.1 Programmation du jeu
 
-Le jeu est un simple casse-briques programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos en Python. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le compose. Il existe cinq couleurs de briques réparties dans un total de six niveaux.  
+Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos en Python. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le composent avec une balle qui rebondit sur une raquette. 
 
 [Insérer screenshot.png]
 
-La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivé sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
+La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
-Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement sur la brique.  
+Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement (QU'APPELLES TU NORMALEMENT, SOIS PRÉCIS !) sur la brique.  Il existe cinq couleurs de briques réparties dans un total de six niveaux (DECRIS LES NIVEAUX).  
 
 [Insérer image rebond_brique.png]
 
-Afin de facilité l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :  
+Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
+(EXPLICITE MIEUX A QUOI CORRESPONDENT LES PROBABILITES , EX : p=0.5 : la balle rebondit une fois sur deux dans la direction opposée et une fois sur deux de rebondir selon un angle de 45 degrées...)
  - briques **jaunes** : **p = 0**  
  - briques **oranges** : **p = 0.25**  
  - briques **saumons** : **p = 0.5**  
@@ -56,7 +57,7 @@ Afin de facilité l'apprentissage, la couleur des briques provient d'une colorma
 
 #### La programmation au service de l'expérience
 
-Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probabiliste. L'objectif étant d'avoir un programme complet mais aussi flexible, nous avons choisi d'utiliser un fichier de configuration - config.ini - qui permet de modifier les valeurs suivantes :
+Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probabiliste. L'objectif étant d'avoir un programme complet mais aussi flexible, nous avons choisi d'utiliser un fichier de configuration - config.ini - qui permet de modifier facilement les valeurs suivantes :
  - vitesse de la balle  
  - taille de la balle  
  - dimensions de l'écran de jeu  
@@ -64,16 +65,18 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
  - configuration des niveaux  
  - angles de rebond sur la raquette  
  - nom du sujet qui passe l'expérience  
+ 
+ TYPE DE BRIQUE ? BACKGROUD ? AJOUT D'OCCLUDER ?...
 
-Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement et de reproche sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement.  
+Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement et de reproche sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement (QUELLES PHRASES ? SOIS PRÉCIS).  
 
 L'intégration d'un menu principal configurable permet de futurs ajouts de contenu comme, par exemple, un menu pour sélectionner différents sets de niveaux ou un menu d'options permettant de modifier config.ini directement dans le menu principal. Celui-ci contient actuellement deux options qui permettent de lancer la partie et quitter le jeu.  
 
 Pour regrouper toutes les données dans un unique fichier, nous avons opté pour l'utilisation de Pandas Dataframe - un module permettant de stocker un grand nombre de données facilement et efficacement.  
 
-Afin que le programme du jeu puisse fonctionner de concert avec le dispositif d'eye-tracking, nous nous sommes muni d'un code d'interfaçage TheEyeTribe/Python écrit par *Per Baekgaard* sur son dépôt GitHub (https://github.com/baekgaard/peyetribe) et dont la licence est libre d'utilisation. Il a ensuite fallu intégrer le code à notre programme de manière à récolter les données du regard.  
+Afin que le programme du jeu puisse fonctionner de concert avec le dispositif d'eye-tracking, nous nous sommes muni d'un code d'interfaçage TheEyeTribe/Python écrit par *Per Baekgaard* sur son dépôt GitHub (https://github.com/baekgaard/peyetribe) et dont la licence est libre d'utilisation. Il a ensuite fallu intégrer le code à notre programme de manière à récolter les données de mouvements des yeux.  
 
-Le programme a été construit pour récolter les données du regard, mais également du déplacement de la balle et de la raquette. Des parties de code permettent ainsi de stocker ces informations avant de les réunir dans la dataframe.  
+Le programme enregistre les données de mouvement du regard, et le déplacement de la balle et de la raquette. Des parties de code permettent de stocker les données acquises pour les réunir dans une dataframe.  
 
 ### 2.2 TheEyeTribe : dispositif d'eye-tracking
 
@@ -83,11 +86,11 @@ L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du 
 
 ### 2.3 Protocole expérimental
 
-Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur que celui-ci va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran - à une distance d'environ 50 cm - sous lequel est placé le dispositif d'eye-tracking. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
+Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur qu'il va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran - à une distance d'environ 50 cm - sous lequel est placé le dispositif d'eye-tracking. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
 
 L'étape de calibration consiste en la fixation et au suivi, par le sujet, d'un point qui apparait à l'écran puis se déplace en 16 endroits différents. Si le sujet a correctement suivi le point des yeux, le logiciel confirme la qualité de la calibration et l'étape est terminée. Dans le cas contraire, le logiciel indique une mauvaise calibration et le sujet la recommence alors.
 
-Chaque niveau dure entre 2 et 4 min pour une durée de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min.  
+Chaque niveau dure entre 2 et 4 min pour une durée de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min.  EXPLIQUE POURQUOI LA DURÉE EST VARIABLE
 
 Le sujet se trouve dans une salle d'expérimentation épurée afin de ne pas perturber sa vision et il n'y a aucune interaction avec l'expérimentateur.
 
@@ -131,7 +134,7 @@ Ces données nous permettent d'observer le comportement du joueur vis-à-vis de 
 [Mettre l'image saccade.png]  
 Cette observation nous a permis de mettre en évidence une première variable d'intérêt que nous avons nommé "temps de latence". Cette saccade rend compte d'un comportement de suivi de la balle. La durée de celui-ci devrait donc être corrélé aux prédictions faites par le cerveau sur la trajectoire que prendra la balle après le rebond.  ]*
 
-Une deuxième variable d'intérêt a été choisie par la suite, découlant d'un raisonnement différent. Cette variable est la distance entre le regard et l'emplacement du rebond sur la brique. Elle serait pertinente par le fait que, plus un comportement est prédictible - ici le sens du rebond de la balle -, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On choisi donc d'observer l'évolution de cette distance au cours des niveaux pour chaque couleur de brique - et donc pour chaque probabilité.  
+Une deuxième variable d'intérêt a été choisie par la suite, découlant d'un raisonnement différent. Cette variable est la distance entre le regard et l'emplacement du rebond sur la brique. Elle est pertinente par le fait que, plus un comportement est prédictible - ici le sens du rebond de la balle -, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On choisi donc d'observer l'évolution de cette distance au cours des niveaux pour chaque couleur de brique - et donc pour chaque probabilité.  
 
 
 ## 3. Résultats
@@ -193,3 +196,5 @@ ___
 10. Meltem Sevgi, Andrea O. Diaconescu, Marc Tittgemeyer and Leonhard Schilbach, *"Social Bayes: Using Bayesian Modeling to Study Autistic Trait-Related Differences in Social Cognition"*, Society of Biological Psychiatry (2016)
 11. Colin J. Palmer, Rebecca P. Lawson and Jakob Hohwy, *"Bayesian Approaches to Autism: Towards Volatility, Action and Behavior"*, ResearchGate (2017)
 12. Kristien Ooms, Lien Dupont, Lieselot Lapon and Stanislav Popelka, *"Accuracy and precision of fixations locations recorded with the low-cost Eye Tribe tracker in different experimental set-ups"*, ResearchGate (2015)
+
+MAIS OU SONT CITEES CES REFERENCES DANS TON TEXTE ???
