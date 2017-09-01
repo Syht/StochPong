@@ -17,7 +17,7 @@ ___
 
 De récentes études, comme celle de *John M. Henderson et al.* (2017), font le lien entre notre contrôle du regard et les prédictions générées par notre cerveau. En effet, le cerveau semble se comporter comme un générateur de prédictions, usant de ses expériences passées et des informations présentement à sa disposition, pour tenter de déterminer les futures informations qu'il va recevoir. On appelle cette façon de considérer le cerveau comme un générateur de prédictions le Cerveau Prédictif. En se basant sur ce concept, l'intérêt de nos recherches est de réussir à construire un moyen d'explorer la prise de décision dans un environnement probabiliste, d'étudier les interactions entre perception et action - appelée inférence active.  
 
-Si nos perceptions sont testées pour confirmer les hypothèses générées par le cerveau, alors la recherche visuelle peut être interprêtée comme une expérience générant des données sensorielles. Nous nous sommes basés sur les travaux de *Karl Friston et al.* (2012) pour ce qui est du fait que le comportement saccadique du regard renseigne sur les prédictions générées par le cerveau. L'idée étant que le regard, contrôlé par le cerveau, cherche à minimiser l'entropie des états cachés du monde et de leurs conséquences sensorielles. On peut ainsi modéliser ce fonctionnement en utilisant l'inférence Bayesienne ainsi qu'une minimalisation de l'énergie libre (*Karl Friston et al.* 2006). On peut ainsi déterminer un model d'inférence perceptuelle et d'apprentissage qui pourrait expliquer un grand nombre de faits neurobiologiques. En usant d'outils de physique statistique, tel qu'un Bayes Empirique et des modèles hiérarchiques décrivant la génération des données sensorielles - ceux-ci permettant au cerveau la construction de priors prévisionnels dynamiques et sensibles au contexte - on peut mettre en évidence le lien entre perception et action.
+Si nos perceptions sont testées pour confirmer les hypothèses générées par le cerveau, alors la recherche visuelle peut être interprêtée comme une expérience générant des données sensorielles. Nous nous sommes basés sur les travaux de *Karl Friston et al.* (2012) pour ce qui est du fait que le comportement saccadique du regard renseigne sur les prédictions générées par le cerveau. L'idée étant que le regard, contrôlé par le cerveau, cherche à minimiser l'entropie des états cachés du monde et de leurs conséquences sensorielles. On peut ainsi modéliser ce fonctionnement en utilisant l'inférence Bayesienne ainsi qu'une minimalisation de l'énergie libre (*Karl Friston et al.* 2006). On peut ainsi déterminer un model d'inférence perceptuelle et d'apprentissage qui pourrait expliquer un grand nombre de faits neurobiologiques. En usant d'outils de physique statistique, tel qu'un Bayes Empirique et des modèles hiérarchiques décrivant la génération des données sensorielles - ceux-ci permettant au cerveau la construction de priors prévisionnels dynamiques et sensibles au contexte - on peut mettre en évidence le lien entre perception et action. L'inférence active peut ainsi être décrite par le codage prédictif (*Karl Friston et al.* 2011).
 
 L'utilisation d'un jeu vidéo pour mener cette étude nous est portée par de nombreuses publications scientifiques - comme celles de *Daphne Bavelier et al.* (2012 et 2013) - qui nous démontre l'intérêt de l'utilisation de jeux vidéos pour ce qui est de l'apprentissage et de l'attention. L'utilisation d'un jeu vidéo nous permet d'avoir un environnement écologique et ludique, permettant notamment l'étude de populations de différents âges dont la mâturation du cerveau prédictif peut varier, et permettant également de mettre en évidence des dysfonctionnements si jamais appliqué à des cas pathologiques.  
 
@@ -33,27 +33,36 @@ Une fois cet outil - le jeu et le système de reccueil de données adapté - dé
 
 ## 2. Méthodes
 
-Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a commencé par une phase de documentation bibliographique durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude (QUELS ARTICLES ? QUELS SUJETS ? SOIS PRÉCIS !). Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
+Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a commencé par une phase de documentation bibliographique durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude, comme le jeu vidéo (*Daphne Bavelier et al.* 2012-1013), le lien entre regard et prédiction du cerveau (*John M. Henderson* 2017), l'inférence active, le codage prédictif et l'utilisation de traitements Bayesiens sous différentes formes (*Karl Friston et al.* 2006-2011-2012, *Benjamin T. Vincent* 2015, *Florent Meyniel et al.* 2016) comme son application aux troubles du spectre autistique (*Colin Palmer et al.* 2017, *Meltem Sevgi et al.* 2015). Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
 
 ### 2.1 Programmation du jeu
 
-Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le composent avec une balle qui rebondit sur une raquette. CETTE DERNIERE PHRASE C'EST DU PROTOCOLE EXPÉRIMENTAL
+Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos.  
 
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
 
 La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
-Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement (QU'APPELLES TU NORMALEMENT, SOIS PRÉCIS !) sur la brique.  Il existe cinq couleurs de briques réparties dans un total de six niveaux (DECRIS LES NIVEAUX).  
+Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement - c'est à dire symétriquement - sur la brique (cf. image ci-dessous, trajectoire gris-noir).  
 
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-cc7622e3.png)
 
+Il existe cinq couleurs de briques réparties dans un total de six niveaux. Les niveaux sont construits de la manière suivante :
+ - niveau 1 : 60 briques de probabilité **p = 0**
+ - niveau 2 : 60 briques de probabilité **p = 0.25**
+ - niveau 3 : 60 briques de probabilité **p = 0.5**
+ - niveau 4 : 60 briques de probabilité **p = 0.75**
+ - niveau 5 : 60 briques de probabilité **p = 1**
+ - niveau 6 : 80 briques mélangées aléatoirement contenant 16 briques de chaque probabilité
+
 Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
-(EXPLICITE MIEUX A QUOI CORRESPONDENT LES PROBABILITES , EX : p=0.5 : la balle rebondit une fois sur deux dans la direction opposée et une fois sur deux de rebondir selon un angle de 45 degrés...)
  - briques **jaunes** : **p = 0**  
  - briques **oranges** : **p = 0.25**  
  - briques **saumons** : **p = 0.5**  
  - briques **violettes** : **p = 0.75**  
  - briques **bleues** : **p = 1**  
+
+Nous avons donc des briques complètement prédictibles (**p = 0** et **p = 1**) sur lesquelles la balle rebondit toujours normalement ou revient toujours sur sa trajectoire, des briques fortement prédictibles (**p = 0.25** et **p = 0.75**) et des briques impossibles à prédire (**p = 0.5**).
 
 #### La programmation au service de l'expérience
 
@@ -66,9 +75,9 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
  - angles de rebond sur la raquette  
  - nom du sujet qui passe l'expérience  
 
- TYPE DE BRIQUE ? BACKGROUD ? AJOUT D'OCCLUDER ?...
+D'autres configurations ont été explorées, et il est également possible de modifier l'apparence des briques et du background du jeu - et ainsi pouvoir par exemple jouer sur une valence sociale en affichant des visages expressifs - ainsi que mettre en place des occulteurs faisant disparaître la balle sur une surface prédéfinie, permettant d'étudier la volatilité du contexte et son influence sur la prise de décision et la génération de prédiction.  
 
-Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement et de reproche sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement (QUELLES PHRASES ? SOIS PRÉCIS).  
+Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement ("Super ! Continue comme ça !") et de reproche ("Fais attention à ne pas perdre la balle." lors de la première perte de balle puis "Fais plus attention !" lors des pertes suivantes) sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement.  
 
 L'intégration d'un menu principal configurable permet de futurs ajouts de contenu comme, par exemple, un menu pour sélectionner différents sets de niveaux ou un menu d'options permettant de modifier config.ini directement dans le menu principal. Celui-ci contient actuellement deux options qui permettent de lancer la partie et quitter le jeu.  
 
@@ -82,15 +91,15 @@ Le programme enregistre les données de mouvement du regard, et le déplacement 
 
 La récolte des données du regard est faite avec TheEyeTribe, un appareil d'eye-tracking - ou d'oculométrie - à notre disposition. Constitué de diodes infrarouges et d'une caméra infrarouge, ce dispositif permet, comme son nom l'indique, de traquer les mouvements oculaires et ainsi calculer la direction du regard du sujet. L'appareil utilisé fonctionne avec la technique de reflet cornéen - ou réflexion IR - qui consiste à l'envoi d'une lumière infrarouge en direction de la pupille pour que le reflet infrarouge renvoyé par la cornée de l'oeil soit ensuite détecté par la caméra infrarouge, permettant de déterminer la direction du regard.  
 
-L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du logiciel natif *EyeTribe UI*. TheEyeTribe, considéré comme un système d'eye-tracking low-cost, ne présente pas pour autant de mauvaises performances, comme le confirme le papier de *Kristien Ooms et al.* (2015).
+L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du logiciel natif *EyeTribe UI*. TheEyeTribe, considéré comme un système d'eye-tracking low-cost, ne présente pas pour autant de mauvaises performances, comme le confirme le papier de *Kristien Ooms et al.* (2015), tant que l'on impose des conditions expérimentales contrôlées : le sujet doit rester immobile à une distance fixe du dispositif.
 
 ### 2.3 Protocole expérimental
 
-Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur qu'il va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran - à une distance d'environ 50 cm - sous lequel est placé le dispositif d'eye-tracking. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
+Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur qu'il va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran sous lequel est placé le dispositif d'eye-tracking, à une distance d'environ 50 cm. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
 
 L'étape de calibration consiste en la fixation et au suivi, par le sujet, d'un point qui apparait à l'écran puis se déplace en 16 endroits différents. Si le sujet a correctement suivi le point des yeux, le logiciel confirme la qualité de la calibration et l'étape est terminée. Dans le cas contraire, le logiciel indique une mauvaise calibration et le sujet la recommence alors.
 
-Chaque niveau dure entre 2 et 4 min pour une durée de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min.  EXPLIQUE POURQUOI LA DURÉE EST VARIABLE
+Chaque niveau dure entre 2 et 4 min pour une durée de 12 à 24 min. Ce à quoi s'ajoute 1 à 3 min de calibrage pour une durée totale de l'expérience de 13 à 27 min. La durée de l'expérience varie ainsi car c'est l'adresse du joueur qui va déterminer à quelle vitesse celui-ci va réussir à détruire toutes les briques d'un niveau. Quant à la calibration, sa durée ne dépasse la minute uniquement s'il est nécessaire de la recommencer.
 
 Le sujet se trouve dans une salle d'expérimentation épurée afin de ne pas perturber sa vision et il n'y a aucune interaction avec l'expérimentateur.
 
@@ -121,20 +130,27 @@ Par exemple : 2017-06-28_143211_dataframe_lvl4_remi.csv correspond à l'enregist
 
 ### 2.5 Analyse des données
 
-EXPLIQUER EN DETAILS l'isolation du gradiant pour déterminer les rebonds sur briques
-
 L'analyse des données est faite en langage Python, en utilisant Jupyter Notebook - une application open-source web qui permet de créer et partager des documents contenant du code, des équations, des graphiques et du texte explicatif - afin de faciliter l'échange et avoir un environnement de travail flexible.  
 
-Ces données nous permettent d'observer le comportement du joueur vis-à-vis de son apprentissage des probabilités de rebond opposé des briques en fonction de leur couleur. Afin de quantifier ce phénomène, il nous fallait trouver comment traiter nos données, comment mettre en évidence des variables d'intérêt. Les données brutes obtenues nous permettent de visualiser les trajectoires des variables de la dataframe comme ci-dessous.  
+Les données obtenues nous permettent d'observer le comportement du joueur vis-à-vis de son apprentissage des probabilités **p** de rebond opposé de la balle sur les briques en fonction de leur couleur. Afin de quantifier ce phénomène, il nous fallait trouver comment traiter nos données, comment mettre en évidence des variables d'intérêt. Les données brutes obtenues nous permettent de visualiser les trajectoires des variables de la dataframe comme ci-dessous.  
 
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-eee578a6.png)
 
-*ATTENTION !! Pas scientifique, présenter ça comme des hypothèses
-[Comme il est impossible de sortir les informations recherchées de cette représentation, nous avons décidé d'observer les trajectoires dans une fenêtre temporel autour du rebond. De plus, nous avons centré toutes les trajectoires pour chaque sujet et chaque rebond. Pour dégrossir l'analyse, nous avons décidé de ne regarder que les rebonds s'opérant sur le dessous des briques. De plus, afin de s'affranchir de l'angle de rebond, nous avons tracé la position en Y en fonction du temps. Grâce à ces tracés, nous avons pu observé un comportement récurrent : une saccade du regard qui s'effectue peu après le rebond.  
+Ces données n'étant pas directement exploitables, notre but premier était de déterminer quand s'opéraient les rebonds détruisant les briques. Notre objectif étant d'étudier le lien entre perception et action, nous avons décidé de nous concentrer sur les rebonds qui détruisent les briques par le bas, car étant les rebonds retournant vers la raquette et donc ceux nécessitant une action de la part du joueur. Afin de se faire, nous avons tracé l'évolution du gradient de **Yball** au cours du temps (cf. ci-dessous). Celui-ci, en changeant de signe, nous renseigne sur un changement de direction de la balle selon l'axe des ordonnées. C'est ainsi qu'on détermine, lorsqu'un gradient négatif devient positif, les instants où la balle détruit une brique par le bas.  
+
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-f2666f15.png)
+
+Nous avons, par la suite, choisi deux variables d'intérêt qui nous permettrait de mettre en évidence l'apprentissage des probabilités et les prédictions qui en découleraient. La première est le temps de latence défini par la durée entre le rebond de la balle sur la brique et la saccade du regard qui résulte d'une prise de décision générée par les prédictions du cerveau. Grâce au gradient, nous pouvons afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (cf. ci-dessous).  
+
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-b230e884.png)
+
+On peut observer en noir l'évolution de la position en ordonnées de la balle, et ce sur tous les rebonds du niveau correspondant, tandis que les tracés variant du bleu au rouge montre la position en ordonnées du regard (les tracés sont de couleurs différentes afin de faciliter l'apréhension visuelle).  
+
+Afin de quantifier plus précisément la latence, nous avons tracé les courbes montrant l'évolution de la distance entre le point d'impact balle/brique et le regard au cours du temps
 
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-ed9792a8.png)
 
-Cette observation nous a permis de mettre en évidence une première variable d'intérêt que nous avons nommé "temps de latence". Cette saccade rend compte d'un comportement de suivi de la balle. La durée de celui-ci devrait donc être corrélé aux prédictions faites par le cerveau sur la trajectoire que prendra la balle après le rebond.  ]*
+Cette observation nous a permis de mettre en évidence une première variable d'intérêt que nous avons nommé "temps de latence". Cette saccade rend compte d'un comportement de suivi de la balle. La durée de celui-ci devrait donc être corrélé aux prédictions faites par le cerveau sur la trajectoire que prendra la balle après le rebond.
 
 Une deuxième variable d'intérêt a été choisie par la suite, découlant d'un raisonnement différent. Cette variable est la distance entre le regard et l'emplacement du rebond sur la brique. Elle est pertinente par le fait que, plus un comportement est prédictible - ici le sens du rebond de la balle -, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On choisi donc d'observer l'évolution de cette distance au cours des niveaux pour chaque couleur de brique - et donc pour chaque probabilité.  
 
@@ -192,12 +208,11 @@ ___
 4. Karl Friston, James Kilner and Lee Harrison, *"A free energy principle for the brain"*, Journal of Physiology Paris (2006)
 4. Jyoti Mishra, Daphne Bavelier and Adam Gazzaley, *"How to Asses Gaming-Induced Benefits on Attention and Working Memory"*, Games for Health Journal (2012)
 5. Patrícia Belchior, Michael Marsiske, Shannon M. Sisco, Anna Yam, Daphne Bavelier, Karlene Ball and William C. Mann, *"Video game training to improve selective visual attention in older adults"*, Computers in Human Behavior (2013)
-6. Karl Friston, Jérémie Mattout and James Kilner, *"Action understanding and active inference"*, Europe PMC Funders Group (2012)
+6. Karl Friston, Jérémie Mattout and James Kilner, *"Action understanding and active inference"*, Europe PMC Funders Group (2011)
 7. Christian Keysers and Valeria Gazzola, *"Hebbian learning and predictive neurons for actions, sensations and emotions"*, Philosophical Transactions of the Royal Society (2014)
 8. Florent Meyniel, Maxime Maheu and Stanislas Dehaene, *"Human Inferences about Sequences: A Minimal Transition Probability Model"*, PLOS Computational Biology (2016)
-9. Catherine Manning, James Kilner, Louise Neil, Themelis Karaminis and Elizabeth Pellicano, *"Children on the autism spectrum update their behaviour in response to a volatile environment"*, Developmental Science (2016)
 10. Meltem Sevgi, Andrea O. Diaconescu, Marc Tittgemeyer and Leonhard Schilbach, *"Social Bayes: Using Bayesian Modeling to Study Autistic Trait-Related Differences in Social Cognition"*, Society of Biological Psychiatry (2016)
 11. Colin J. Palmer, Rebecca P. Lawson and Jakob Hohwy, *"Bayesian Approaches to Autism: Towards Volatility, Action and Behavior"*, ResearchGate (2017)
 12. Kristien Ooms, Lien Dupont, Lieselot Lapon and Stanislav Popelka, *"Accuracy and precision of fixations locations recorded with the low-cost Eye Tribe tracker in different experimental set-ups"*, ResearchGate (2015)
 
-MAIS OU SONT CITEES CES REFERENCES DANS TON TEXTE ???
+Les références vis-à-vis de l'autisme et de social Bayes apparaîtront dans Discussion
