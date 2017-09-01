@@ -35,8 +35,12 @@ Une fois cet outil - le jeu et le système de reccueil de données adapté - dé
 
 ## 2. Méthode
 
-Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a débuté par une étape de revue bibliographique durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude, comme le jeu vidéo (*Daphne Bavelier et al.* 2012-1013), le lien entre regard et prédiction du cerveau (*John M. Henderson* 2017), l'inférence active, le codage prédictif et l'utilisation de traitements Bayesiens sous différentes formes (*Karl Friston et al.* 2006-2011-2012, *Benjamin T. Vincent* 2015, *Florent Meyniel et al.* 2016) comme son application aux troubles du spectre autistique (*Colin Palmer et al.* 2017, *Meltem Sevgi et al.* 2015). Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.
-(TU POURRAIS METTRE UNE SORTE DE CALENDRIER DE CE QUE TU AS FAIT A QUEL MOMENT)
+Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bruno Wicker, a débuté par une étape de revue bibliographique durant laquelle j'ai lu des articles scientifiques traitant des sujets sur lesquels se base notre étude, comme le jeu vidéo (*Daphne Bavelier et al.* 2012-1013), le lien entre regard et prédiction du cerveau (*John M. Henderson* 2017), l'inférence active, le codage prédictif et l'utilisation de traitements Bayesiens sous différentes formes (*Karl Friston et al.* 2006-2011-2012, *Benjamin T. Vincent et al.* 2015, *Florent Meyniel et al.* 2016) comme son application aux troubles du spectre autistique (*Colin Palmer et al.* 2017, *Meltem Sevgi et al.* 2015). Une fois le sujet pris en main et après avoir clarifié nos objectifs, je suis entré dans la phase de programmation du jeu durant laquelle j'ai appris à coder en Python et notamment à utiliser le module Pygame. La dernière partie de mon stage s'est déroulée à l'Institut des Neurosciences de la Timone, sous la supervision de Laurent Perrinet, afin d'analyser les données recueillies.  
+
+**Calendrier du stage**  
+Premier mois de stage : Documentation, bibliographie  
+Second et troisième mois de stage : Programmation du jeu et enregistrement des pilotes  
+Quatrième mois de stage : Analyse des données  
 
 ### 2.1 Programmation du jeu
 
