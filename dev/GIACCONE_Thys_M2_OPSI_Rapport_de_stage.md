@@ -37,14 +37,16 @@ Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bru
 
 ### 2.1 Programmation du jeu
 
-Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos.  
+Le jeu est un "casse-briques" classique (cf. Fig. 1), programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos.  
 
+Figure 1 : Capture d'écran du niveau 1 du jeu
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
 
 La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
-Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement - c'est à dire symétriquement - sur la brique (cf. image ci-dessous, trajectoire gris-noir).  
+Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement - c'est à dire symétriquement - sur la brique (cf. Fig. 2, trajectoire gris-noir).  
 
+Figure 2 : Comportement de la balle lors d'un rebond sur une brique
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-cc7622e3.png)
 
 Il existe cinq couleurs de briques réparties dans un total de six niveaux. Les niveaux sont construits de la manière suivante :
@@ -123,6 +125,7 @@ Les dataframes ainsi créées sont constituées de toutes les données suivantes
  - position en X de la raquette : **Xpaddle** (pixel)  
  - position en Y de la raquette : **Ypaddle** (pixel)  
 
+Figure 3 : Capture d'écran d'une partie de dataframe
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-963ae640.PNG)
 
 Le nom donné aux fichiers dataframes est également très important. Il permet un classement chronologique mais également de déterminer le niveau concerné ainsi que le sujet de l'expérience. Son format est le suivant :   année-mois-jour_heureminuteseconde_dataframe_lvlnuméroduniveau_sujet.csv  
@@ -132,28 +135,29 @@ Par exemple : 2017-06-28_143211_dataframe_lvl4_remi.csv correspond à l'enregist
 
 L'analyse des données est faite en langage Python, en utilisant Jupyter Notebook - une application open-source web qui permet de créer et partager des documents contenant du code, des équations, des graphiques et du texte explicatif - afin de faciliter l'échange et avoir un environnement de travail flexible.  
 
-Les données obtenues nous permettent d'observer le comportement du joueur vis-à-vis de son apprentissage des probabilités **p** de rebond opposé de la balle sur les briques en fonction de leur couleur. Afin de quantifier ce phénomène, il nous fallait trouver comment traiter nos données, comment mettre en évidence des variables d'intérêt. Les données brutes obtenues nous permettent de visualiser les trajectoires des variables de la dataframe comme ci-dessous.  
+Les données obtenues nous permettent d'observer le comportement du joueur vis-à-vis de son apprentissage des probabilités **p** de rebond opposé de la balle sur les briques en fonction de leur couleur. Afin de quantifier ce phénomène, il nous fallait trouver comment traiter nos données, comment mettre en évidence des variables d'intérêt. Les données brutes obtenues nous permettent de visualiser les trajectoires des variables de la dataframe (Fig. 4).  
 
+Figure 4 : Trajectoires du regard, de la balle et de la raquette au cours d'un niveau
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-eee578a6.png)
 
-Ces données n'étant pas directement exploitables, notre but premier était de déterminer quand s'opéraient les rebonds détruisant les briques. Notre objectif étant d'étudier le lien entre perception et action, nous avons décidé de nous concentrer sur les rebonds qui détruisent les briques par le bas, car étant les rebonds retournant vers la raquette et donc ceux nécessitant une action de la part du joueur. Afin de se faire, nous avons tracé l'évolution du gradient de **Yball** au cours du temps (cf. ci-dessous). Celui-ci, en changeant de signe, nous renseigne sur un changement de direction de la balle selon l'axe des ordonnées. C'est ainsi qu'on détermine, lorsqu'un gradient négatif devient positif, les instants où la balle détruit une brique par le bas.  
+Ces données n'étant pas directement exploitables, notre but premier était de déterminer quand s'opéraient les rebonds détruisant les briques. Notre objectif étant d'étudier le lien entre perception et action, nous avons décidé de nous concentrer sur les rebonds qui détruisent les briques par le bas, car étant les rebonds retournant vers la raquette et donc ceux nécessitant une action de la part du joueur. Afin de se faire, nous avons tracé l'évolution du gradient de **Yball** au cours du temps (cf. Fig. 5). Celui-ci, en changeant de signe, nous renseigne sur un changement de direction de la balle selon l'axe des ordonnées. C'est ainsi qu'on détermine, lorsqu'un gradient négatif devient positif, les instants où la balle détruit une brique par le bas.  
 
+Figure 5 : Evolution du gradient de la variable Yball au cours du temps
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-f2666f15.png)
 
-Nous avons, par la suite, choisi deux variables d'intérêt qui nous permettrait de mettre en évidence l'apprentissage des probabilités et les prédictions qui en découleraient. La première est le temps de latence défini par la durée entre le rebond de la balle sur la brique et la saccade du regard qui résulte d'une prise de décision générée par les prédictions du cerveau. Grâce au gradient, nous pouvons afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (cf. ci-dessous).  
+Nous avons, par la suite, choisi deux variables d'intérêt qui nous permettrait de mettre en évidence l'apprentissage des probabilités et les prédictions qui en découleraient. La première est le temps de latence défini par la durée entre le rebond de la balle sur la brique et la saccade du regard qui résulte d'une prise de décision générée par les prédictions du cerveau. Grâce au gradient, nous pouvons afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (cf. Fig. 6).  
 
+Figure 6 : Comportement du regard (dégradé bleu-rouge) lors du rebond de la balle sur une brique (noir)
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-b230e884.png)
 
 On peut observer en noir l'évolution de la position en ordonnées de la balle, et ce sur tous les rebonds du niveau correspondant, tandis que les tracés variant du bleu au rouge montre la position en ordonnées du regard (les tracés sont de couleurs différentes afin de faciliter l'apréhension visuelle).  
 
-Afin de quantifier plus précisément la latence, nous avons tracé les courbes montrant l'évolution de la distance entre le point d'impact balle/brique et le regard au cours du temps
+Afin de quantifier plus précisément la latence, nous avons tracé les courbes montrant l'évolution de la distance entre le point d'impact balle/brique et le regard au cours du temps (cf. Fig. 7).
 
+Figure 7 : Evolution de la distance entre le point d'impact et le regard au cours du temps
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-ed9792a8.png)
 
-Cette observation nous a permis de mettre en évidence une première variable d'intérêt que nous avons nommé "temps de latence". Cette saccade rend compte d'un comportement de suivi de la balle. La durée de celui-ci devrait donc être corrélé aux prédictions faites par le cerveau sur la trajectoire que prendra la balle après le rebond.
-
-Une deuxième variable d'intérêt a été choisie par la suite, découlant d'un raisonnement différent. Cette variable est la distance entre le regard et l'emplacement du rebond sur la brique. Elle est pertinente par le fait que, plus un comportement est prédictible - ici le sens du rebond de la balle -, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On choisi donc d'observer l'évolution de cette distance au cours des niveaux pour chaque couleur de brique - et donc pour chaque probabilité.  
-
+La seconde variable d'intérêt, bien que découlant d'un raisonnement différent, est directement corrélée à la première et permet la mise en évidence du même phénomène par un moyen détourné. Cette variable est la distance entre le regard et l'emplacement de l'impact sur la brique (cf. Fig. 7). Elle est pertinente du fait que, plus un comportement est prédictible, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On s'attend donc à trouver de grandes distances lorsque le rebond est complètement prédictible mais au contraire de petites distances lorsque le comportement est imprédictible. Pour mettre en évidence cette variable d'intérêt il nous faut donc la tracer en fonction de la probabilité **p** de chaque brique et observer son évolution au cours du temps.
 
 ## 3. Résultats
 
