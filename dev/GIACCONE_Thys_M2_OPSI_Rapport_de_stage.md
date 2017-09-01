@@ -40,13 +40,13 @@ Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bru
 
 Le jeu est un "casse-briques" classique, programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos. L'objectif du joueur est de finir chaque niveau en détruisant toutes les briques qui le composent avec une balle qui rebondit sur une raquette. CETTE DERNIERE PHRASE C'EST DU PROTOCOLE EXPÉRIMENTAL
 
-[Insérer screenshot.png]
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
 
 La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée perpendiculairement à celle-ci, tandis que les extrémités de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
 Le contexte probabiliste est généré par une variable cachée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité associée à la couleur de la brique concernée. La balle va alors avoir une probabilité **p** de revenir sur sa trajectoire et une probabilité **(p-1)** de rebondir normalement (QU'APPELLES TU NORMALEMENT, SOIS PRÉCIS !) sur la brique.  Il existe cinq couleurs de briques réparties dans un total de six niveaux (DECRIS LES NIVEAUX).  
 
-[Insérer image rebond_brique.png]
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-cc7622e3.png)
 
 Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
 (EXPLICITE MIEUX A QUOI CORRESPONDENT LES PROBABILITES , EX : p=0.5 : la balle rebondit une fois sur deux dans la direction opposée et une fois sur deux de rebondir selon un angle de 45 degrés...)
@@ -66,7 +66,7 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
  - configuration des niveaux  
  - angles de rebond sur la raquette  
  - nom du sujet qui passe l'expérience  
- 
+
  TYPE DE BRIQUE ? BACKGROUD ? AJOUT D'OCCLUDER ?...
 
 Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement et de reproche sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement (QUELLES PHRASES ? SOIS PRÉCIS).  
@@ -115,7 +115,7 @@ Les dataframes ainsi créées sont constituées de toutes les données suivantes
  - position en X de la raquette : **Xpaddle** (pixel)  
  - position en Y de la raquette : **Ypaddle** (pixel)  
 
-[Insérer dataframe.png]  
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-963ae640.PNG)
 
 Le nom donné aux fichiers dataframes est également très important. Il permet un classement chronologique mais également de déterminer le niveau concerné ainsi que le sujet de l'expérience. Son format est le suivant :   année-mois-jour_heureminuteseconde_dataframe_lvlnuméroduniveau_sujet.csv  
 Par exemple : 2017-06-28_143211_dataframe_lvl4_remi.csv correspond à l'enregistrement du niveau 4 de Rémi qui a eut lieu le 28/06/2017 et a débuté à 14h32 et 11s.  
@@ -128,11 +128,13 @@ L'analyse des données est faite en langage Python, en utilisant Jupyter Noteboo
 
 Ces données nous permettent d'observer le comportement du joueur vis-à-vis de son apprentissage des probabilités de rebond opposé des briques en fonction de leur couleur. Afin de quantifier ce phénomène, il nous fallait trouver comment traiter nos données, comment mettre en évidence des variables d'intérêt. Les données brutes obtenues nous permettent de visualiser les trajectoires des variables de la dataframe comme ci-dessous.  
 
-[Mettre l'image all_trajectories.png]  
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-eee578a6.png)
 
 *ATTENTION !! Pas scientifique, présenter ça comme des hypothèses
 [Comme il est impossible de sortir les informations recherchées de cette représentation, nous avons décidé d'observer les trajectoires dans une fenêtre temporel autour du rebond. De plus, nous avons centré toutes les trajectoires pour chaque sujet et chaque rebond. Pour dégrossir l'analyse, nous avons décidé de ne regarder que les rebonds s'opérant sur le dessous des briques. De plus, afin de s'affranchir de l'angle de rebond, nous avons tracé la position en Y en fonction du temps. Grâce à ces tracés, nous avons pu observé un comportement récurrent : une saccade du regard qui s'effectue peu après le rebond.  
-[Mettre l'image saccade.png]  
+
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-ed9792a8.png)
+
 Cette observation nous a permis de mettre en évidence une première variable d'intérêt que nous avons nommé "temps de latence". Cette saccade rend compte d'un comportement de suivi de la balle. La durée de celui-ci devrait donc être corrélé aux prédictions faites par le cerveau sur la trajectoire que prendra la balle après le rebond.  ]*
 
 Une deuxième variable d'intérêt a été choisie par la suite, découlant d'un raisonnement différent. Cette variable est la distance entre le regard et l'emplacement du rebond sur la brique. Elle est pertinente par le fait que, plus un comportement est prédictible - ici le sens du rebond de la balle -, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On choisi donc d'observer l'évolution de cette distance au cours des niveaux pour chaque couleur de brique - et donc pour chaque probabilité.  
