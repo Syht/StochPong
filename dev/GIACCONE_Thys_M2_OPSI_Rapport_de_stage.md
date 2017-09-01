@@ -1,11 +1,13 @@
 # Exploration du codage prédictif grâce au jeu vidéo
 
-
+<big>**Thys Giaccone**</big>  
 **Encadrants : Bruno Wicker, Laurent Perrinet**  
 *Laboratoire de Neurosciences Cognitives, Equipe ACDC, UMR 7291 CNRS  
-3, place Victor-Hugo 13331 - Marseille Cedex 3*  
+Aix-Marseille-Université - 3, place Victor-Hugo 13331 - Marseille*  
+*Institut de Neurosciences de la Timone  
+Faculté de Médecine - 27, boulevard Jean Moulin 13005 - Marseille*
 *Ecole Centrale Marseille, Technopôle de Château-Gombert  
-38, rue Frédéric Joliot Curie 13451 - Marseille Cedex 20*
+38, rue Frédéric Joliot Curie 13451 - Marseille*
 
 ___
 
@@ -168,13 +170,13 @@ Montrer les trajectoires
 montrer que Rémi
 
 Résultats temps de latences + graphs
-    lvl 1 : peu de données=très prédictible donc regarde ailleurs
-    lvl 2 : Idem
-    lorsque peu prédictible, on observe des temps de latences plus élevés
+		lvl 1 : peu de données=très prédictible donc regarde ailleurs
+		lvl 2 : Idem
+		lorsque peu prédictible, on observe des temps de latences plus élevés
 Résultats distance rebond/gaze + graphs :
-    lvl 1 : peu de données=très prédictible donc regarde ailleurs
-    lvl 2 : Idem
-    lorsque peu prédictible, on observe d'abord de grandes distances puis un rapprochement du regard
+		lvl 1 : peu de données=très prédictible donc regarde ailleurs
+		lvl 2 : Idem
+		lorsque peu prédictible, on observe d'abord de grandes distances puis un rapprochement du regard
 
 temp de latence et distance rebond/gaze corrélés
 
@@ -189,16 +191,16 @@ Pour la latence : peu de points pour le niveau 1 et 2 car très prédictible, le
 La latence indique le moment où la décision est prise. Plus la décision est incertaine, plus on met du temps à accumuler des informations -> augmentation du temps de latence.
 
 * Résumé des résultats obtenus
-    * jeu vidéo -> psycho
-    * analyse robuste
-    * marqueur psycho (latence) lié à la prédictabilité
+		* jeu vidéo -> psycho
+		* analyse robuste
+		* marqueur psycho (latence) lié à la prédictabilité
 * limites
-    * variabilité des résulats du mouvement des yeux (regard périphérique) -> occlusion ?
-    * temps d'acquisition
-    * cadre théorique pour manipuler la valeur de prédictabilité
+		* variabilité des résulats du mouvement des yeux (regard périphérique) -> occlusion ?
+		* temps d'acquisition
+		* cadre théorique pour manipuler la valeur de prédictabilité
 * Ouvertures
-    * ?
-    * briques sociales
+		* ?
+		* briques sociales
 
 
 ___
