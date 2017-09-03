@@ -232,7 +232,7 @@ Perte d'un certain nombre de données de latence dûe au fait que les joueurs ne
 		* briques sociales
 
 Ajout de valence sociale aisée grâce à la grande configurabilité du jeu via des briques sociales (expliquer ce que c'est) ou des backgrounds sociaux ou encore des occludeurs perturbant faisant disparaître la balle sur une petite surface. Application à l'étude des troubles du spectre autistique.  
-CITER : *Meltem Sevgi et al*. (2016) et *Colin J. Palmer et al.* (2017)
+CITER : *Meltem Sevgi et al.* (2016) et *Colin J. Palmer et al.* (2017)
 
 ## Remerciements
 
