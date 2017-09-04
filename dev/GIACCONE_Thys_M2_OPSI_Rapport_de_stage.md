@@ -9,6 +9,8 @@ Faculté de Médecine - 27, boulevard Jean Moulin 13005 - Marseille*
 *Ecole Centrale Marseille, Technopôle de Château-Gombert  
 38, rue Frédéric Joliot Curie 13451 - Marseille*
 
+___
+
 **Abstract:** Dans ce papier nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. En développant un outil flexible et écologique, le jeu vidéo, nous avons la possibilité d'étudier le cerveau prédictif et son rôle dans la prise de décision à partir d'éléments perceptuels. Cet outil, conçu pour être aisément configurable et modifiable, pourra être utilisé dans d'autres recherches et, par exemple, permettre l'étude de l'influence d'une valence sociale chez des individus atteints de troubles du spectre autistique, dans le contexte du cerveau prédictif.
 
 ___
@@ -70,7 +72,6 @@ Afin de faciliter l'apprentissage, la couleur des briques provient d'une colorma
  - briques **bleues** : **p = 1**  
 
 Nous avons donc des briques complètement prédictibles (**p = 0** et **p = 1**) sur lesquelles la balle rebondit toujours normalement ou revient toujours sur sa trajectoire, des briques fortement prédictibles (**p = 0.25** et **p = 0.75**) et des briques impossibles à prédire (**p = 0.5**).
-
 
 #### La programmation au service de l'expérience
 
@@ -148,7 +149,7 @@ Ces données n'étant pas directement exploitables, notre but premier était de 
 Figure 4 : Evolution du gradient de la variable Yball au cours du temps  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-f2666f15.png)
 
-Nous avons, par la suite, choisi deux variables d'intérêts qui nous permettrait de mettre en évidence l'apprentissage des probabilités et les prédictions qui en découleraient. La première est le temps de latence défini par la durée entre le rebond de la balle sur la brique et la saccade du regard qui résulte d'une prise de décision générée par les prédictions du cerveau. Celle-ci n'est calculable que lorsque le sujet a son regard posé sur le point d'impact balle-brique car s'il regarde ailleurs, nous ne pouvons pas relier la saccade à une prédiction de la trajectoire de la balle. Grâce au gradient, nous pouvons afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (Fig. 5).  
+Nous avons, par la suite, choisi deux variables d'intérêts qui nous permettrait de mettre en évidence l'apprentissage des probabilités et les prédictions qui en découleraient. La première est le temps de latence défini par la durée entre le rebond de la balle sur la brique et la saccade du regard qui résulte d'une prise de décision générée par les prédictions du cerveau. Celle-ci n'est calculable que lorsque le sujet a son regard posé sur le point d'impact balle-brique (**critère** : d(impact, regard) < 200 pixels) car s'il regarde ailleurs, nous ne pouvons pas relier la saccade à une prédiction de la trajectoire de la balle. Grâce au gradient, nous pouvons afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (Fig. 5).  
 
 Figure 5 : Comportement du regard (dégradé bleu-rouge) lors du rebond de la balle sur une brique (noir)  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-b230e884.png)
@@ -162,33 +163,30 @@ Figure 6 : Evolution de la distance entre le point d'impact et le regard au cour
 
 La seconde variable d'intérêt, bien que découlant d'un raisonnement différent, est directement corrélée à la première et permet la mise en évidence du même phénomène par un moyen détourné. Cette variable est la distance entre le regard et l'emplacement de l'impact sur la brique (Fig. 7). Elle est pertinente du fait que, plus un comportement est prédictible, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On s'attend donc à trouver de grandes distances lorsque le rebond est complètement prédictible mais au contraire de petites distances lorsque le comportement est imprédictible. Pour mettre en évidence cette variable d'intérêt il nous faut donc la tracer en fonction de la probabilité **p** de chaque brique et observer son évolution au cours du temps.
 
+**Temps de latence** = t(saccade) - t(impact)  
+**Distance impact-regard** = d(impact, regard) = sqrt(Xball²[impact] + Yball²[impact]) - sqrt(Xgaze²[impact] + Ygaze²[impact])
+
 ## 3. Résultats
 
-Pour l'obtention des données pilotes, trois sujets ont été enregistrés sur l'expérience. Une analyse statistique poussée n'est donc pas possible mais est prévue pour la suite. Les trajectoires des différentes variables concernées sont les informations brutes obtenues suite à l'enregistrement des pilotes (Fig. 7).  
+Pour l'obtention des données pilotes, trois sujets ont été enregistrés sur l'expérience. Une analyse statistique poussée n'est pas possible à cause de la quantité restreinte de données mais est prévue pour la suite. Les données brutes obtenues suite à l'enregistrement des pilotes (Fig. 7) peuvent être tracées afin de visualiser les différentes trajectoires décrites par nos trois variables.  
 
 Figure 7 : Trajectoires du regard, de la balle et de la raquette au cours d'un niveau  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-eee578a6.png)
 
-Une fois les rebonds détectés grâce au gradient (Fig. 4) et les variables d'intérêts calculées, nous les avons tracées de manière à mettre en évidence les effets d'apprentissage et de prédiction recherchés.  
-
-**Elément important quant à la prédictibilité des briques :**  
-Bien que les briques **p = 0.25** et **p = 0.75** sont également prédictibles sur le papier, il faut prendre en compte un prior important qui est le fait que le joueur s'attend toujours, intuitivement, à voir la balle rebondir normalement (symétriquement). De ce fait, l'apprentissage de la probabilité s'en trouve ralentis, ce qui explique pourquoi le joueur n'a pas le même comportement pour les briques de probabilité **p = 0.25** que pour celles de probabilité **p = 0.75**  
+Une fois les rebonds détectés grâce au gradient (Fig. 4) et les variables d'intérêts calculées, nous les avons tracées de manière à mettre en évidence les effets d'apprentissage recherchés et la génération de prédictions qui en découle.  
 
 ### 3.1 Temps de latence
 
+Les temps de latence ont été calculés pour chaque rebond de balle sur une brique lorsque le calcul est possible :  
+d(impact, regard) < 200 pixels  
+
+La probabilité **p** de la brique correspondante est indiquée par la couleur du point indiquant la valeur de latence.  
+Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au niveau 5 nous avons, dans l'ordre, des briques de probabilités **p = 0**, **p = 0.25**, **p = 0.5**, **p = 0.75** et **p = 1**, puis les 5 couleurs de brique mélangées en nombre égal pour le niveau 6.
+
+Les latences sont affichées au cours du temps sur la totalité des 6 niveaux. Ainsi, les **lignes verticales pointillées** correspondent au passage d'un niveau au suivant.  
+
 Figure 8 : Evolution des latences de première saccade après le rebond au cours des six niveaux renseignée de la couleur de brique correspondante  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-7a1c51fa.png)
-
-Les lignes verticales pointillées correspondent au passage d'un niveau au suivant. Chaque point de couleur représente la latence calculée lors du rebond sur la brique de la couleur représentée. Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au niveau 5 nous avons, dans l'ordre, des briques de probabilités **p = 0**, **p = 0.25**, **p = 0.5**, **p = 0.75** et **p = 1**.
-
-La latence indique le moment où la décision est prise  
-Plus la décision est incertaine, plus on met du temps à accumuler des informations -> augmentation du temps de latence.
-
-- Pour les niveaux 1 (**p = 0**) et 2 (**p = 0.25**) nous n'obtenons que peu de données dû au fait que les briques sont très prédictibles pour le sujet car les première se comportent comme lors d'un rebond réel tandis que les secondes ne se comportent de manière contre-intuitive que pour 25% des rebonds. Celui-ci peut alors se permettre de placer sont regard ailleurs et utiliser sa vision périphérique pour suivre la balle.  
-- Pour le niveau 3 (**p = 0.5**) qui contient les briques imprédictibles, on observe que les temps de latences n'ont pas réellement de tendance.  
-- Pour le niveau 4 (**p = 0.75**) on observe des latences élevées au début, et qui diminuent progressivement au fil du niveau. C'est le comportement typique auquel on s'attend. Le sujet a tout d'abord du mal à prédire le rebond car celui-ci prend 75% du temps une direction contre-intuitive, ce qui résulte en une grande latence. Le sujet apprend ensuite l'effet probabiliste et se met à prédire de mieux en mieux la direction de la balle, ce qui résulte en une baisse de la latence.
-- Pour le niveau 5 (**p = 1**) on observe un phénomène similaire au niveau 4 mais avec une pente beaucoup plus abrupte. Comme la balle rebondit systématiquement de manière contre-intuitive, le joueur montre d'abord de hauts temps de latence. Mais ceux-ci diminuent très vite à cause de la forte prédictabilité des rebonds.
-- Pour le niveau 6, on observe des temps de latence grobalement plus faibles que pour les niveaux précédents, ce qui semble mettre en évidence un apprentissage réussi des probabilité par le joueur.
 
 **EST-CE QUE J'AFFICHE LE TEMPS DE LATENCE MOYENNE CALCULé PAR LEVEL ? (cf. ci-dessous) en sachant que seul le résultat pour Juliette donne cette évolution et que Juliette fait parti des niveaux MIXTE
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-c7dbd14f.png)
@@ -198,30 +196,47 @@ A mon avis il ne faut pas présenter les résultats calculant les latences moyen
 
 ### 3.2 Distance point d'impact - regard
 
+Les distances impact-regard ont été calculées pour chaque rebond de balle sur une brique.
+
+La probabilité **p** de la brique correspondante est indiquée par la couleur du point indiquant la valeur de latence.  
+Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au niveau 5 nous avons, dans l'ordre, des briques de probabilités **p = 0**, **p = 0.25**, **p = 0.5**, **p = 0.75** et **p = 1**, puis les 5 couleurs de brique mélangées en nombre égal pour le niveau 6.
+
+Les distances impact-rebond sont affichées au cours du temps sur la totalité des 6 niveaux. Ainsi, les **lignes verticales pointillées** correspondent au passage d'un niveau au suivant.  
+
 Figure 9 : Evolution de la distance entre le point d'impact de la balle sur une brique et la position du regard renseignée de la couleur de brique correspondante  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-98d5a236.png)
 
-Les lignes verticales pointillées correspondent au passage d'un niveau au suivant. Chaque point de couleur représente la distance impact-regard calculée lors du rebond sur la brique de la couleur représentée.
-
-- Pour les niveaux 1 (**p = 0**) et 2 (**p = 0.25**) nous observons de grandes distances dû au fait que les briques sont très prédictibles pour le sujet car les première se comportent comme lors d'un rebond réel tandis que les secondes ne se comportent de manière contre-intuitive que pour 25% des rebonds. Celui-ci peut alors se permettre de placer sont regard ailleurs et utiliser sa vision périphérique pour suivre la balle.  
-- Pour le niveau 3 (**p = 0.5**) qui contient les briques imprédictibles, on observe que les distances impact-regard forme une courbe en 1/x (avec x>0) qui affiche tout d'abord de grandes distances puis une diminution rapide pour enfin se stabiliser sur de très faibles distances. Cette courbe soutient le fait que le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car il ne peut pas générer de prédiction correctement et ainsi user de sa vision périphérique pour suivre la balle.  
-- Pour le niveau 4 (**p = 0.75**) on observe que les distances impact-regard forme une courbe en 1/x (avec x>0) qui affiche tout d'abord de grandes distances puis une diminution rapide pour enfin se stabiliser sur de très faibles distances. Cette courbe soutient le fait que le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car il ne peut pas générer de prédiction correctement et ainsi user de sa vision périphérique pour suivre la balle. Contrairement au niveau 2 (**p = 0.25**) le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car, malgré la prédictibilité identique, les rebonds sur les briques violettes (**p = 0.75**) prennent 75% du temps une direction contre-intuitive contrairement aux oranges qui prennent 75% du temps une direction intuitive.
-- Pour le niveau 5 (**p = 1**) on observe un phénomène similaire au niveau 4. Bien que les briques bleues sont parfaitements prédictibles, la balle rebondit systématiquement de manière contre-intuitive. Le joueur utilise d'abord sa vision périphérique pour ensuite rapprocher sont regard du point d'impact pour chercher l'information. On s'attendrait ici à ce que le joueur se mette à utiliser de nouveau sa vision périphérique une fois l'apprentissage de la probabilité acquis, mais il semble que le côté contre-intuitif des rebonds l'empêche de générer le modèle de prédiction adapté.
-- Pour le niveau 6, le joueur maintient son regard proche pour tout type de brique et ce tout au long du niveau. On s'attendrait à observer des distances plus grandes pour les briques prédictibles que pour celles qui ne le sont pas.
-
 ## 4. Discussion
 
+**Elément important quant à la prédictibilité des briques :**  
+Bien que les briques **p = 0.25** et **p = 0.75** sont également prédictibles sur le papier, il faut prendre en compte un prior important qui est le fait que le joueur s'attend toujours, intuitivement, à voir la balle rebondir normalement (symétriquement). De ce fait, lorsque l'on considère des briques de probabilité **p > 0.5**, l'apprentissage de celle-ci s'en trouve perturbé, ce qui explique pourquoi le joueur n'a pas le même comportement pour les briques de probabilité **p = 0.25** que pour celles de probabilité **p = 0.75**.  
 
 - Résumé des résultats obtenus
 		- jeu vidéo -> psycho
 		- analyse robuste
-		- marqueur psycho (latence) lié à la prédictabilité
+		- marqueur psycho (latence) lié à la prédictibilité
 
+**Niveau 1 (p = 0)** : et 2 (**p = 0.25**) nous n'obtenons que peu de données dû au fait que les briques sont très prédictibles pour le sujet car les première se comportent comme lors d'un rebond réel tandis que les secondes ne se comportent de manière contre-intuitive que pour 25% des rebonds. Celui-ci peut alors se permettre de placer sont regard ailleurs et utiliser sa vision périphérique pour suivre la balle.  
+Pour le niveau 3 (**p = 0.5**) qui contient les briques imprédictibles, on observe que les temps de latences n'ont pas réellement de tendance.  
+Pour le niveau 4 (**p = 0.75**) on observe des latences élevées au début, et qui diminuent progressivement au fil du niveau. C'est le comportement typique auquel on s'attend. Le sujet a tout d'abord du mal à prédire le rebond car celui-ci prend 75% du temps une direction contre-intuitive, ce qui résulte en une grande latence. Le sujet apprend ensuite l'effet probabiliste et se met à prédire de mieux en mieux la direction de la balle, ce qui résulte en une baisse de la latence.
+Pour le niveau 5 (**p = 1**) on observe un phénomène similaire au niveau 4 mais avec une pente beaucoup plus abrupte. Comme la balle rebondit systématiquement de manière contre-intuitive, le joueur montre d'abord de hauts temps de latence. Mais ceux-ci diminuent très vite à cause de la forte prédictibilité des rebonds.
+Pour le niveau 6, on observe des temps de latence grobalement plus faibles que pour les niveaux précédents, ce qui semble mettre en évidence un apprentissage réussi des probabilité par le joueur.
+
+Pour les niveaux 1 (**p = 0**) et 2 (**p = 0.25**) nous observons de grandes distances dû au fait que les briques sont très prédictibles pour le sujet car les première se comportent comme lors d'un rebond réel tandis que les secondes ne se comportent de manière contre-intuitive que pour 25% des rebonds. Celui-ci peut alors se permettre de placer sont regard ailleurs et utiliser sa vision périphérique pour suivre la balle.  
+Pour le niveau 3 (**p = 0.5**) qui contient les briques imprédictibles, on observe que les distances impact-regard forme une courbe en 1/x (avec x>0) qui affiche tout d'abord de grandes distances puis une diminution rapide pour enfin se stabiliser sur de très faibles distances. Cette courbe soutient le fait que le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car il ne peut pas générer de prédiction correctement et ainsi user de sa vision périphérique pour suivre la balle.  
+Pour le niveau 4 (**p = 0.75**) on observe que les distances impact-regard forme une courbe en 1/x (avec x>0) qui affiche tout d'abord de grandes distances puis une diminution rapide pour enfin se stabiliser sur de très faibles distances. Cette courbe soutient le fait que le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car il ne peut pas générer de prédiction correctement et ainsi user de sa vision périphérique pour suivre la balle. Contrairement au niveau 2 (**p = 0.25**) le sujet se voit obligé de rapprocher son regard du point d'impact pour rechercher l'information car, malgré la prédictibilité identique, les rebonds sur les briques violettes (**p = 0.75**) prennent 75% du temps une direction contre-intuitive contrairement aux oranges qui prennent 75% du temps une direction intuitive.
+Pour le niveau 5 (**p = 1**) on observe un phénomène similaire au niveau 4. Bien que les briques bleues sont parfaitements prédictibles, la balle rebondit systématiquement de manière contre-intuitive. Le joueur utilise d'abord sa vision périphérique pour ensuite rapprocher sont regard du point d'impact pour chercher l'information. On s'attendrait ici à ce que le joueur se mette à utiliser de nouveau sa vision périphérique une fois l'apprentissage de la probabilité acquis, mais il semble que le côté contre-intuitif des rebonds l'empêche de générer le modèle de prédiction adapté.
+Pour le niveau 6, le joueur maintient son regard proche pour tout type de brique et ce tout au long du niveau. On s'attendrait à observer des distances plus grandes pour les briques prédictibles que pour celles qui ne le sont pas.
+
+La latence indique le moment où la décision est prise  
+Plus la décision est incertaine, plus on met du temps à accumuler des informations -> augmentation du temps de latence.
+
+corrélation paddle/regard paddle/balle à discuter
 
 * limites
     * variabilité des résulats du mouvement des yeux (regard périphérique) -> occlusion ?
     * temps d'acquisition
-    * cadre théorique pour manipuler la valeur de prédictabilité
+    * cadre théorique pour manipuler la valeur de prédictibilité
 
 Manque de données, que 3 pilotes, pas suffisant pour obtenir des résultats solides. Analyse statistique poussée impossible sur si peu de données.
 
