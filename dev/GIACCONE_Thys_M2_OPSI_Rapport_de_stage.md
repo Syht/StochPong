@@ -52,7 +52,7 @@ La raquette du casse-brique est dirigée grâce à la souris et permet de reorie
 Le contexte probabiliste est généré par une variable cachée associée à la couleur de la brique concernée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité. La balle va alors avoir une probabilité **(1-p)** de rebondir normalement - c'est à dire symétriquement - sur la brique (Fig. 2, trajectoire gris-noir) et une probabilité **p** de revenir sur sa trajectoire (Fig. 2, trajectoire gris-rouge).  
 
 Figure 2 : Comportement de la balle lors d'un rebond sur une brique  
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-cc7622e3.png)
+![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-76f3dcd1.png)
 
 Il existe cinq couleurs de briques réparties dans un total de six niveaux. Les niveaux sont construits de la manière suivante :
  - niveau 1 : 60 briques de probabilité **p = 0**
