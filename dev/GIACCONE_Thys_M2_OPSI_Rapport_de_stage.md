@@ -163,8 +163,8 @@ Figure 6 : Evolution de la distance entre le point d'impact et le regard au cour
 
 La seconde variable d'intérêt, bien que découlant d'un raisonnement différent, est directement corrélée à la première et permet la mise en évidence du même phénomène par un moyen détourné. Cette variable est la distance entre le regard et l'emplacement de l'impact sur la brique (Fig. 7). Elle est pertinente du fait que, plus un comportement est prédictible, plus le regard peut se permettre de se trouver ailleurs, de n'observer la balle qu'avec la vision périphérique. On s'attend donc à trouver de grandes distances lorsque le rebond est complètement prédictible mais au contraire de petites distances lorsque le comportement est imprédictible. Pour mettre en évidence cette variable d'intérêt il nous faut donc la tracer en fonction de la probabilité **p** de chaque brique et observer son évolution au cours du temps.
 
-**Temps de latence** `` = t(saccade) - t(impact)``
-**Distance impact-regard** `` = d(impact, regard) = sqrt(Xball²[impact] + Yball²[impact]) - sqrt(Xgaze²[impact] + Ygaze²[impact])``
+**Temps de latence** `` = t(saccade) - t(impact)``  
+**Distance impact-regard** `` = d(impact, regard) = sqrt[(Xball[impact] - Xgaze[impact])² + (Yball[impact] - Ygaze[impact])²]``
 
 ## 3. Résultats
 
