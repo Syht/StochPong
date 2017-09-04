@@ -44,7 +44,7 @@ Deux dernières semaines de stage : Analyse des données
 
 ### 2.1 Programmation du jeu
 
-Le jeu est un "casse-briques" classique (Fig. 1), programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos.  
+Le jeu est un "casse-briques" classique (Fig. 1), programmé en langage Python à l'aide du module Pygame - module permettant de développer des jeux vidéos. La fenêtre du jeu fait 1024 pixels de haut pour 1280 pixels de large.  
 
 Figure 1 : Capture d'écran du niveau 1 du jeu  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
@@ -233,13 +233,16 @@ L'étude présentée dans ce mémoire n'est qu'à ses prémices ; nous avons ain
 
 Contrairement aux prévisions faites en début de stage, nous n'avons pas eu le temps d'analyser les données de la raquette. Les déplacements de la raquette sont censées refléter la prise de décision du sujet et il serait intéressant d'observer le lien entre celle-ci et les déplacements de la balle et du regard. Il est ainsi prévue de mettre en évidence le lien entre perception et action en analysant la corrélation entre la génération de prédiction du sujet et sa prise de décision, se reflétant dans le mouvement de la raquette.
 
-Les faibles temps d'acquisition - soient les durées des niveaux - pourraient ne pas être suffisant pour observer correctement l'apprentissage des probabilités. 
+?? Les faibles temps d'acquisition - soient les durées des niveaux - pourraient ne pas être suffisant pour observer correctement l'apprentissage des probabilités. Il ne faut pas pour autant ignorer le fait qu'une expérience trop longue pourrait nuire à la concentration des sujets et ainsi résulter en de mauvaises données. ?? **Ce paragraphe est-il pertinent ?**
 
-Perte d'un certain nombre de données de latence dûe au fait que les joueurs ne regardaient pas suffisamment près de l'impact sur la brique -> calcul de la latence impossible (expliquer pourquoi). Modification future du jeu possible afin d'améliorer les résultats (occludeur lié au regard via l'eye-tracking (cercle d'occlusion) ou lié au déplacement du paddle (rectangle verticale d'occlusion)). Problème -> force le sujet à regarder la balle, peut peut-être nuire à la qualité des résultats mais augmentera la quantité.
+Comme expliqué précédemment, un certain nombre de données de latence est perdu dûe au fait que les joueurs ne regardaient pas suffisamment près de l'impact sur la brique. Le calcul de la latence est alors rendu impossible à cause du critère : d(impact, regard) < 200  
+Nous avons donc envisagé différentes modifications futures du jeu afin d'améliorer la quantité de résultats ; l'objectif étant de forcer le joueur à regarder la zone d'intérêt, nous avons pensé à utiliser des occulteurs cachant une partie de l'écran tout en laissant une autre partie visible. Deux types d'occlusions nous ont paru pertinents :  
+- un disque d'occlusion lié au système d'eye-tracking, permettant de cacher la totalité de l'écran au joueur, à l'exception d'un disque d'environ 200 pixels de rayon centré au centre du regard du joueur,
+- un rectangle vertical d'occlusion lié au déplacement de la raquette - donc de la souris - permettant de cacher tout l'écran au joueur à l'exception d'un rectangle vertical centré sur la raquette et faisant toute la hauteur de l'écran de jeu.  
 
-* Ouvertures
-		* ?
-		* briques sociales
+Ces occlusions permettrait d'obtenir un plus grand nombre de résultats car les joueurs seraient obligés de suivre la balle et ne pourraient pas utiliser leur vision périphérique pour se faire. Mais on se demande alors à quel point le fait de forcer le regard du sujet va influencer les résultats et nuire à leur qualité. L'intérêt de l'étude étant d'utiliser le comportement occulaire comme un marqueur de la prise de décision, si jamais on le force à adopter un certain comportement, cela a beaucoup de chance de fausser les résultats ainsi obtenus.  
+
+**Ouverture**
 
 Ajout de valence sociale aisée grâce à la grande configurabilité du jeu via des briques sociales (expliquer ce que c'est) ou des backgrounds sociaux ou encore des occludeurs perturbant faisant disparaître la balle sur une petite surface. Application à l'étude des troubles du spectre autistique.  
 CITER : *Meltem Sevgi et al.* (2016) et *Colin J. Palmer et al.* (2017)
