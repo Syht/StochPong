@@ -229,14 +229,16 @@ Bien que les briques de probabilités **p = 0.25** et **p = 0.75** sont égaleme
 **Niveau 5 (p = 1) :** On observe, dans le niveau 5, un phénomène similaire au niveau 4. Bien que les briques bleues sont parfaitements prédictibles, la balle rebondit systématiquement de manière contre-intuitive. Le joueur utilise d'abord sa vision périphérique pour ensuite rapprocher sont regard du point d'impact pour chercher l'information. On s'attendrait ici à ce que le joueur se mette à utiliser de nouveau sa vision périphérique une fois l'apprentissage de la probabilité acquis, mais il semble que le côté contre-intuitif des rebonds monopolise son attention et le force à regarder la zone d'intérêt.  
 **Niveau 6 (toutes les couleurs) :** On observe, dans le niveau 6, que le joueur maintient son regard proche pour tout type de brique et ce tout au long du niveau. On s'attendrait à observer des distances plus grandes pour les briques prédictibles que pour celles qui ne le sont pas. Le mélange des briques semble pousser le sujet à focaliser son attention sur les rebonds afin de générer les meilleurs prédictions possibles.  
 
+Il est bon de remarquer que les deux variables d'intérêts nécessitent d'être analysées en parallèle ; l'une sans l'autre ne nous renseignant pas sur tous les aspects qui nous intéressent. En effet, les critères de calcul du temps de latence nous font perdre un certain nombre de données, ce qui n'est pas le cas pour la distance impact-regard. De plus, ce seccond critère nous renseigne sur l'utilisation de la vision périphérique, qui semble être un élément important dans les stratégies des joueurs et est indirectement liée à la facilité à générer des prédictions.
 
-
-corrélation paddle/regard paddle/balle à discuter
+Nos hypothèses de départ n'avaient pas pris en compte un élément qui s'est révélé significatif, l'intuitivité
 
 * limites
     * variabilité des résulats du mouvement des yeux (regard périphérique) -> occlusion ?
     * temps d'acquisition
     * cadre théorique pour manipuler la valeur de prédictibilité
+
+corrélation paddle/regard paddle/balle à discuter
 
 Manque de données, que 3 pilotes, pas suffisant pour obtenir des résultats solides. Analyse statistique poussée impossible sur si peu de données.
 
