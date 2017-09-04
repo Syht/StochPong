@@ -62,7 +62,7 @@ Il existe cinq couleurs de briques réparties dans un total de six niveaux. Les 
  - niveau 5 : 60 briques de probabilité **p = 1**
  - niveau 6 : 80 briques mélangées aléatoirement contenant 16 briques de chaque probabilité
 
-Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
+Afin de faciliter l'apprentissage, la couleur des briques provient d'une colormap isoluminante (PLASMA), et les probabilités **p** leur sont associées de la manière suivante :
  - briques **jaunes** : **p = 0**  
  - briques **oranges** : **p = 0.25**  
  - briques **saumons** : **p = 0.5**  
@@ -82,7 +82,7 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
  - angles de rebond sur la raquette  
  - nom du sujet qui passe l'expérience  
 
-D'autres configurations ont été explorées, et il est également possible de modifier l'apparence des briques et du background du jeu - et ainsi pouvoir par exemple jouer sur une valence sociale en affichant des visages expressifs - ainsi que mettre en place des occulteurs faisant disparaître la balle sur une surface prédéfinie, permettant d'étudier la volatilité du contexte et son influence sur la prise de décision et la génération de prédiction.  
+D'autres configurations ont été explorées, et il est également possible de modifier l'apparence des briques et du fond (background) du jeu - et ainsi pouvoir par exemple jouer sur une valence sociale en affichant des visages expressifs - ainsi que mettre en place des occulteurs faisant disparaître la balle sur une surface pré-définie, permettant d'étudier la volatilité du contexte et son influence sur la prise de décision et la génération de prédiction.  
 
 Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement ("Super ! Continue comme ça !") et de reproche ("Fais attention à ne pas perdre la balle." lors de la première perte de balle puis "Fais plus attention !" lors des pertes suivantes) sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement.  
 
