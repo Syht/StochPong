@@ -11,7 +11,7 @@ Faculté de Médecine - 27, boulevard Jean Moulin 13005 - Marseille*
 
 ___
 
-**Abstract:** Dans ce papier nous nous intéressons à l'influence du contexte perceptuel sur les mécanismes de prise de décision via un apprentissage probabiliste. En développant un outil flexible et écologique, le jeu vidéo, nous avons la possibilité d'étudier le cerveau prédictif et son rôle dans la prise de décision à partir d'éléments perceptuels. Cet outil, conçu pour être aisément configurable et modifiable, pourra être utilisé dans d'autres recherches et, par exemple, permettre l'étude de l'influence d'une valence sociale chez des individus atteints de troubles du spectre autistique, dans le contexte du cerveau prédictif.
+**Abstract:** Dans ce mémoire nous étudions l'influence du contexte perceptuel sur les mécanismes de prise de décision. En développant un outil flexible et écologique, le jeu vidéo, nous ouvrons la possibilité d'étudier le rôle d'un apprentissage probabiliste de type prédictif et son implication dans une tâche de prise de décision à partir d'éléments perceptuels ambigüs. Cet outil, conçu pour être aisément configurable et modifiable, pourra être utilisé dans d'autres recherches dans le contexte d'une théorie du cerveau prédictif et, par exemple, permettre l'étude de l'influence d'une valence sociale chez des individus atteints de troubles du spectre autistique.
 
 ___
 
