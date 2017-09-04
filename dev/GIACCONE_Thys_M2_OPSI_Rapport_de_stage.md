@@ -1,17 +1,17 @@
 # Exploration du codage prédictif grâce au jeu vidéo
 
-<big>**Thys Giaccone**</big> - Master 2 OPSI - Signal et Image  
+<big>**Thys Giaccone**</big> - Master 2 OPSI - Signal et Image - 2016-17  
 **Encadrants : Bruno Wicker, Laurent Perrinet**  
-*Laboratoire de Neurosciences Cognitives, Equipe ACDC, UMR 7291 CNRS  
-Aix-Marseille-Université - 3, place Victor-Hugo 13331 - Marseille*  
-*Institut de Neurosciences de la Timone  
-Faculté de Médecine - 27, boulevard Jean Moulin 13005 - Marseille*
-*Ecole Centrale Marseille, Technopôle de Château-Gombert  
-38, rue Frédéric Joliot Curie 13451 - Marseille*
+*Laboratoire de Neurosciences Cognitives, Equipe ACDC, UMR 7291 CNRS*  
+*Aix-Marseille-Université - 3, place Victor-Hugo 13331 - Marseille*  
+*Institut de Neurosciences de la Timone*  
+*Faculté de Médecine - 27, boulevard Jean Moulin 13005 - Marseille*
+*Ecole Centrale Marseille, Technopôle de Château-Gombert*  
+*38, rue Frédéric Joliot Curie 13451 - Marseille*
 ___
 
-**Résumé:** Ce mémoire porte sur une étude de l'influence du contexte perceptuel sur les mécanismes de prise de décision. En développant un outil expérimental flexible et écologique, le jeu vidéo, le projet a eu pour objectif d'étudier le rôle d'un apprentissage probabiliste de type prédictif et son implication dans une tâche de prise de décision à partir d'éléments perceptuels ambigus. Cet outil, conçu pour être aisément configurable et modifiable, pourra être utilisé pour étudier le développement et la maturation du cerveau prédictif, ainsi que ses dysfonctionnements potentiels dans diverses pathologies neurodéveloppementales tel que l'autisme.
-.
+**Résumé :** Ce mémoire porte sur une étude de l'influence du contexte perceptuel sur les mécanismes de prise de décision. En développant un outil expérimental flexible et écologique, le jeu vidéo, le projet a eu pour objectif d'étudier le rôle d'un apprentissage probabiliste de type prédictif et son implication dans une tâche de prise de décision à partir d'éléments perceptuels ambigus. Cet outil, conçu pour être aisément configurable et modifiable, pourra être utilisé pour étudier le développement et la maturation du cerveau prédictif, ainsi que ses dysfonctionnements potentiels dans diverses pathologies neurodéveloppementales tel que l'autisme.
+
 ___
 
 ## 1. Introduction
@@ -43,7 +43,7 @@ Mon stage au Laboratoire de Neurosciences Cognitives, sous la supervision de Bru
 Le jeu est un "casse-briques" classique (Fig. 1), programmé en langage Python à l'aide du module ``Pygame`` - module permettant le développement de jeux vidéos. La fenêtre du jeu fait 1024 pixels de haut pour 1280 pixels de large.  
 
 Figure 1 : *Capture d'écran du niveau 1 du jeu*  
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
+<img src="assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png" width="350">
 
 La raquette du casse-brique est dirigée grâce à la souris et permet de réorienter la balle, quel que soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée en angle droit (à 90° par rapport à la raquette), tandis que les extrémités gauche et droite de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
@@ -154,6 +154,8 @@ Nous avons, par la suite, choisi deux variables d'intérêts qui nous permette d
 
 Grâce au gradient, on peut afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (Fig. 5).  
 
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+
 Figure 5 : *Comportement du regard (dégradé bleu-rouge) lors du rebond de la balle sur une brique (noir)*  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-b230e884.png)
 
@@ -188,8 +190,10 @@ Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au
 
 Les latences sont affichées au cours du temps sur la totalité des 6 niveaux. Ainsi, les **lignes verticales pointillées** correspondent au passage d'un niveau au suivant.  
 
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+
 Figure 8 : *Evolution des latences de première saccade après le rebond au cours des six niveaux renseignée de la couleur de brique correspondante*  
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-d3d090d5.png)
+<img src="assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-d3d090d5.png" width="600">
 
 ### 3.2 Distance point d'impact - regard
 
@@ -201,7 +205,7 @@ Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au
 Les distances impact-rebond sont affichées au cours du temps sur la totalité des 6 niveaux. Ainsi, les **lignes verticales pointillées** correspondent au passage d'un niveau au suivant.  
 
 Figure 9 : *Evolution de la distance entre le point d'impact de la balle sur une brique et la position du regard renseignée de la couleur de brique correspondante*  
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-07af486b.png)
+<img src="assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-07af486b.png" width="600">
 
 ## 4. Discussion
 
