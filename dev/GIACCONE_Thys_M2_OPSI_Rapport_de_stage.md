@@ -231,11 +231,8 @@ L'étude présentée dans ce mémoire n'est qu'à ses prémices ; nous avons ain
 
 Contrairement aux prévisions faites en début de stage, nous n'avons pas eu le temps d'analyser les données de la raquette. Les déplacements de la raquette sont censées refléter la prise de décision du sujet et il serait intéressant d'observer le lien entre celle-ci et les déplacements de la balle et du regard. Il est ainsi prévue de mettre en évidence le lien entre perception et action en analysant la corrélation entre la génération de prédiction du sujet et sa prise de décision, se reflétant dans le mouvement de la raquette.
 
-<<<<<<< HEAD
+
 ?? Les faibles temps d'acquisition - soient les durées des niveaux - pourraient ne pas être suffisant pour observer correctement l'apprentissage des probabilités. Il ne faut pas pour autant ignorer le fait qu'une expérience trop longue pourrait nuire à la concentration des sujets et ainsi résulter en de mauvaises données. ?? **Ce paragraphe est-il pertinent ?**
-=======
-Les faibles temps d'acquisition - soient les durées des niveaux - pourraient ne pas être suffisant pour observer correctement l'apprentissage des probabilités.
->>>>>>> 05a327108e662bfe3b711e196db8ba8519a68253
 
 Comme expliqué précédemment, un certain nombre de données de latence est perdu dûe au fait que les joueurs ne regardaient pas suffisamment près de l'impact sur la brique. Le calcul de la latence est alors rendu impossible à cause du critère : d(impact, regard) < 200  
 Nous avons donc envisagé différentes modifications futures du jeu afin d'améliorer la quantité de résultats ; l'objectif étant de forcer le joueur à regarder la zone d'intérêt, nous avons pensé à utiliser des occulteurs cachant une partie de l'écran tout en laissant une autre partie visible. Deux types d'occlusions nous ont paru pertinents :  
