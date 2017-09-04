@@ -247,6 +247,8 @@ La création d'un outil tel que ce jeu vidéo nous ouvre grand nombre de possibi
 
 ## Remerciements
 
+Je tiens à grandement remercier Bruno Wicker et Laurent Perrinet, deux personnes qui m'ont supervisé au long de mon stage et qui ont su lui donné une dimension humaine et de recherche passionnante et enrichissante.  
+Je tiens également à remercier les membres du Laboratoire de Neurosciences Cognitives (LNC) qui m'ont acueilli parmi eux et se sont montrés particulièrement agréables et bienveillants à mon égard.
 
 
 ___
