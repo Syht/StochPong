@@ -190,12 +190,6 @@ Les latences sont affichées au cours du temps sur la totalité des 6 niveaux. A
 Figure 8 : Evolution des latences de première saccade après le rebond au cours des six niveaux renseignée de la couleur de brique correspondante  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-7a1c51fa.png)
 
-**EST-CE QUE J'AFFICHE LE TEMPS DE LATENCE MOYENNE CALCULé PAR LEVEL ? (cf. ci-dessous) en sachant que seul le résultat pour Juliette donne cette évolution et que Juliette fait parti des niveaux MIXTE
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-c7dbd14f.png)
-Le résultat de Rémi est le résultat suivant et va à l'encontre de notre théorie sur les temps de latence (si j'ai bien compris, ils doivent être plus grands lorsque le rebond est peu prédictible tandis que chez Rémi on observe les plus faibles temps de latence lors du 3ème niveau, c'est à dire le niveau composé de brique p=0.5, soit les brique les moins prédictibles)
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-7910be43.png)
-A mon avis il ne faut pas présenter les résultats calculant les latences moyennes car ça cache l'évolution des latences au cours d'un level et tous les levels n'ont pas autant de données exploitables, ce qui fausse les calculs de moyenne**
-
 ### 3.2 Distance point d'impact - regard
 
 Les distances impact-regard ont été calculées pour chaque rebond de balle sur une brique.
