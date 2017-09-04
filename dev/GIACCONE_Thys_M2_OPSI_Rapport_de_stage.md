@@ -229,15 +229,11 @@ Nos hypothèses de départ n'avaient pas pris en compte un élément qui s'est r
 
 **Limites**  
 
+L'étude présentée dans ce mémoire n'est qu'à ses prémices ; nous avons ainsi été confrontés à des limitations induites par un manque de temps. Notre étude n'a pour l'instant qu'une faible quantité de données exploitables, tout d'abord dûe au nombre restreint de pilotes - trois personnes ont été enregistrées sur l'expérience - puis à une simplification, expliquée dans **2.5 Analyse des données**, qui fait que nous ne considérons que les rebonds qui viennent par le bas de la brique. De ce fait, il n'a pas été possible de faire une analyse statistique poussée afin de montrer des résultats solides. Cette étude statistique est prévue pour la suite, lorsqu'un bon nombre de sujets auront procédé à l'expérience.  
 
-* limites
-    * variabilité des résulats du mouvement des yeux (regard périphérique) -> occlusion ?
-    * temps d'acquisition
-    * cadre théorique pour manipuler la valeur de prédictibilité
+Contrairement aux prévisions faites en début de stage, nous n'avons pas eu le temps d'analyser les données de la raquette. Les déplacements de la raquette sont censées refléter la prise de décision du sujet et il serait intéressant d'observer le lien entre celle-ci et les déplacements de la balle et du regard. Il est ainsi prévue de mettre en évidence le lien entre perception et action en analysant la corrélation entre la génération de prédiction du sujet et sa prise de décision, se reflétant dans le mouvement de la raquette.
 
-corrélation paddle/regard paddle/balle à discuter
-
-Manque de données, que 3 pilotes, pas suffisant pour obtenir des résultats solides. Analyse statistique poussée impossible sur si peu de données.
+Les faibles temps d'acquisition - soient les durées des niveaux - pourraient ne pas être suffisant pour observer correctement l'apprentissage des probabilités. 
 
 Perte d'un certain nombre de données de latence dûe au fait que les joueurs ne regardaient pas suffisamment près de l'impact sur la brique -> calcul de la latence impossible (expliquer pourquoi). Modification future du jeu possible afin d'améliorer les résultats (occludeur lié au regard via l'eye-tracking (cercle d'occlusion) ou lié au déplacement du paddle (rectangle verticale d'occlusion)). Problème -> force le sujet à regarder la balle, peut peut-être nuire à la qualité des résultats mais augmentera la quantité.
 
