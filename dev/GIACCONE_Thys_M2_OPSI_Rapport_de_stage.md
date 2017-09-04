@@ -29,7 +29,7 @@ Le jeu ainsi programmé devra répondre à plusieurs critères afin qu'il permet
 
 Une fois les données acquises, l'objectif est de créer un programme complet qui permettra une analyse rapide et facile des données futures. Celui-ci sera capable de lire les fichiers de données, de tracer les figures pertinentes, de mettre en évidence les variables d'intérêt et ainsi fournir à l'expérimentateur les données nécessaires à la résolution de la problématique.  
 
-Une fois cet outil - le jeu et le système de reccueil de données adapté - développé, ce sera la première étape vers une étude plus large visant à étudier l'influence d'une valence sociale dans le contexte du cerveau prédictif.  
+Une fois cet outil - le jeu et le système d'enregistrement de données adapté - développé, ce sera la première étape vers une étude plus large visant à étudier l'influence d'une valence sociale dans le contexte du cerveau prédictif.  
 
 ## 2. Matériel et méthodes
 
@@ -47,12 +47,12 @@ Le jeu est un "casse-briques" classique (Fig. 1), programmé en langage Python �
 Figure 1 : Capture d'écran du niveau 1 du jeu  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-68cec066.png)
 
-La raquette du casse-brique est dirigée grâce à la souris et permet de reorienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée avec un rebond parfait (comme le trajet d'un rayoj lumineux sur un miroir plan), tandis que les extrémités gauche et droite de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
+La raquette du casse-brique est dirigée grâce à la souris et permet de ré-orienter la balle, quelque soit son angle d'arrivée sur la raquette. Une balle arrivant au centre de la raquette est renvoyée avec un rebond parfait (comme le trajet d'un rayoj lumineux sur un miroir plan), tandis que les extrémités gauche et droite de la raquette vont renvoyer la balle avec des angles de respectivement 40° et 140°. Les valeurs intermédiaires suivent une loi linéaire respectant les valeurs données ci-dessus.  
 
 Le contexte probabiliste est généré par une variable cachée associée à la couleur de la brique concernée qui va modifier le comportement de la balle lors de la destruction d'une brique selon une probabilité. La balle va alors avoir une probabilité **(1-p)** de rebondir normalement - c'est à dire symétriquement - sur la brique (Fig. 2, trajectoire gris-noir) et une probabilité **p** de revenir sur sa trajectoire (Fig. 2, trajectoire gris-rouge).  
 
 Figure 2 : Comportement de la balle lors d'un rebond sur une brique  
-![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-76f3dcd1.png)
+<center>![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-76f3dcd1.png)</center>
 
 Il existe cinq couleurs de briques réparties dans un total de six niveaux. Les niveaux sont construits de la manière suivante :
  - niveau 1 : 60 briques de probabilité **p = 0**
