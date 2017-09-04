@@ -1,6 +1,6 @@
 # Exploration du codage prédictif grâce au jeu vidéo
 
-<big>**Thys Giaccone**</big>  
+<big>**Thys Giaccone**</big> - Master 2 OPSI - Signal et Image  
 **Encadrants : Bruno Wicker, Laurent Perrinet**  
 *Laboratoire de Neurosciences Cognitives, Equipe ACDC, UMR 7291 CNRS  
 Aix-Marseille-Université - 3, place Victor-Hugo 13331 - Marseille*  
@@ -243,8 +243,7 @@ Ces occlusions permettrait d'obtenir un plus grand nombre de résultats car les 
 
 **Ouverture**
 
-Ajout de valence sociale aisée grâce à la grande configurabilité du jeu via des briques sociales (expliquer ce que c'est) ou des backgrounds sociaux ou encore des occludeurs perturbant faisant disparaître la balle sur une petite surface. Application à l'étude des troubles du spectre autistique.  
-CITER : *Meltem Sevgi et al.* (2016) et *Colin J. Palmer et al.* (2017)
+La création d'un outil tel que ce jeu vidéo nous ouvre grand nombre de possibilités ; l'une d'entre elles étant l'utilisation possible de cet outil dans une étude visant à comprendre les troubles du spectre autistique. En effet, on peut aisément modifier le jeu afin d'y ajouter une valence sociale - c'est à dire inclure des éléments sociaux tels que des visages expressifs. L'image des briques ainsi que le background du jeu pouvant être modifier à volonté, les possibilité d'application dans une étude de l'autisme sont nombreux. L'autisme est aujourd'hui caractérisé par une déficience des intéractions sociales, mais les processus sous-jacents qui en sont la cause sont encore sujet à controverse. Il a été suggéré que le spectre autistique puisse se caractériser par des troubles d'inférence du cerveau lors de réception de signaux sociaux (*Colin J. Palmer et al.* 2017). Plusieurs études ont ainsi développé des modèles d'inférence Bayesienne dans le but d'étudier l'effet du contexte sur la génération et la prise de décisions (*Meltem Sevgi et al.* 2016) dans un environnement volatile. L'utilisation d'un jeu vidéo peut ainsi être un ajout pertinent au secteur de la recherche des troubles du spectre autistique. Il permettrait d'obtenir facilement un grand nombre de données et, grâce aux développements de modèles hiérarchiques d'inférence Bayesienne, pourrait contribuer à la confirmation où à l'infirmation des théories décrivant les troubles du spectre autistique comme induite par une différence dans le traitement des informations par le cerveau prédictif.
 
 ## Remerciements
 
