@@ -188,8 +188,6 @@ Rappelons que les couleurs sont reliées aux probabilités et que du niveau 1 au
 
 Les latences sont affichées au cours du temps sur la totalité des 6 niveaux. Ainsi, les **lignes verticales pointillées** correspondent au passage d'un niveau au suivant.  
 
-<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-
 Figure 8 : *Evolution des latences de première saccade après le rebond au cours des six niveaux renseignée de la couleur de brique correspondante*  
 <img src="assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-d3d090d5.png" width="600">
 
