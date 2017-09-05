@@ -73,8 +73,7 @@ Nous avons donc des briques complètement prédictibles (**p = 0** et **p = 1**)
 
 #### Paramétrage du jeu
 
-Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probabiliste. L'objectif étant d'avoir un programme complet mais aussi flexible, nous avons choisi d'utiliser un fichier de configuration - ``config.ini`` - qui permet de modifier facilement les valeurs suivantes :
-
+L'objectif étant d'avoir un programme complet et flexible, il est basé sur l'utilisation d'un fichier de configuration optimisé - ``config.ini`` - qui permet de modifier facilement les valeurs suivantes :
  - vitesse de la balle  
  - taille de la balle  
  - dimensions de l'écran de jeu  
@@ -86,7 +85,6 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
  - type d'arrière-plan
 
 Il est également possible de placer des occulteurs faisant disparaître la balle sur une surface prédéfinie, permettant d'étudier la volatilité du contexte et son influence sur le comportement du joueur.  
-
 
 Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement (``Super ! Continue comme ça !``) et de reproche (``Fais attention à ne pas perdre la balle.`` lors de la première perte de balle puis ``Fais plus attention !`` lors des pertes suivantes) sont affichées à l'écran lorsque le joueur finit un niveau ou perd la balle, respectivement.  
 
@@ -102,7 +100,6 @@ Le code est disponible sur GitHub (https://github.com/Syht/StochPong), ce qui no
 ### 2.2 TheEyeTribe : dispositif d'eye-tracking
 
 La récolte des données du regard est faite avec TheEyeTribe, un appareil d'eye-tracking - ou d'oculométrie - à notre disposition. Constitué de diodes infrarouges et d'une caméra infrarouge, ce dispositif permet, comme son nom l'indique, de traquer les mouvements oculaires et ainsi calculer la direction du regard du sujet. L'appareil utilisé fonctionne avec la technique de reflet cornéen - ou réflexion IR - qui consiste à l'envoi d'une lumière infrarouge en direction de la pupille pour que le reflet infrarouge renvoyé par la cornée de l'oeil soit ensuite détecté par la caméra infrarouge, permettant de déterminer la direction du regard.  
-
 
 L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du logiciel natif *EyeTribe UI*. TheEyeTribe, considéré comme un système d'eye-tracking low-cost, ne présente pas pour autant de mauvaises performances, comme le confirme le papier de *Ooms et al.* (2015), tant que l'on impose des conditions expérimentales contrôlées : le sujet doit rester relativement immobile à une distance fixe du dispositif.
 
