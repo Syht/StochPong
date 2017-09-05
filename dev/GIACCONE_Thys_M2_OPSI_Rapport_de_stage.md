@@ -73,7 +73,7 @@ Nous avons donc des briques complètement prédictibles (**p = 0** et **p = 1**)
 
 #### La programmation au service de l'expérience
 
-Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probabiliste. L'objectif étant d'avoir un programme complet mais aussi flexible, nous avons choisi d'utiliser un fichier de configuration - config.ini - qui permet de modifier facilement les valeurs suivantes :
+Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probabiliste. L'objectif étant d'avoir un programme complet mais aussi flexible, nous avons choisi d'utiliser un fichier de configuration - ``config.ini`` - qui permet de modifier facilement les valeurs suivantes :
  - vitesse de la balle  
  - taille de la balle  
  - dimensions de l'écran de jeu  
@@ -84,13 +84,13 @@ Il faut savoir que le jeu ne consiste pas uniquement en un casque-briques probab
 
 D'autres configurations ont été explorées, et il est également possible de modifier l'apparence des briques et du fond (background) du jeu - et ainsi pouvoir par exemple jouer sur une valence sociale en affichant des visages expressifs - ainsi que mettre en place des occulteurs faisant disparaître la balle sur une surface pré-définie, permettant d'étudier la volatilité du contexte et son influence sur la prise de décision et la génération de prédiction.  
 
-Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement ("Super ! Continue comme ça !") et de reproche ("Fais attention à ne pas perdre la balle." lors de la première perte de balle puis "Fais plus attention !" lors des pertes suivantes) sont affichées à l'écran lorsque le joueur fini un niveau ou perd la balle, respectivement.  
+Afin de motiver les sujets et les pousser à maintenir un comportement productif durant l'expérience, des phrases d'encouragement ("Super ! Continue comme ça !") et de reproche ("Fais attention à ne pas perdre la balle." lors de la première perte de balle puis "Fais plus attention !" lors des pertes suivantes) sont affichées à l'écran lorsque le joueur finit un niveau ou perd la balle, respectivement.  
 
-L'intégration d'un menu principal configurable permet de futurs ajouts de contenu comme, par exemple, un menu pour sélectionner différents sets de niveaux ou un menu d'options permettant de modifier config.ini directement dans le menu principal. Celui-ci contient actuellement deux options qui permettent de lancer la partie et quitter le jeu.  
+L'intégration d'un menu principal configurable permet de futurs ajouts de contenu comme, par exemple, un menu pour sélectionner différents sets de niveaux ou un menu d'options permettant de modifier ``config.ini`` directement dans le menu principal. Celui-ci contient actuellement deux options qui permettent de lancer la partie et quitter le jeu.  
 
-Pour regrouper toutes les données dans un unique fichier, nous avons opté pour l'utilisation de Pandas Dataframe - un module permettant de stocker un grand nombre de données facilement et efficacement.  
+Pour regrouper toutes les données dans un unique fichier, nous avons opté pour l'utilisation du format de ndonnées ``Pandas Dataframe`` - un module permettant de stocker un grand nombre de données facilement et efficacement.  
 
-Afin que le programme du jeu puisse fonctionner de concert avec le dispositif d'eye-tracking, nous nous sommes muni d'un code d'interfaçage TheEyeTribe/Python écrit par *Per Baekgaard* sur son dépôt GitHub (https://github.com/baekgaard/peyetribe) et dont la licence est libre d'utilisation. Il a ensuite fallu intégrer le code à notre programme de manière à récolter les données de mouvements des yeux.  
+Afin que le programme du jeu puisse fonctionner de concert avec le dispositif d'eye-tracking, nous nous sommes muni d'un code d'interfaçage ``TheEyeTribe/Python`` écrit par *Per Baekgaard* sur son dépôt GitHub (https://github.com/baekgaard/peyetribe) et dont la licence est libre d'utilisation. Il a ensuite fallu intégrer le code à notre programme de manière à récolter les données de mouvements des yeux.  
 
 Le programme enregistre les données de mouvement du regard, et le déplacement de la balle et de la raquette. Des parties de code permettent de stocker les données acquises pour les réunir dans une dataframe.  
 
@@ -98,11 +98,11 @@ Le programme enregistre les données de mouvement du regard, et le déplacement 
 
 La récolte des données du regard est faite avec TheEyeTribe, un appareil d'eye-tracking - ou d'oculométrie - à notre disposition. Constitué de diodes infrarouges et d'une caméra infrarouge, ce dispositif permet, comme son nom l'indique, de traquer les mouvements oculaires et ainsi calculer la direction du regard du sujet. L'appareil utilisé fonctionne avec la technique de reflet cornéen - ou réflexion IR - qui consiste à l'envoi d'une lumière infrarouge en direction de la pupille pour que le reflet infrarouge renvoyé par la cornée de l'oeil soit ensuite détecté par la caméra infrarouge, permettant de déterminer la direction du regard.  
 
-L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du logiciel natif *EyeTribe UI*. TheEyeTribe, considéré comme un système d'eye-tracking low-cost, ne présente pas pour autant de mauvaises performances, comme le confirme le papier de *Kristien Ooms et al.* (2015), tant que l'on impose des conditions expérimentales contrôlées : le sujet doit rester immobile à une distance fixe du dispositif.
+L'eye-tracker est positionné sous l'écran de jeu et est calibré à l'aide du logiciel natif *EyeTribe UI*. TheEyeTribe, considéré comme un système d'eye-tracking low-cost, ne présente pas pour autant de mauvaises performances, comme le confirme le papier de *Kristien Ooms et al.* (2015), tant que l'on impose des conditions expérimentales contrôlées : le sujet doit rester relativement immobile à une distance fixe du dispositif.
 
 ### 2.3 Protocole expérimental
 
-Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur qu'il va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran sous lequel est placé le dispositif d'eye-tracking, à une distance d'environ 50 cm. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
+Aucune information sur la nature probabiliste des briques n'est donnée au sujet ni sur le nombre de niveaux que comporte le jeu. On explique au joueur qu'il va devoir finir un certain nombre de niveaux en détruisant les briques que composent chacun d'entre eux. Avant de commencer l'expérience, le joueur s'installe devant l'écran sous lequel est placé le dispositif d'eye-tracking, à une distance d'environ $50 cm$. On demande ensuite au joueur de rester le plus immobile possible durant l'étape de calibration et l'expérience afin que la précision de l'eye-tracker soit optimisée.  
 
 L'étape de calibration consiste en la fixation et au suivi, par le sujet, d'un point qui apparait à l'écran puis se déplace en 16 endroits différents. Si le sujet a correctement suivi le point des yeux, le logiciel confirme la qualité de la calibration et l'étape est terminée. Dans le cas contraire, le logiciel indique une mauvaise calibration et le sujet la recommence alors.
 
