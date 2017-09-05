@@ -154,8 +154,6 @@ Nous avons, par la suite, choisi deux variables d'intérêts qui nous permette d
 
 Grâce au gradient, on peut afficher les comportements de la balle et du regard dans une fenêtre autour du rebond et ainsi mettre en évidence cette première variable d'intérêt (Fig. 5).  
 
-<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-
 Figure 5 : *Comportement du regard (dégradé bleu-rouge) lors du rebond de la balle sur une brique (noir)*  
 ![](assets/GIACCONE_Thys_M2_OPSI_Rapport_de_stage-b230e884.png)
 
