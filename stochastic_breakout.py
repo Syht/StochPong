@@ -28,6 +28,9 @@ HEIGHT = int(scrsize['height'])
 WIDTH = int(scrsize['width'])
 PADDLESIZE = int(pdlsize['size'])
 
+# CHOIX DU SET DE NIVEAUX (MIXE ou MONOCHROMATIQUE) : choisisser lvls = 'lvls_mix' ou lvls = 'lvls_mono'
+lvls = 'lvls_mono'
+
 # Game constants
 SCREENRECT = pygame.Rect(0, 0, WIDTH, HEIGHT)
 
@@ -202,7 +205,7 @@ class Ball(pygame.sprite.Sprite):
             winstyle = pygame.HWSURFACE|pygame.DOUBLEBUF|pygame.FULLSCREEN # | pygame.FULLSCREEN
             bestdepth = pygame.display.mode_ok(SCREENRECT.size, winstyle, 32)
             screen = pygame.display.set_mode(SCREENRECT.size, winstyle, bestdepth)
-            levels = ast.literal_eval(level['lvls_mono'])
+            levels = ast.literal_eval(level[lvls])
             arena = Arena(levels)
             # display messages to motivate the player not to lose the ball
             if Ball.lost == False:
@@ -421,7 +424,7 @@ def main():
     Brick.images = spritesheet.imgsat(ast.literal_eval(bricksprite['bigbricks']))
 
     # loads the different levels reading config.ini (ast.literal_eval: allows to read lists from config.ini files)
-    levels = ast.literal_eval(level['lvls_mono'])
+    levels = ast.literal_eval(level[lvls])
 
     # decorate the game window
     pygame.display.set_caption('Welcome to Stochastic Pong')
