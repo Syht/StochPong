@@ -6,7 +6,8 @@ Created on Tue Sep 19 15:25:08 2017
 """
 
 from __future__ import division, print_function
-import os, glob, matplotlib.pyplot as plt, numpy as np, pandas as pd, math, re, itertools, ast, configparser
+import os, glob, math, re, itertools, ast, configparser
+import matplotlib.pyplot as plt, numpy as np, pandas as pd
 config = configparser.ConfigParser()
 config.read('config.ini')
 level = config['levels']
